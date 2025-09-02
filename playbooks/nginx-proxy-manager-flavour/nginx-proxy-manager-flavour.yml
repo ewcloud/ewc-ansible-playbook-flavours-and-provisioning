@@ -1,0 +1,34 @@
+---
+- name: Prompt for user inputs
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: os_security_group_name
+      prompt: OpenStack security group containing all firewall rules required for Nginx Proxy Manager operation
+      private: false
+
+    - name: npm_admin_ui_port
+      prompt: port number at which the Nginx Proxy Manager admin UI is served
+      private: false
+
+  tasks:
+    - name: Store user input as localhost facts
+      ansible.builtin.set_fact:
+        os_security_group_name_fact: "{{ os_security_group_name_fact }}"
+        npm_admin_ui_port_fact: "{{ npm_admin_ui_port }}"
+
+- name: Install NGINX Proxy Manager
+  hosts: all
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+
+  tasks:
+    - name: EWC Ansible Role NGINX Proxy Manager
+      ansible.builtin.include_role:
+        name: ewc-ansible-role-nginx-proxy-manager-1.0
+      vars:
+        os_security_group_name: "{{ hostvars['localhost']['os_security_group_name_fact'] }}"
+        npm_admin_ui_port: "{{ hostvars['localhost']['npm_admin_ui_port_fact'] }}"

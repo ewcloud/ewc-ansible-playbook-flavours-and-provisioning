@@ -1,0 +1,168 @@
+---
+- name: Prompt for user inputs
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: tf_project_path
+      prompt: path to terraform working directory
+      private: false
+
+    - name: private_keypair_path
+      prompt: path to the local private keypair to use for SSH access to the instance. Or press Enter to accept default
+      private: false
+
+    - name: ipa_domain
+      prompt: domain name to be managed by the IPA server
+      private: false
+
+    - name: ipa_server_hostname
+      prompt: hostname of the IPA server
+      private: false
+
+    - name: ipa_admin_username
+      prompt: username of administrator account to replace the default IPA admin
+      private: false
+
+    - name: ipa_admin_password
+      prompt: password of administrator account to replace the default IPA admin
+      private: true
+      unsafe: true
+
+  tasks:
+    - name: Validate user input
+      ansible.builtin.assert:
+        that:
+          - tf_project_path is defined and tf_project_path != ''
+          - private_keypair_path is defined and private_keypair_path != ''
+        fail_msg: "Input validation failed. See README.md for information on required inputs and their format."
+        success_msg: "User input configuration is valid."
+
+    - name: Store user input as localhost facts
+      ansible.builtin.set_fact:
+        tf_project_path_fact: "{{ tf_project_path }}"
+        private_keypair_path_fact: "{{ private_keypair_path }}"
+
+        ewc_ansible_role_ipa_client_disenroll:
+          ipa_domain_fact: "{{ ipa_domain }}"
+          ipa_server_hostname_fact: "{{ ipa_server_hostname }}"
+          ipa_admin_username_fact: "{{ ipa_admin_username }}"
+          ipa_admin_password_fact: "{{ ipa_admin_password }}"
+
+    - name: Gather stats about Terraform working directory and the instance's Terraform definition file
+      ansible.builtin.stat:
+        path: "{{ tf_project_path_fact }}/main.tf"
+      register: main_tf_file
+
+    - name: Raise error if instance's Terraform definition file does not exists
+      ansible.builtin.assert:
+        that:
+          - main_tf_file.stat.exists
+        fail_msg: "Terraform definition file at {{ tf_project_path_fact }}/main.tf does not exist, or insufficient permissions to read it"
+        success_msg: "Found Terraform definition file for instance at {{ tf_project_path_fact }}/main.tf"
+
+    - name: Gather stats about Terraform working directory and the instance's Terraform state file
+      ansible.builtin.stat:
+        path: "{{ tf_project_path_fact }}/terraform.tfstate"
+      register: tfstate_file
+
+    - name: Raise error if instance's Terraform state file does not exists
+      ansible.builtin.assert:
+        that:
+          - tfstate_file.stat.exists
+        fail_msg: "Terraform state file at {{ tf_project_path_fact }}/terraform.tfstate does not exist, or insufficient permissions to read it"
+        success_msg: "Found Terraform state file for instance at {{ tf_project_path_fact }}/terraform.tfstate"
+
+- name: Add floating IP to VM via Terraform and authorized OpenStack application credentials
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Update intance's Terraform definition file
+      ansible.builtin.lineinfile:
+        path: "{{ hostvars['localhost']['tf_project_path_fact'] }}/main.tf"
+        search_string: 'instance_has_fip'
+        line: instance_has_fip = true
+        mode: "0644"
+
+    - name: Update previously provisioned instance
+      community.general.terraform:
+        project_path: "{{ hostvars['localhost']['tf_project_path_fact'] }}"
+        state: present
+        force_init: false
+        overwrite_init: false
+        provider_upgrade: false
+      register: tf_applied
+      environment:
+        TF_IN_AUTOMATION: "true"
+
+    - name: Store private IP address of the newly provisioned OpenStack VM
+      ansible.builtin.set_fact:
+        remote_host_internal_ip_fact: "{{ tf_applied.outputs.instance.value.internal_ip }}"
+
+    - name: Store public IP address of the newly provisioned OpenStack VM
+      ansible.builtin.set_fact:
+        remote_host_public_ip_fact: "{{ tf_applied.outputs.instance.value.floating_ip }}"
+
+    - name: Store hostname of the newly provisioned OpenStack VM
+      ansible.builtin.set_fact:
+        ipa_client_hostname_fact: "{{ tf_applied.outputs.instance.value.name }}"
+
+    - name: Wait for SSH to become available
+      ansible.builtin.wait_for:
+        host: "{{ remote_host_public_ip_fact }}"
+        port: 22
+        timeout: 300
+
+    - name: Add dynamic host to inventory
+      ansible.builtin.add_host:
+        name: "remote_host"
+        ansible_host: "{{ remote_host_public_ip_fact }}"
+        ansible_user: "cloud-user"
+        ansible_ssh_private_key_file: "{{ hostvars['localhost']['private_keypair_path'] }}"
+        ansible_ssh_common_args: "-o StrictHostKeyChecking=accept-new"
+
+- name: Disenroll from an IPA server's LDAP/DNS services
+  hosts: remote_host
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+
+  tasks:
+    - name: EWC Ansible Role IPA Client Disenroll
+      ansible.builtin.include_role:
+        name: ewc-ansible-role-ipa-client-disenroll-1.0
+      vars:
+        ipa_domain: "{{ hostvars['localhost']['ewc_ansible_role_ipa_client_disenroll']['ipa_domain_fact'] }}"
+        ipa_client_hostname: "{{ hostvars['localhost']['ipa_client_hostname_fact'] }}"
+        ipa_server_hostname: "{{ hostvars['localhost']['ewc_ansible_role_ipa_client_disenroll']['ipa_server_hostname_fact'] }}"
+        ipa_admin_username: "{{ hostvars['localhost']['ewc_ansible_role_ipa_client_disenroll']['ipa_admin_username_fact'] }}"
+        ipa_admin_password: "{{ hostvars['localhost']['ewc_ansible_role_ipa_client_disenroll']['ipa_admin_password_fact'] }}"
+
+- name: Teardown and summarize execution after teardown
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Teardown instance
+      community.general.terraform:
+        project_path: "{{ hostvars['localhost']['tf_project_path_fact'] }}"
+        state_file: "{{ hostvars['localhost']['tf_project_path_fact'] }}/terraform.tfstate"
+        state: absent
+        force_init: false
+        overwrite_init: false
+        provider_upgrade: false
+      register: tf_applied
+      environment:
+        TF_IN_AUTOMATION: "true"
+
+    - name: List edited/deleted OpenStack resources
+      ansible.builtin.debug:
+        msg:
+          - "Terraform state file path: {{ hostvars['localhost']['tf_project_path_fact'] }}/terraform.tfstate"
+          - "OpenStack instance name: {{ hostvars['localhost']['ipa_client_hostname_fact'] }}"
+          - "OpenStack internal IP address: {{ hostvars['localhost']['remote_host_internal_ip_fact'] }}"
+          - "OpenStack public IP address: {{ hostvars['localhost']['remote_host_public_ip_fact'] }}"

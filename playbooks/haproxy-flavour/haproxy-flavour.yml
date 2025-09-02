@@ -1,0 +1,28 @@
+---
+- name: Prompt for user inputs
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: os_security_group_name
+      prompt: OpenStack security group containing all firewall rules required for HAProxy operation
+      private: false
+
+  tasks:
+    - name: Store user input as localhost facts
+      ansible.builtin.set_fact:
+        os_security_group_name_fact: "{{ os_security_group_name_fact }}"
+
+- name: Install HA Proxy with certbot
+  hosts: haproxy_hosts
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+
+  tasks:
+    - name: EWC Ansible Role HAProxy
+      ansible.builtin.include_role:
+        name: ewc-ansible-role-haproxy-1.0
+      vars:
+        os_security_group_name: "{{ hostvars['localhost']['os_security_group_name_fact'] }}"

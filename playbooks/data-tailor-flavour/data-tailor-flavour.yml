@@ -1,0 +1,71 @@
+---
+- name: Prompt for user inputs
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: conda_installer
+      prompt: URI of the installer to use. Or press Enter to accept default
+      private: false
+      default: "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh"
+
+    - name: conda_prefix
+      prompt: prefix where conda will be installed. Or press Enter to accept default
+      private: false
+      default: "/opt/conda"
+
+    - name: conda_update_base
+      prompt: flag to decide whether base environment needs updating. Or press Enter to accept default
+      private: false
+      default: "false"
+
+    - name: conda_user
+      prompt: user that will own the conda installation. Or press Enter to accept default
+      private: false
+      default: "root"
+
+    - name: data_tailor_env_wipe
+      prompt: flag to delete existing conda environment where data tailor was previously installed. Only yes will be accepted to approve. Or press Enter to accept default
+      private: false
+      default: "no"
+
+    - name: data_tailor_env_name
+      prompt: name of conda environment where data tailor will be installed. Or press Enter to accept default
+      private: false
+      default: "epct-desktop"
+
+  tasks:
+    - name: Store user input as localhost facts
+      ansible.builtin.set_fact:
+        conda_installer_fact: "{{ conda_installer_fact }}"
+        conda_prefix_fact: "{{ conda_prefix }}"
+        conda_update_base_fact: "{{ conda_update_base }}"
+        conda_user_fact: "{{ conda_user }}"
+        data_tailor_env_wipe_fact: "{{ data_tailor_env_wipe }}"
+        data_tailor_env_name_fact: "{{ data_tailor_env_name }}"
+
+- name: EUMETSAT data tailor
+  hosts: all
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+
+  tasks:
+    - name: EWC Ansible Role Coda
+      ansible.builtin.include_role:
+        name: ewc-ansible-role-conda
+      vars:
+        conda_installer: "{{ hostvars['localhost']['conda_installer_fact'] }}"
+        conda_prefix: "{{ hostvars['localhost']['conda_prefix'] }}"
+        conda_update_base: "{{ hostvars['localhost']['conda_update_base'] }}"
+        conda_user: "{{ hostvars['localhost']['conda_user'] }}"
+
+    - name: EWC Ansible Data Tailor
+      ansible.builtin.include_role:
+        name: ewc-ansible-role-data-tailor
+      vars:
+        data_tailor_env_wipe: "{{ hostvars['localhost']['data_tailor_env_wipe'] }}"
+        data_tailor_env_name: "{{ hostvars['localhost']['data_tailor_env_name'] }}"
+        conda_prefix: "{{ hostvars['localhost']['conda_prefix'] }}"
+        conda_user: "{{ hostvars['localhost']['conda_user'] }}"
