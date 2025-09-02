@@ -93,6 +93,6 @@ ansible-playbook \
 This is due to constrains imposed by the required
 ewc-ansible-role-ipa-client-enroll Ansible Role.
 
-| Name | Version | License |Package Info |
+| Name | Version | License |Home URL |
 |------|---------|------|-----|
 | ewc-ansible-role-ipa-client-enroll | 1.0 | MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-client-enroll |

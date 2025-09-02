@@ -83,7 +83,7 @@ ansible-playbook \
 > 💡 A VM plan with at least 16GB of RAM is recommended for successful setup and
 stable operation.
 
-| Name | Version | License | Package Info |
+| Name | Version | License | Home URL |
 |------|---------|------|------|
 | ewc-ansible-role-conda | 1.1 |  Apache-2.0 | https://github.com/ewcloud/ewc-ansible-role-conda |
 | ewc-ansible-role-data-tailor | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-role-data-tailor |

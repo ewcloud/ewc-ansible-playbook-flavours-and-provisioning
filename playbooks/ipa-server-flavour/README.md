@@ -102,6 +102,6 @@ Ansible Role.
 > 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
 stable operation.
 
-| Name | Version | License | Package Info |
+| Name | Version | License | Home URL |
 |------|---------|------|------|
 | ewc-ansible-role-ipa-server | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-server |

@@ -51,7 +51,7 @@ for details on how import your public key into OpenStack.
 ## Prerequisites
 To successfully run this playbook, the following packages should be available in your work environment:
 
-| Name | Version | License | Package Info |
+| Name | Version | License | Home URL |
 |------|---------|----- |-----|
 | git | >= 2.0.0 | GPLv2  | https://git-scm.com/downloads |
 | python | >= 3.9.0   | PSF | https://www.python.org/downloads  |
@@ -123,7 +123,7 @@ Role.
 > 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
 stable operation.
 
-| Name | Version | License | Package Info |
+| Name | Version | License | Home URL |
 |------|---------|-------|------|
 | ewc-tf-module-openstack-compute | 1.0 | MIT | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
 | ewc-ansible-role-ssh-bastion | 1.3 | MIT | https://github.com/ewcloud/ewc-ansible-role-ssh-bastion |

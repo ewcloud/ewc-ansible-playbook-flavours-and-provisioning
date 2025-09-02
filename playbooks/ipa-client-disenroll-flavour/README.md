@@ -97,6 +97,6 @@ ansible-playbook \
 
 ## Dependencies
 
-| Name | Version | License | Package Info |
+| Name | Version | License | Home URL |
 |------|---------|------|----------|
 | ewc-ansible-role-ipa-client-disenroll | 1.0 | MIT |  https://github.com/ewcloud/ewc-ansible-role-ipa-client-disenroll |
