@@ -46,8 +46,8 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 | [remote-desktop-provisioning](./playbooks/remote-desktop-provisioning/) | Provision a new instance, or edits it if already existing, and then applies `ewc-ansible-role-remote-desktop`  | 
 | [ssh-bastion-provisioning](./playbooks/ssh-bastion-provisioning/)   | Provision a new instance, or edits it if already existing, and then applies `ewc-ansible-role-ssh-bastion` | 
 
-# Troubleshooting
-Checkout the [troubleshooting documentation](../docs/troubleshooting.md) for
+## Troubleshooting
+Checkout the [troubleshooting documentation](./docs/troubleshooting.md) for
 information on common problems and how to troubleshoot them.
 
 ## Changelog
