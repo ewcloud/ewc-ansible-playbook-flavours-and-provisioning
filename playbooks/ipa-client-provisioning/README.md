@@ -47,12 +47,12 @@ for details on how import your public key into OpenStack.
 ## Prerequisites
 To successfully run this playbook, the following packages should be available in your work environment:
 
-| Name | Version | Package Info |
-|------|---------|-------|
-| git | >= 2.0.0 |  https://git-scm.com/downloads |
-| python | >= 3.9.0 | https://www.python.org/downloads/  |
-| ansible | >= 2.14.0 | https://pypi.org/project/ansible  |
-| terraform | >= 0.14.0 | https://developer.hashicorp.com/terraform/install |
+| Name | Version | License | Package Info |
+|------|---------|----- |-----|
+| git | >= 2.0.0 | GPLv2  | https://git-scm.com/downloads |
+| python | >= 3.9.0   | PSF | https://www.python.org/downloads  |
+| ansible | >= 2.14.0 |  GPLv3+ | https://pypi.org/project/ansible  |
+| terraform | >= 0.14.0  | BSL   | https://developer.hashicorp.com/terraform/install |
 
 ## Usage
 

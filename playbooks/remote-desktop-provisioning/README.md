@@ -48,6 +48,16 @@ required a private and public SSH keypair. Checkout this
 [EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
 for details on how import your public key into OpenStack.
 
+## Prerequisites
+To successfully run this playbook, the following packages should be available in your work environment:
+
+| Name | Version | License | Package Info |
+|------|---------|----- |-----|
+| git | >= 2.0.0 | GPLv2  | https://git-scm.com/downloads |
+| python | >= 3.9.0   | PSF | https://www.python.org/downloads  |
+| ansible | >= 2.14.0 |  GPLv3+ | https://pypi.org/project/ansible  |
+| terraform | >= 0.14.0  | BSL   | https://developer.hashicorp.com/terraform/install |
+
 ## Usage
 
 ### 1. Configure and apply the template
