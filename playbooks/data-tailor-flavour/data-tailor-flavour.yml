@@ -38,7 +38,7 @@
   tasks:
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
-        conda_installer_fact: "{{ conda_installer_fact }}"
+        conda_installer_fact: "{{ conda_installer }}"
         conda_prefix_fact: "{{ conda_prefix }}"
         conda_update_base_fact: "{{ conda_update_base }}"
         conda_user_fact: "{{ conda_user }}"
@@ -54,18 +54,18 @@
   tasks:
     - name: EWC Ansible Role Coda
       ansible.builtin.include_role:
-        name: ewc-ansible-role-conda
+        name: ewc-ansible-role-conda-1.1
       vars:
         conda_installer: "{{ hostvars['localhost']['conda_installer_fact'] }}"
-        conda_prefix: "{{ hostvars['localhost']['conda_prefix'] }}"
-        conda_update_base: "{{ hostvars['localhost']['conda_update_base'] }}"
-        conda_user: "{{ hostvars['localhost']['conda_user'] }}"
+        conda_prefix: "{{ hostvars['localhost']['conda_prefix_fact'] }}"
+        conda_update_base: "{{ hostvars['localhost']['conda_update_base_fact'] }}"
+        conda_user: "{{ hostvars['localhost']['conda_user_fact'] }}"
 
     - name: EWC Ansible Data Tailor
       ansible.builtin.include_role:
-        name: ewc-ansible-role-data-tailor
+        name: ewc-ansible-role-data-tailor-1.0
       vars:
-        data_tailor_env_wipe: "{{ hostvars['localhost']['data_tailor_env_wipe'] }}"
-        data_tailor_env_name: "{{ hostvars['localhost']['data_tailor_env_name'] }}"
-        conda_prefix: "{{ hostvars['localhost']['conda_prefix'] }}"
-        conda_user: "{{ hostvars['localhost']['conda_user'] }}"
+        data_tailor_env_wipe: "{{ hostvars['localhost']['data_tailor_env_wipe_fact'] }}"
+        data_tailor_env_name: "{{ hostvars['localhost']['data_tailor_env_name_fact'] }}"
+        conda_prefix: "{{ hostvars['localhost']['conda_prefix_fact'] }}"
+        conda_user: "{{ hostvars['localhost']['conda_user_fact'] }}"
