@@ -63,12 +63,13 @@ example:
 ```bash
 ansible-playbook \
   -i inventory.yml \
-  -e "os_security_group_name_fact=ssh-http-https" \
+  -e "npm_admin_ui_port=8080" \
+  -e "os_security_group_name=nginx-proxy-manager" \
   nginx-proxy-manager-flavour.yml
 ```
 
 ## Inputs
-> ⚠️ If deploying to an instance on the ECMWF site, use of high port numbers, such as the one exemplified below, won't provide access to the Nginx Proxy Manager UI from the pubic internet, even when a correctly-configured security group is attached to the instance. For details see [EWC Security guidelines - Restrictive firewall (allow-listing)](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Security+guidelines#EWCSecurityguidelines-Restrictivefirewall(allow-listing)).
+> ⛔ If deploying to an instance on the ECMWF site, using a high port numbers such as the in the examples, will prevent you from accessing the Nginx Proxy Manager UI from the pubic internet, even when a valid security group is attached to the instance. This is due to the outer perimeter firewall of the ECMWF site. For details see [EWC Security guidelines - Restrictive firewall (allow-listing)](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Security+guidelines#EWCSecurityguidelines-Restrictivefirewall(allow-listing)).
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
@@ -86,4 +87,4 @@ stable operation.
 
 | Name | Version | License | Home URL |
 |------|---------|------|------|
-| ewc-ansible-role-nginx-proxy-manager | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-nginx-proxy-manager |
+| ewc-ansible-role-nginx-proxy-manager | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-role-nginx-proxy-manager |
