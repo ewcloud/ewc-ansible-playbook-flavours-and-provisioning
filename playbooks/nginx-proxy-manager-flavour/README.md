@@ -19,9 +19,29 @@ Nginx Proxy Manager is full-featured tool that helps to lower the barriers to en
 * Nginx Proxy
 * Manager log auditing
 
+## Prerequisites
+>💡 Versions listed correspond to minimal prerequisites.
+
+To successfully run this playbook, the following packages should be available in your work environment:
+
+| Name | Version | License | Home URL |
+|------|---------|----- |-----|
+| git | 2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | 3.9   | PSF | https://www.python.org/downloads  |
+| ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+
 ## Usage
 
-### 1. Specify the target host and SSH credentials
+### 1. Download  Ansible dependencies
+>💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
+
+Download the correct version of the Ansible dependencies, if you haven't done so already:
+
+```
+ansible-galaxy role install -r requirements.yml
+```
+
+### 2. Specify the target host and SSH credentials
 Create an inventory file to specify address/credentials that Ansible should use
 to reach the virtual machine you wish to configure:
 
@@ -38,9 +58,9 @@ ewcloud:
       ansible_ssh_common_args: -o StrictHostKeyChecking=accept-new
 ```
 
-### 2. Configure and apply the template
+### 3. Configure and apply the template
 
-#### 2.1. Interactive Mode
+#### 3.1. Interactive Mode
 
 By running the following command, you can trigger an interactive session that
 prompts you for the necessary user inputs, and then applies changes to your
@@ -50,7 +70,7 @@ target EWC environment:
 ansible-playbook -i inventory.yml nginx-proxy-manager-flavour.yml
 ```
 
-#### 2.2. Non-Interactive Mode
+#### 3.2. Non-Interactive Mode
 
 >💡 To learn more about defining variables at runtime, checkout the
 [official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
@@ -69,7 +89,7 @@ ansible-playbook \
 ```
 
 ## Inputs
-> ⛔ If deploying to an instance on the ECMWF site, using a high port numbers such as the in the examples, will prevent you from accessing the Nginx Proxy Manager UI from the pubic internet, even when a valid security group is attached to the instance. This is due to the outer perimeter firewall of the ECMWF site. For details see [EWC Security guidelines - Restrictive firewall (allow-listing)](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Security+guidelines#EWCSecurityguidelines-Restrictivefirewall(allow-listing)).
+> ⛔ If deploying to an instance on the ECMWF site, using a high port numbers such as in the example above will prevent you from accessing the Nginx Proxy Manager UI from the pubic internet, even when a valid security group is attached to the instance. This is due to the outer perimeter firewall of the ECMWF site. For details see [EWC Security guidelines - Restrictive firewall (allow-listing)](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Security+guidelines#EWCSecurityguidelines-Restrictivefirewall(allow-listing)).
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|

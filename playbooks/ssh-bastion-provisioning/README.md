@@ -49,7 +49,7 @@ required a private and public SSH keypair. Checkout this
 for details on how import your public key into OpenStack.
 
 ## Prerequisites
-> 💡 Versions listed correspond to minimal prerequisites.
+>💡 Versions listed correspond to minimal prerequisites.
 
 To successfully run this playbook, the following packages should be available in your work environment:
 
@@ -60,12 +60,20 @@ To successfully run this playbook, the following packages should be available in
 | ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
 | terraform | 0.14  | BSL   | https://developer.hashicorp.com/terraform/install |
 
-
 ## Usage
 
-### 1. Configure and apply the template
+### 1. Download  Ansible dependencies
+>💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
-#### 1.1. Interactive Mode
+Download the correct version of the Ansible dependencies, if you haven't done so already:
+
+```
+ansible-galaxy role install -r requirements.yml
+```
+
+### 2. Configure and apply the template
+
+#### 2.1. Interactive Mode
 
 By running the following command, you can trigger an interactive session that
 prompts you for the necessary user inputs, and then applies changes to your
@@ -75,7 +83,7 @@ target EWC environment:
 ansible-playbook ssh-bastion-provisioning.yml
 ```
 
-#### 1.2. Non-Interactive Mode
+#### 2.2. Non-Interactive Mode
 
 >💡 To learn more about defining variables at runtime, checkout the
 [official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).

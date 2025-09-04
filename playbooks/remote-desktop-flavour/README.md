@@ -22,10 +22,29 @@ the [MATE desktop environment](https://mate-desktop.org/).
 - Enable end-users to interact with the VM through a graphical interface using the X2Go client
 application.
 
+## Prerequisites
+>💡 Versions listed correspond to minimal prerequisites.
+
+To successfully run this playbook, the following packages should be available in your work environment:
+
+| Name | Version | License | Home URL |
+|------|---------|----- |-----|
+| git | 2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | 3.9   | PSF | https://www.python.org/downloads  |
+| ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
 
 ## Usage
 
-### 1. Specify the target host and SSH credentials
+### 1. Download  Ansible dependencies
+>💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
+
+Download the correct version of the Ansible dependencies, if you haven't done so already:
+
+```
+ansible-galaxy role install -r requirements.yml
+```
+
+### 2. Specify the target host and SSH credentials
 Create an inventory file to specify address/credentials that Ansible should use
 to reach the virtual machine you wish to configure:
 
@@ -43,9 +62,9 @@ ewcloud:
 
 ```
 
-### 2. Configure and apply the template
+### 3. Configure and apply the template
 
-#### 2.1. Interactive Mode
+#### 3.1. Interactive Mode
 
 By running the following command, you can trigger an interactive session that
 prompts you for the necessary user inputs, and then applies changes to your
@@ -55,7 +74,7 @@ target EWC environment:
 ansible-playbook -i inventory.yml remote-desktop-flavour.yml
 ```
 
-#### 2.2. Non-Interactive Mode
+#### 3.2. Non-Interactive Mode
 
 >💡 To learn more about defining variables at runtime, checkout the
 [official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
@@ -72,7 +91,7 @@ ansible-playbook \
   remote-desktop-flavour.yml
 ```
 
-### 3. Install the local client and connect to your remote desktop
+### 4. Install the local client and connect to your remote desktop
 >⚠️ When configuring a connection, be sure to select "MATE" (instead of
 "KDE" or any other options) in the `Session Type` drop-down list, towards the
 bottom of the `Session` tab. This is required for the local client to correctly

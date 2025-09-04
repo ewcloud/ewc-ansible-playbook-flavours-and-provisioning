@@ -13,9 +13,29 @@ The Data Tailor is a product customization toolbox designed to:
 
 For more information on capabilities of the Data Tailor, please refer to [Data Tailor Standalone Guide on User Portal](https://user.eumetsat.int/resources/user-guides/data-tailor-standalone-guide) and for more information about the available products and customisations inside the Data Tailor, please go to [Products and Customisations Available in the Data Tailor](https://user.eumetsat.int/resources/user-guides/data-store-detailed-guide#ID-Products-and-customisation-available-in-the-Data-Tailor) page.
 
+## Prerequisites
+>💡 Versions listed correspond to minimal prerequisites.
+
+To successfully run this playbook, the following packages should be available in your work environment:
+
+| Name | Version | License | Home URL |
+|------|---------|----- |-----|
+| git | 2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | 3.9   | PSF | https://www.python.org/downloads  |
+| ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+
 ## Usage
 
-### 1. Specify the target host and SSH credentials
+### 1. Download  Ansible dependencies
+>💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
+
+Download the correct version of the Ansible dependencies, if you haven't done so already:
+
+```
+ansible-galaxy role install -r requirements.yml
+```
+
+### 2. Specify the target host and SSH credentials
 Create an inventory file to specify address/credentials that Ansible should use
 to reach the virtual machine you wish to configure:
 
@@ -32,9 +52,9 @@ ewcloud:
       ansible_ssh_common_args: -o StrictHostKeyChecking=accept-new
 ```
 
-### 2. Configure and apply the template
+### 3. Configure and apply the template
 
-#### 2.1. Interactive Mode
+#### 3.1. Interactive Mode
 
 By running the following command, you can trigger an interactive session that
 prompts you for the necessary user inputs, and then applies changes to your
@@ -44,7 +64,7 @@ target EWC environment:
 ansible-playbook -i inventory.yml data-tailor-flavour.yml
 ```
 
-#### 2.2. Non-Interactive Mode
+#### 3.2. Non-Interactive Mode
 
 >💡 To learn more about defining variables at runtime, checkout the
 [official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).

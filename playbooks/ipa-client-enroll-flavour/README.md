@@ -19,10 +19,30 @@ IPA server on the same subnet.
 - Enable DNS resolution for discovering private hosts and public addresses.
 - Allow remote access to the VM using centrally managed LDAP users via password authentication.
 
+## Prerequisites
+>💡 Versions listed correspond to minimal prerequisites.
+
+To successfully run this playbook, the following packages should be available in your work environment:
+
+| Name | Version | License | Home URL |
+|------|---------|----- |-----|
+| git | 2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | 3.9   | PSF | https://www.python.org/downloads  |
+| ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+
 ## Usage
 
-### 1. Specify the target host and SSH credentials
-> 💡 To find out which is the default user for your chosen VM image,
+### 1. Download  Ansible dependencies
+>💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
+
+Download the correct version of the Ansible dependencies, if you haven't done so already:
+
+```
+ansible-galaxy role install -r requirements.yml
+```
+
+### 2. Specify the target host and SSH credentials
+>💡 To find out which is the default user for your chosen VM image,
 checkout the [official EWC documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+VM+images+and+default+users).
 
 Create an inventory file to specify address/credentials that Ansible should use
@@ -42,9 +62,9 @@ ewcloud:
 
 ```
 
-### 2. Configure and apply the template
+### 3. Configure and apply the template
 
-#### 2.1. Interactive Mode
+#### 3.1. Interactive Mode
 
 By running the following command, you can trigger an interactive session that
 prompts you for the necessary user inputs, and then applies changes to your
@@ -54,7 +74,7 @@ target EWC environment:
 ansible-playbook -i inventory.yml ipa-client-enroll-flavour.yml
 ```
 
-#### 2.2. Non-Interactive Mode
+#### 3.2. Non-Interactive Mode
 
 >💡 To learn more about defining variables at runtime, checkout the
 [official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
