@@ -12,10 +12,10 @@
   tasks:
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
-        os_security_group_name_fact: "{{ os_security_group_name_fact }}"
+        os_security_group_name_fact: "{{ os_security_group_name }}"
 
 - name: Install HA Proxy with certbot
-  hosts: haproxy_hosts
+  hosts: all
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
