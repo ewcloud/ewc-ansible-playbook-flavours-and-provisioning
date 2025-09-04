@@ -1,13 +1,10 @@
 name: Semantic Release
 
-#on:
-#  workflow_run:
-#    workflows: ["Ansible Lint"]
-#    types:
-#      - completed
 on:
-  push
-
+  workflow_run:
+    workflows: ["Ansible Lint"]
+    types:
+      - completed
 
 permissions:
   contents: write
@@ -17,7 +14,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-#    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -36,6 +33,6 @@ jobs:
         run: npm audit signatures || echo "Some dependency signatures could not be verified!"
 
       - name: Run semantic-release
-        run: npx semantic-release --dry-run
+        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
