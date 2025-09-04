@@ -16,7 +16,7 @@
   tasks:
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
-        os_security_group_name_fact: "{{ os_security_group_name_fact }}"
+        os_security_group_name_fact: "{{ os_security_group_name }}"
         npm_admin_ui_port_fact: "{{ npm_admin_ui_port }}"
 
 - name: Install NGINX Proxy Manager
