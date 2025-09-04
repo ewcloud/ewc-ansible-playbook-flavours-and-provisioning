@@ -1,0 +1,6 @@
+---
+roles:
+  - name: ewc-ansible-role-haproxy-1.0
+    src: https://github.com/ewcloud/ewc-ansible-role-haproxy.git
+    version: 1.0.0
+  

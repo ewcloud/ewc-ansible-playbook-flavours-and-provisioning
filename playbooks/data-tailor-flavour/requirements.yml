@@ -1,0 +1,9 @@
+---
+roles:
+  - name: ewc-ansible-role-data-tailor-1.0
+    src: https://github.com/ewcloud/ewc-ansible-role-data-tailor.git
+    version: 1.0.0
+
+  - name: ewc-ansible-role-conda-1.1
+    src: https://github.com/ewcloud/ewc-ansible-role-conda.git
+    version: 1.1.0
