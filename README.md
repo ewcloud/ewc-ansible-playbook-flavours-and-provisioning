@@ -1,5 +1,5 @@
 # Flavours and Provisioning
->💡 Two categories of templates in this collection, 1) one to configure previously provisioned instances, and 2) another to self-provisioning or manage provisioned instances (i.e. "one-line" deployment and full state management).
+>💡 Two categories of templates in this collection: 1) one to configure previously provisioned instances, 2) another to self-provisioning or manage provisioned instances (i.e. "one-line" deployment and full state management).
 
 A collection of configuration templates
 (i.e. [Ansible Playbooks](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks.html))
