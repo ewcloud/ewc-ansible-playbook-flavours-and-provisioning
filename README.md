@@ -31,7 +31,7 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 
 | Name  | Summary  |
 |------|-----|
-| [data-tailor-flavour](./playbooks/data-tailor-flavour/)    |Transforms an existing VM into a powerful satellite data customization hub, enabling users to efficiently subset, aggregate, reproject, and reformat data from METOP, MFG, MSG, MTG, and Sentinel-3 into GIS and image formats, offering faster processing and greater flexibility than web-based alternatives.  |
+| [eumetsat-data-tailor-flavour](./playbooks/eumetsat-data-tailor-flavour/)    |Transforms an existing VM into a powerful satellite data customization hub, enabling users to efficiently subset, aggregate, reproject, and reformat data from METOP, MFG, MSG, MTG, and Sentinel-3 into GIS and image formats, offering faster processing and greater flexibility than web-based alternatives.  |
 | [haproxy-flavour](./playbooks/haproxy-flavour/)    | Configures an existing VM as a high-performance load balancer, enhancing application speed, security, and scalability with easy management for TCP and HTTP workloads.   |
 | [ipa-client-disenroll-flavour](./playbooks/ipa-client-disenroll-flavour/)   |  Simplifies the secure removal of a running VM from a FreeIPA-managed fleet of instances, reducing administrative overhead and enhancing security by eliminating stale credentials and DNS records. |
 | [ipa-client-enroll-flavour](./playbooks/ipa-client-enroll-flavour) | Seamlessly integrates a running VM into a FreeIPA-managed fleet of instances, enabling centralized user authentication, DNS resolution, and secure remote access for simplified and scalable identity management. | 
