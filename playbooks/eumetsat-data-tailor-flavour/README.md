@@ -1,4 +1,4 @@
-# Data tailor flavour
+# EUMETSAT Data tailor flavour
 
 This Ansible Playbook configures an existing virtual machine running
 within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the Data Tailor Standalone and EUMETSAT Data Access Client (EUMDAC).

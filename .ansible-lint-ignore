@@ -1,5 +1,5 @@
-playbooks/data-tailor-flavour/data-tailor-flavour.yml var-naming[no-role-prefix]
-playbooks/data-tailor-flavour/data-tailor-flavour.yml yaml[line-length]
+playbooks/eumetsat-data-tailor-flavour/eumetsat-data-tailor-flavour.yml var-naming[no-role-prefix]
+playbooks/eumetsat-data-tailor-flavour/eumetsat-data-tailor-flavour.yml yaml[line-length]
 playbooks/haproxy-flavour/haproxy-flavour.yml var-naming[no-role-prefix]
 playbooks/haproxy-flavour/haproxy-flavour.yml yaml[line-length]
 playbooks/ipa-client-disenroll-flavour/ipa-client-disenroll-flavour.yml var-naming[no-role-prefix]
