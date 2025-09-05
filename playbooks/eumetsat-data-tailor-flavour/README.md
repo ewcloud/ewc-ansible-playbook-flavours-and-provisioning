@@ -1,4 +1,4 @@
-# Data tailor flavour
+# EUMETSAT Data tailor flavour
 
 This Ansible Playbook configures an existing virtual machine running
 within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the Data Tailor Standalone and EUMETSAT Data Access Client (EUMDAC).
@@ -61,7 +61,7 @@ prompts you for the necessary user inputs, and then applies changes to your
 target EWC environment:
 
 ```bash
-ansible-playbook -i inventory.yml data-tailor-flavour.yml
+ansible-playbook -i inventory.yml eumetsat-data-tailor-flavour.yml
 ```
 
 #### 3.2. Non-Interactive Mode
@@ -85,7 +85,7 @@ ansible-playbook \
       "conda_prefix": "/opt/conda",
       "conda_user": "root"
     }' \
-  data-tailor-flavour.yml
+  eumetsat-data-tailor-flavour.yml
 ```
 
 ## Inputs
