@@ -101,11 +101,12 @@ ansible-playbook \
         "instance_name":"server",
         "instance_index": 1,
         "flavor_name":"eo2.medium",
-        "image_name":"Rocky-8.10-20250204105303",
+        "image_name":"Rocky-9.5-20250604142417",
         "public_keypair_name":"john-claudy-publickey",
         "private_keypair_path":"~/.ssh/id_rsa",
         "private_network_name": "private",
-        "security_group_name": "ssh"
+        "security_group_name": "ssh",
+        "whitelisted_ip_ranges": ""
     }' \
   remote-desktop-provisioning.yml
 ```
@@ -136,7 +137,7 @@ Desktop section of
 | instance_name| name of the instance, used in the full instance name.  Example: `server` | `string` | n/a | yes |
 | instance_index | index or identifier for the instance, used as suffix in the full instance name. Example: `1` | `number` | n/a | yes |
 | flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation. | `string` | n/a | yes |
-| image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 8.10 instances are currently supported due to constrains imposed by the required ewc-ansible-role-remote-desktop Ansible Role. Example: `Rocky-8.10-20250204105303`  | `string` | n/a | yes |
+| image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 8.10 and 9.5 instances are currently supported due to constrains imposed by the required ewc-ansible-role-remote-desktop Ansible Role. Example: `Rocky-8.10-20250204105303`  | `string` | n/a | yes |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
 | private_keypair_path| path to the local private keypair to use for SSH access to the instance. Example: `~/.ssh/id_rsa` | `string` | n/a | yes |
 | private_networks_name | private network name to attach the instance to. Example: `private` | `string` | n/a | yes |
@@ -144,7 +145,7 @@ Desktop section of
 | whitelisted_ip_ranges | IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Example: `['10.0.0.0/24','192.168.1.0/24']` | `list(string)` | n/a | no |
 
 ## Dependencies
-> ⚠️ Only RockyLinux 8.10 instances are currently supported due
+> ⚠️ Only RockyLinux 8.10 and 9.5 instances are currently supported due
 to constrains imposed by the required ewc-ansible-role-remote-desktop Ansible
 Role.
 
@@ -153,8 +154,8 @@ stable operation.
 
 | Name | Version | License | Home URL |
 |------|---------|-------|------|
-| ewc-tf-module-openstack-compute | 1.3 | MIT | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
-| ewc-ansible-role-remote-desktop | 1.0 | MIT | https://github.com/ewcloud/ewc-ansible-role-remote-desktop |
+| ewc-tf-module-openstack-compute | 1.4 | MIT | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
+| ewc-ansible-role-remote-desktop | 1.1 | MIT | https://github.com/ewcloud/ewc-ansible-role-remote-desktop |
 
 
 ## Troubleshooting
