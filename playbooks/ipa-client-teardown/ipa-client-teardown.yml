@@ -85,7 +85,7 @@
         path: "{{ hostvars['localhost']['tf_project_path_fact'] }}/main.tf"
         search_string: 'instance_has_fip'
         line: instance_has_fip = true
-        mode: "0644"
+        mode: u=rwx,g=r,o=r
 
     - name: Update previously provisioned instance
       community.general.terraform:

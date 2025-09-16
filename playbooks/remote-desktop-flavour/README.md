@@ -115,7 +115,7 @@ Desktop section of
 
 ## Dependencies
 
-> ⚠️ Only RockyLinux 8.10 instances are currently supported due
+> ⚠️ Only RockyLinux 8.10 and 9.5 instances are currently supported due
 to constrains imposed by the required ewc-ansible-role-remote-desktop Ansible
 Role.
 
@@ -124,4 +124,4 @@ stable operation.
 
 | Name | Version | License |Home URL |
 |------|---------|-------|---|
-| ewc-ansible-role-remote-desktop | 1.0 | MIT |  https://github.com/ewcloud/ewc-ansible-role-remote-desktop |
+| ewc-ansible-role-remote-desktop | 1.1 | MIT |  https://github.com/ewcloud/ewc-ansible-role-remote-desktop |
