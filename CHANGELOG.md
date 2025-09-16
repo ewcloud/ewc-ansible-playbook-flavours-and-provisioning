@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.0.0...1.1.0) (2025-09-16)
+
+
+### Features
+
+* Dependencies version update and extended troubleshooting guides ([#5](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/5)) ([c67cb58](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/c67cb585997b3bd643e35268ae410d484b12bead))
+
 # 1.0.0 (2025-09-05)
 
 
