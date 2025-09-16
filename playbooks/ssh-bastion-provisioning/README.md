@@ -137,7 +137,7 @@ stable operation.
 | Name | Version | License | Home URL |
 |------|---------|-------|------|
 | ewc-tf-module-openstack-compute | 1.0 | MIT | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
-| ewc-ansible-role-ssh-bastion | 1.3 | MIT | https://github.com/ewcloud/ewc-ansible-role-ssh-bastion |
+| ewc-ansible-role-ssh-bastion | 1.4 | MIT | https://github.com/ewcloud/ewc-ansible-role-ssh-bastion |
 
 
 ## Troubleshooting
