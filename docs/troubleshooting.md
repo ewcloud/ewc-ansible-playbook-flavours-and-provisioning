@@ -259,3 +259,22 @@ For technical details, see pam_nologin(8).\"\nConnection closed by
 Wait for couple more minutes and re-run the playbook with the same inputs as in
 the previous run. It should pickup right where it left when the timeout occurred.
 
+## 11. Failed during Ansible execution due to Python "future" module syntax errors
+If the Python version running on your localhost is to far ahead (three or more major releases) from the python version running on 
+the the target host, Ansible may fail mid run with an error like:
+
+```
+"module_stdout": " ...  from __future__ import annotations\r\n ^\r\nSyntaxError: future feature annotations is not defined\r\n", 
+...
+"msg": "The following modules failed to execute: ansible.legacy.setup."
+...
+````
+
+### Solution
+>💡 Ansible attempts to run the playbook on the target host by using the Python binary specified in your inventory.yml file as `ansible_python_interpreter`.
+
+On your target host, try to update the default Python version, for example by using [pyenv](https://github.com/pyenv/pyenv) to install and configure a 
+new default, or by swapping the virtual image used by your instance with a newer one (which should include a newer Python version).
+
+If technical or organizational reasons prevent you from updating the remote host, or updating its Python version does not solve the issue, try downgrading
+the Python version used on your localhost to trigger the execution, such that it matches that of the remote host.
