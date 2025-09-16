@@ -35,6 +35,15 @@ instance in `main.tf`, and its current state in `terraform.tfstate`, under the u
 To learn the basics about managing infrastructure with Terraform, checkout the
 [official documentation examples](https://developer.hashicorp.com/terraform/tutorials/aws-get-started).
 
+>⚠️ Successfull execution leads to changes of the DNS nameserver(s) in your
+OpenStack subnet (includes now only the IP address of the new IPA server).
+This can negatively affect existing VMs within your subnet.
+To prevent issues, programatically update each VM via the
+[IPA Client Enroll Flavour](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour)
+CommunityHub Item. Alternatively, you can manually
+[add the new nameserver](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/domain-dns)
+to their DNS configuration.
+
 ## Authentication
 
 Before proceeding, if you lack OpenStack Application Credentials or do not know
