@@ -116,11 +116,20 @@
         port: 22
         timeout: 300
 
+    - name: Read instance definition file to extract virtual image name
+      ansible.builtin.slurp:
+        src: "{{ hostvars['localhost']['tf_project_path_fact'] }}/main.tf"
+      register: tf_file
+
+    - name: Extract virtual image name to infer default Linux user for impersonation
+      ansible.builtin.set_fact:
+        image_name: "{{ (tf_file.content | b64decode | regex_search('image_name\\s*=\\s*\"([^\"]+)\"', '\\1')).0 }}"
+
     - name: Add dynamic host to inventory
       ansible.builtin.add_host:
         name: "remote_host"
         ansible_host: "{{ remote_host_public_ip_fact }}"
-        ansible_user: "cloud-user"
+        ansible_user: "{{ 'ubuntu' if image_name | lower | regex_search('^ubuntu') else 'cloud-user' }}"
         ansible_ssh_private_key_file: "{{ hostvars['localhost']['private_keypair_path'] }}"
         ansible_ssh_common_args: "-o StrictHostKeyChecking=accept-new"
 
