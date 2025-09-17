@@ -137,7 +137,7 @@ Error: Error creating openstack_networking_floatingip_v2: Expected HTTP response
 If no public IP addresses in your tenancy can be released, at least temporarily,
 get in touch with the EWC support team to request an clarify your available options.
 
-##6. Unable to find flavour with name ...
+## 6. Unable to find flavour with name ...
 
 If you input an invalid value for `flavour_name`, you might get the following
 error:
