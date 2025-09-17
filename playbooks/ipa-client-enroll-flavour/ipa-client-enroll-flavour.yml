@@ -27,10 +27,6 @@
       unsafe: true
       confirm: false
 
-    - name: password_allowed_ip_ranges
-      prompt: IP addresses or IP ranges (in CIDR format) to be allowed for password access in SSHD configuration. When in doubt, add only IP addresses you know and trust. Press Enter to accept default value [['10.0.0.0/8','172.16.0.0/12','192.168.0.0/16']]
-      private: false
-
   tasks:
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
@@ -39,7 +35,6 @@
         ipa_server_hostname_fact: "{{ ipa_server_hostname }}"
         ipa_admin_username_fact: "{{ ipa_admin_username }}"
         ipa_admin_password_fact: "{{ ipa_admin_password }}"
-        password_allowed_ip_ranges_fact: "{{ password_allowed_ip_ranges }}"
 
 - name: Install IPA client and enroll into an IPA server's LDAP/DNS services
   hosts: all
@@ -57,4 +52,3 @@
         ipa_server_hostname: "{{ hostvars['localhost']['ipa_server_hostname_fact'] }}"
         ipa_admin_username: "{{ hostvars['localhost']['ipa_admin_username_fact'] }}"
         ipa_admin_password: "{{ hostvars['localhost']['ipa_admin_password_fact'] }}"
-        password_allowed_ip_ranges: "{{ hostvars['localhost']['password_allowed_ip_ranges_fact'] }}"

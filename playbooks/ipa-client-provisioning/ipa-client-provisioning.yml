@@ -67,10 +67,6 @@
       private: true
       unsafe: true
 
-    - name: password_allowed_ip_ranges
-      prompt: IP addresses or IP ranges (in CIDR format) to be allowed for password access in SSHD configuration. When in doubt, add only IP addresses you know and trust. Press Enter to accept default value [['10.0.0.0/8','172.16.0.0/12','192.168.0.0/16']]
-      private: false
-
   vars:
     ecmwf_defaults:
       external_network_name_fact: "external-internet"
@@ -115,7 +111,6 @@
           ipa_server_hostname_fact: "{{ ipa_server_hostname }}"
           ipa_admin_username_fact: "{{ ipa_admin_username }}"
           ipa_admin_password_fact: "{{ ipa_admin_password }}"
-          password_allowed_ip_ranges_fact: "{{ password_allowed_ip_ranges }}"
 
 - name: Provision VM via Terraform and authorized OpenStack application credentials
   hosts: localhost
@@ -240,7 +235,6 @@
         ipa_server_hostname: "{{ hostvars['localhost']['ewc_ansible_role_ipa_client_enroll']['ipa_server_hostname_fact'] }}"
         ipa_admin_username: "{{ hostvars['localhost']['ewc_ansible_role_ipa_client_enroll']['ipa_admin_username_fact'] }}"
         ipa_admin_password: "{{ hostvars['localhost']['ewc_ansible_role_ipa_client_enroll']['ipa_admin_password_fact'] }}"
-        password_allowed_ip_ranges: "{{ hostvars['localhost']['ewc_ansible_role_ipa_client_enroll']['password_allowed_ip_ranges_fact'] }}"
 
 - name: Cleanup and summarize execution after post-provisioning
   hosts: localhost
