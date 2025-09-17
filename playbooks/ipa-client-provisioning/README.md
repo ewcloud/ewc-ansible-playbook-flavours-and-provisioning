@@ -105,7 +105,7 @@ ansible-playbook \
         "instance_has_fip": "no",
         "ipa_domain": "eumetsat.sandbox.ewc",
         "ipa_server_hostname": "ipa-server-1",
-        "ipa_admin_username": "iapadmin",
+        "ipa_admin_username": "ipaadmin",
         "ipa_admin_password": "my-secret-password"
     }' \
   ipa-client-provisioning.yml
