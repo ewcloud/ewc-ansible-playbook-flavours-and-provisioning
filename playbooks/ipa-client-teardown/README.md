@@ -87,7 +87,7 @@ ansible-playbook \
         "private_keypair_path": "~/.ssh/id_rsa",
         "ipa_domain": "eumetsat.sandbox.ewc",
         "ipa_server_hostname": "ipa-server-1",
-        "ipa_admin_username": "iapadmin",
+        "ipa_admin_username": "ipaadmin",
         "ipa_admin_password": "my-secret-password"
     }' \
   ipa-client-teardown.yml

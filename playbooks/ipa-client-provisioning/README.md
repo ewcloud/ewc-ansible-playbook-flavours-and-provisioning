@@ -105,7 +105,7 @@ ansible-playbook \
         "instance_has_fip": "no",
         "ipa_domain": "eumetsat.sandbox.ewc",
         "ipa_server_hostname": "ipa-server-1",
-        "ipa_admin_username": "iapadmin",
+        "ipa_admin_username": "ipaadmin",
         "ipa_admin_password": "my-secret-password"
     }' \
   ipa-client-provisioning.yml
@@ -130,7 +130,6 @@ ansible-playbook \
 | ipa_server_hostname | hostname of the IPA server. Example: `ipa-server-1` | `string`| n/a | yes |
 | ipa_admin_username | username of the administrator account from the IPA server | `string` | n/a | yes |
 | ipa_admin_password | password of the administrator account from the IPA server | `string` | n/a | yes |
-| password_allowed_ip_ranges | IP addresses or IP ranges (in CIDR format) to be allowed for password access in SSHD configuration. When in doubt, add only IP addresses you know and trust. Example: `['10.0.0.0/24','192.168.1.0/24']` | `list(string)` | `['10.0.0.0/8','172.16.0.0/12','192.168.0.0/16']` | no |
 
 ## Dependencies
 > ⚠️ Only Ubuntu 22.04 and RockyLinux 8.10 VM images are currently supported.
@@ -140,7 +139,7 @@ ewc-ansible-role-ipa-client-enroll Ansible Role.
 | Name | Version | License | Home URL |
 |------|---------|-------|------|
 | ewc-tf-module-openstack-compute | 1.4 | MIT | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
-| ewc-ansible-role-ipa-client-enroll | 1.0 | MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-client-enroll |
+| ewc-ansible-role-ipa-client-enroll | 1.1 | MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-client-enroll |
 
 
 ## Troubleshooting
