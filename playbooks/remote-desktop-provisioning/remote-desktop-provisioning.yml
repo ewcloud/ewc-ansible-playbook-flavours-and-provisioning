@@ -9,29 +9,34 @@
       prompt: choose your target EWC provider to be either 'ecmwf' or 'eumetsat'
       private: false
 
-    - name: tf_project_path
+    - name: remote_desktop_tf_project_path
       prompt: path to terraform working directory
       private: false
 
-    - name: app_name
+    - name: remote_desktop_app_name
       prompt: application name, used as prefix in the full instance name
       private: false
 
-    - name: instance_name
+    - name: remote_desktop_instance_name
       prompt: name of the instance, used in the full instance name
       private: false
 
-    - name: instance_index
+    - name: remote_desktop_instance_index
       prompt: index or identifier for the instance, used as suffix in the full instance name
       private: false
 
-    - name: flavor_name
+    - name: remote_desktop_flavor_name
       prompt: name the flavor to use for the instance
       private: false
 
-    - name: image_name
+    - name: remote_desktop_image_name
       prompt: name the image to use for the instance
       private: false
+
+    - name: remote_desktop_instance_has_fip
+      prompt: whether to assign a floating IP to the instance. Only `yes` will be accepted to approve. Or press Enter to accept default
+      private: false
+      default: "no"
 
     - name: public_keypair_name
       prompt: name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access
@@ -50,7 +55,7 @@
       prompt: security group name to apply to the instance
       private: false
 
-    - name: whitelisted_ip_ranges
+    - name: fail2ban_whitelisted_ip_ranges
       prompt: IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Press Enter to skip
       private: false
 
@@ -67,14 +72,14 @@
         that:
           - ewc_provider is defined and ewc_provider != ''
           - ewc_provider | lower in ['ecmwf', 'eumetsat']
-          - tf_project_path is defined and tf_project_path != ''
+          - remote_desktop_tf_project_path is defined and remote_desktop_tf_project_path != ''
           - private_keypair_path is defined and private_keypair_path != ''
         fail_msg: "Input validation failed. See README.md for information on required inputs and their format."
         success_msg: "User input configuration is valid."
 
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
-        tf_project_path_fact: "{{ tf_project_path }}"
+        tf_project_path_fact: "{{ remote_desktop_tf_project_path }}"
         private_keypair_path_fact: "{{ private_keypair_path }}"
         defaults: >-
           {{
@@ -82,17 +87,18 @@
           }}
 
         ewc_tf_module_openstack_compute:
-          app_name_fact: "{{ app_name }}"
-          instance_name_fact: "{{ instance_name }}"
-          instance_index_fact: "{{ instance_index }}"
-          flavor_name_fact: "{{ flavor_name }}"
-          image_name_fact: "{{ image_name }}"
+          app_name_fact: "{{ remote_desktop_app_name }}"
+          instance_name_fact: "{{ remote_desktop_instance_name }}"
+          instance_index_fact: "{{ remote_desktop_instance_index }}"
+          flavor_name_fact: "{{ remote_desktop_flavor_name }}"
+          image_name_fact: "{{ remote_desktop_image_name }}"
           security_group_name_fact: "{{ security_group_name }}"
           public_keypair_name_fact: "{{ public_keypair_name }}"
           private_network_name_fact: "{{ private_network_name }}"
+          instance_has_fip_fact: "{{ remote_desktop_instance_has_fip }}"
 
         ewc_ansible_role_remote_desktop:
-          whitelisted_ip_ranges_fact: "{{ whitelisted_ip_ranges }}"
+          fail2ban_whitelisted_ip_ranges_fact: "{{ fail2ban_whitelisted_ip_ranges }}"
 
 - name: Provision VM via Terraform and authorized OpenStack application credentials
   hosts: localhost
@@ -191,27 +197,30 @@
       ansible.builtin.wait_for:
         host: "{{ remote_host_public_ip_fact }}"
         port: 22
-        timeout: 300
+        timeout: 600
 
     - name: Add dynamic host to inventory
       ansible.builtin.add_host:
-        name: "remote_host"
+        name: "{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['app_name_fact'] }}-{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['instance_name_fact'] }}-{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['instance_index_fact'] }}"
+        groups:
+          - remote_desktop
+          - ipa_client # Required only when triggered via ../playbooks/default-stack-provisioning/default-stack-provisioning.yml
         ansible_host: "{{ remote_host_public_ip_fact }}"
         ansible_user: "cloud-user"
-        ansible_ssh_private_key_file: "{{ hostvars['localhost']['private_keypair_path'] }}"
+        ansible_ssh_private_key_file: "{{ hostvars['localhost']['private_keypair_path_fact'] }}"
         ansible_ssh_common_args: "-o StrictHostKeyChecking=accept-new"
 
 - name: Configure Remote Desktop server
-  hosts: remote_host
+  hosts: remote_desktop
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
   tasks:
     - name: EWC Ansible Role Remote Desktop
       ansible.builtin.include_role:
-        name: ewc-ansible-role-remote-desktop-1.0
+        name: ewc-ansible-role-remote-desktop-1.2
       vars:
-        whitelisted_ip_ranges: "{{ hostvars['localhost']['ewc_ansible_role_remote_desktop']['whitelisted_ip_ranges_fact'] }}"
+        fail2ban_whitelisted_ip_ranges: "{{ hostvars['localhost']['ewc_ansible_role_remote_desktop']['fail2ban_whitelisted_ip_ranges_fact'] }}"
 
 - name: Cleanup and summarize execution after post-provisioning
   hosts: localhost
@@ -225,6 +234,7 @@
         search_string: 'instance_has_fip'
         line: instance_has_fip = false
         mode: u=rwx,g=r,o=r
+      when: hostvars['localhost']['ewc_tf_module_openstack_compute']['instance_has_fip_fact'] != 'yes'
 
     - name: Remove any unsolicited external IP addresses used during post-provisioning
       community.general.terraform:
@@ -237,6 +247,7 @@
       register: tf_applied
       environment:
         TF_IN_AUTOMATION: "true"
+      when: hostvars['localhost']['ewc_tf_module_openstack_compute']['instance_has_fip_fact'] != 'yes'
 
     - name: List created/edited OpenStack resources
       ansible.builtin.debug:
@@ -244,4 +255,4 @@
           - "Terraform state file path: {{ hostvars['localhost']['tf_project_path_fact'] }}/terraform.tfstate"
           - "OpenStack instance name: {{ hostvars['localhost']['remote_hostname_fact'] }}"
           - "OpenStack internal IP address: {{ hostvars['localhost']['remote_host_internal_ip_fact'] }}"
-          - "OpenStack public IP address: {{ 'N/A' }}"
+          - "OpenStack public IP address: {{ 'N/A' if hostvars['localhost']['ewc_tf_module_openstack_compute']['instance_has_fip_fact'] != 'yes' else hostvars['localhost']['remote_host_public_ip_fact'] }}"
