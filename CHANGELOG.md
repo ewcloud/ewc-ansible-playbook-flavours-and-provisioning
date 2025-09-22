@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.2.0...1.3.0) (2025-09-22)
+
+
+### Features
+
+* Publish Item for one-command-deployment of the default stack ([#7](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/7)) ([d201002](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/d201002fbe139e7030083b74a203ffe1861832f3))
+
 # [1.2.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.1.0...1.2.0) (2025-09-18)
 
 
