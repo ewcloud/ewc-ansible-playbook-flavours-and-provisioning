@@ -6,7 +6,7 @@ A collection of configuration templates
 to customize your
 [European Weather Cloud (EWC)](https://europeanweather.cloud/) tenancy. See full list of Items in the [index](#index) below.
 
-Want to learn how other users make the best out of these templates, or have ideas of your own? Head over to [the official discussion platform](https://chat.europeanweather.cloud/) and engage with the EWC community—feedback is always welcome!♥️
+Want to learn how other users make the best out of these templates, or have ideas of your own? Head over to [the official discussion platform](https://chat.europeanweather.cloud/) and engage with the EWC community. Feedback is always welcomed! ♥️
 
 
 
@@ -44,6 +44,7 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 
 | Name  | Summary  |
 |------|-----|
+| [default-stack-provisioning](./playbooks/default-stack-provisioning/)  | Automates the creation and state management of three VMs, plus their OS configuration. Each of them serves an specific role  (IPA server, SSH bastion or remote desktop). Together, they enable  secure access, centralized user management, and a fully graphical development environment within the EWC. |
 | [ipa-client-provisioning](./playbooks/ipa-client-provisioning/)    | Automates the creation or state update of a VM, plus its configuration as an IPA client, effectively enabling integration with a fleet of instances with centralized authentication, secure remote access, and DNS-based resource discovery in the EWC. |
 | [ipa-client-teardown](./playbooks/ipa-client-teardown/)   | Simplifies the secure teardown of an IPA client VM in the EWC, disabling LDAP authentication, removing DNS records, and safely decommissioning the instance and its resources.  |
 | [ipa-server-provisioning](./playbooks/ipa-server-provisioning/)    |  Automates the creation or state update of VM, plus its configuration as FreeIPA server, streamlining centralized user management, authentication, authorization, and DNS resolution for secure and efficient resource management.  |
