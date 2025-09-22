@@ -9,27 +9,27 @@
       prompt: choose your target EWC provider to be either 'ecmwf' or 'eumetsat'
       private: false
 
-    - name: tf_project_path
+    - name: ssh_bastion_tf_project_path
       prompt: path to terraform working directory
       private: false
 
-    - name: app_name
+    - name: ssh_bastion_app_name
       prompt: application name, used as prefix in the full instance name
       private: false
 
-    - name: instance_name
+    - name: ssh_bastion_instance_name
       prompt: name of the instance, used in the full instance name
       private: false
 
-    - name: instance_index
+    - name: ssh_bastion_instance_index
       prompt: index or identifier for the instance, used as suffix in the full instance name
       private: false
 
-    - name: flavor_name
+    - name: ssh_bastion_flavor_name
       prompt: name the flavor to use for the instance
       private: false
 
-    - name: image_name
+    - name: ssh_bastion_image_name
       prompt: name the image to use for the instance
       private: false
 
@@ -50,7 +50,7 @@
       prompt: security group name to apply to the instance
       private: false
 
-    - name: whitelisted_ip_ranges
+    - name: fail2ban_whitelisted_ip_ranges
       prompt: IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Press Enter to skip
       private: false
 
@@ -67,14 +67,14 @@
         that:
           - ewc_provider is defined and ewc_provider != ''
           - ewc_provider | lower in ['ecmwf', 'eumetsat']
-          - tf_project_path is defined and tf_project_path != ''
+          - ssh_bastion_tf_project_path is defined and ssh_bastion_tf_project_path != ''
           - private_keypair_path is defined and private_keypair_path != ''
         fail_msg: "Input validation failed. See README.md for information on required inputs and their format."
         success_msg: "User input configuration is valid."
 
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
-        tf_project_path_fact: "{{ tf_project_path }}"
+        tf_project_path_fact: "{{ ssh_bastion_tf_project_path }}"
         private_keypair_path_fact: "{{ private_keypair_path }}"
         defaults: >-
           {{
@@ -82,17 +82,17 @@
           }}
 
         ewc_tf_module_openstack_compute:
-          app_name_fact: "{{ app_name }}"
-          instance_name_fact: "{{ instance_name }}"
-          instance_index_fact: "{{ instance_index }}"
-          flavor_name_fact: "{{ flavor_name }}"
-          image_name_fact: "{{ image_name }}"
+          app_name_fact: "{{ ssh_bastion_app_name }}"
+          instance_name_fact: "{{ ssh_bastion_instance_name }}"
+          instance_index_fact: "{{ ssh_bastion_instance_index }}"
+          flavor_name_fact: "{{ ssh_bastion_flavor_name }}"
+          image_name_fact: "{{ ssh_bastion_image_name }}"
           security_group_name_fact: "{{ security_group_name }}"
           public_keypair_name_fact: "{{ public_keypair_name }}"
           private_network_name_fact: "{{ private_network_name }}"
 
         ewc_ansible_role_ssh_bastion:
-          whitelisted_ip_ranges_fact: "{{ whitelisted_ip_ranges }}"
+          fail2ban_whitelisted_ip_ranges_fact: "{{ fail2ban_whitelisted_ip_ranges }}"
 
 - name: Provision VM via Terraform and authorized OpenStack application credentials
   hosts: localhost
@@ -191,18 +191,21 @@
       ansible.builtin.wait_for:
         host: "{{ remote_host_public_ip_fact }}"
         port: 22
-        timeout: 300
+        timeout: 600
 
     - name: Add dynamic host to inventory
       ansible.builtin.add_host:
-        name: "remote_host"
+        name: "{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['app_name_fact'] }}-{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['instance_name_fact'] }}-{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['instance_index_fact'] }}"
+        groups:
+          - "ssh_bastion"
+          - "ipa_client" # Required only when triggered via ../playbooks/default-stack-provisioning/default-stack-provisioning.yml
         ansible_host: "{{ remote_host_public_ip_fact }}"
         ansible_user: "cloud-user"
-        ansible_ssh_private_key_file: "{{ hostvars['localhost']['private_keypair_path'] }}"
+        ansible_ssh_private_key_file: "{{ hostvars['localhost']['private_keypair_path_fact'] }}"
         ansible_ssh_common_args: "-o StrictHostKeyChecking=accept-new"
 
 - name: Configure SSH bastion server
-  hosts: remote_host
+  hosts: "ssh_bastion"
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
@@ -210,9 +213,9 @@
   tasks:
     - name: EWC Ansible Role SSH Bastion
       ansible.builtin.include_role:
-        name: ewc-ansible-role-ssh-bastion-1.3
+        name: ewc-ansible-role-ssh-bastion-1.4
       vars:
-        whitelisted_ip_ranges: "{{ hostvars['localhost']['ewc_ansible_role_ssh_bastion']['whitelisted_ip_ranges_fact'] }}"
+        fail2ban_whitelisted_ip_ranges: "{{ hostvars['localhost']['ewc_ansible_role_ssh_bastion']['fail2ban_whitelisted_ip_ranges_fact'] }}"
 
 - name: Summarize execution after post-provisioning
   hosts: localhost
