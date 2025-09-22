@@ -88,7 +88,6 @@ example:
 ansible-playbook \
   -i inventory.yml \
   -e '{
-        "ipa_client_hostname": "ipa-client-1",
         "ipa_domain": "eumetsat.sandbox.ewc",
         "ipa_server_hostname": "ipa-server-1",
         "ipa_admin_username": "ipaadmin",
@@ -101,7 +100,6 @@ ansible-playbook \
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| ipa_client_hostname | hostname of the target vm where the IPA client will be installed. Example: `ipa-client-1` | `string`| n/a | yes |
 | ipa_domain | domain name managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
 | ipa_server_hostname | hostname of the IPA server. Example: `ipa-server-1` | `string`| n/a | yes |
 | ipa_admin_username | username of the administrator account from the IPA server. Example: `ipaadmin` | `string` | n/a | yes |
