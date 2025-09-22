@@ -1,0 +1,185 @@
+---
+- name: Prompt for user inputs
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: ewc_provider
+      prompt: choose your target EWC provider to be either 'ecmwf' or 'eumetsat'
+      private: false
+
+    - name: public_keypair_name
+      prompt: name of public keypair (stored in OpenStack) to be copied into the instances for remote SSH access
+      private: false
+
+    - name: private_keypair_path
+      prompt: path to the local private keypair to use for SSH access to the instances. Or press Enter to accept default
+      private: false
+      default: "~/.ssh/id_rsa"
+
+    - name: private_network_name
+      prompt: private network name to attach the instances
+      private: false
+
+    - name: security_group_name
+      prompt: security group name to apply to the instances
+      private: false
+
+    - name: ipa_server_tf_project_path
+      prompt: path to terraform working directory for the IPA server
+      private: false
+
+    - name: ipa_server_app_name
+      prompt: application name, used as prefix in the full instance name of the IPA server
+      private: false
+
+    - name: ipa_server_instance_name
+      prompt: name of the instance, used in the full instance name of the IPA server
+      private: false
+
+    - name: ipa_server_instance_index
+      prompt: index or identifier for the instance, used as suffix in the full instance name of the IPA server
+      private: false
+
+    - name: ipa_server_hostname
+      prompt: hostname of the IPA server. Should match the pattern "<ipa_server_app_name>-<ipa_server_instance_name>-<ipa_server_instance_index>". Required for input validation purposes
+      private: false
+
+    - name: ipa_server_flavor_name
+      prompt: name the flavor to use for the instance of the IPA server
+      private: false
+
+    - name: ipa_server_image_name
+      prompt: name the image to use for the instance of the IPA server
+      private: false
+
+    - name: ipa_domain
+      prompt: domain name to be managed by the IPA server
+      private: false
+
+    - name: ipa_admin_username
+      prompt: username of administrator account to replace the default IPA admin
+      private: false
+
+    - name: ipa_admin_password
+      prompt: password of administrator account to replace the default IPA admin
+      private: true
+      unsafe: true
+      confirm: true
+
+    - name: ipa_admin_givenname
+      prompt: given name of the administrator to replace the default IPA admin (not necessarily a real person's name)
+      private: false
+
+    - name: ipa_admin_surname
+      prompt: surname of the administrator to replace the default IPA admin (not necessarily a real person's name)
+      private: false
+
+    - name: ssh_bastion_tf_project_path
+      prompt: path to terraform working directory for the SSH bastion
+      private: false
+
+    - name: ssh_bastion_app_name
+      prompt: application name, used as prefix in the full instance name of the SSH bastion
+      private: false
+
+    - name: ssh_bastion_instance_name
+      prompt: name of the instance, used in the full instance name of the SSH bastion
+      private: false
+
+    - name: ssh_bastion_instance_index
+      prompt: index or identifier for the instance, used as suffix in the full instance name of the SSH bastion
+      private: false
+
+    - name: ssh_bastion_flavor_name
+      prompt: name the flavor to use for the instanceof the SSH bastion
+      private: false
+
+    - name: ssh_bastion_image_name
+      prompt: name the image to use for the instanceof the SSH bastion
+      private: false
+
+    - name: remote_desktop_tf_project_path
+      prompt: path to terraform working directory for the remote desktop
+      private: false
+
+    - name: remote_desktop_app_name
+      prompt: application name, used as prefix in the full instance name of the remote desktop
+      private: false
+
+    - name: remote_desktop_instance_name
+      prompt: name of the instance, used in the full instance name of the remote desktop
+      private: false
+
+    - name: remote_desktop_instance_index
+      prompt: index or identifier for the instance, used as suffix in the full instance name of the remote desktop
+      private: false
+
+    - name: remote_desktop_flavor_name
+      prompt: name the flavor to use for the instance of the remote desktop
+      private: false
+
+    - name: remote_desktop_image_name
+      prompt: name the image to use for the instance of the remote desktop
+      private: false
+
+    - name: remote_desktop_instance_has_fip
+      prompt: technically required to temporarily assign a floating IP to the instance to securely connect from localhost during initial configuration. 💡 The template ensures to remove the floating IP during post-provisioning. Press Enter to accept default
+      private: false
+      default: "yes"
+
+    - name: fail2ban_whitelisted_ip_ranges
+      prompt: IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration for the SSH bastion and the remote desktop. When in doubt, do not set. Press Enter to skip
+      private: false
+
+  tasks:
+    - name: Validate user input
+      ansible.builtin.assert:
+        that:
+          - ipa_server_hostname is defined and ipa_server_hostname != ''
+          - ipa_server_hostname == [ipa_server_app_name, ipa_server_instance_name, ipa_server_instance_index] | join('-')
+        fail_msg: "Input validation failed. See README.md for information on required inputs and their format."
+        success_msg: "User input configuration is valid."
+
+    - name: Store user input as localhost facts
+      ansible.builtin.set_fact:
+        ewc_provider_fact: "{{ ewc_provider }}"
+        private_keypair_path_fact: "{{ private_keypair_path }}"
+
+- name: Provision IPA Server
+  import_playbook: "../ipa-server-provisioning/ipa-server-provisioning.yml"
+
+- name: Provision SSH Bastion
+  import_playbook: "../ssh-bastion-provisioning/ssh-bastion-provisioning.yml"
+
+- name: Provision Remote Desktop
+  import_playbook: "../remote-desktop-provisioning/remote-desktop-provisioning.yml"
+
+- name: Enroll SSH Bastion and Remote Desktop into IPA-managed fleet
+  import_playbook: "../ipa-client-enroll-flavour/ipa-client-enroll-flavour.yml"
+
+- name: Cleanup after post-provisioning
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Update remote desktop instance's Terraform definition file
+      ansible.builtin.lineinfile:
+        path: "{{ hostvars['localhost']['remote_desktop_tf_project_path'] }}/main.tf"
+        search_string: 'instance_has_fip'
+        line: instance_has_fip = false
+        mode: u=rwx,g=r,o=r
+
+    - name: Remove any unsolicited external IP address used during remote desktop post-provisioning
+      community.general.terraform:
+        project_path: "{{ hostvars['localhost']['remote_desktop_tf_project_path'] }}"
+        state_file: "{{ hostvars['localhost']['remote_desktop_tf_project_path'] }}/terraform.tfstate"
+        state: present
+        force_init: false
+        overwrite_init: false
+        provider_upgrade: false
+      register: tf_applied
+      environment:
+        TF_IN_AUTOMATION: "true"
