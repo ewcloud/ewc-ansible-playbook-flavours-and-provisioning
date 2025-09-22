@@ -1,4 +1,5 @@
 # IPA client teardown
+>✅ This template can be safely applied from any local work environment, even running outside an EWC tenancy's private network.
 
 This is a configuration template
 (i.e. an [Ansible Playbook](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks.html))
@@ -83,7 +84,7 @@ each and every available input (see [inputs section](#inputs) below). For exampl
 ```bash
 ansible-playbook \
   -e '{
-        "tf_project_path": "~/iac/ipa-client-1",
+        "tf_project_path": "~/ewc/ipa-client-1",
         "private_keypair_path": "~/.ssh/id_rsa",
         "ipa_domain": "eumetsat.sandbox.ewc",
         "ipa_server_hostname": "ipa-server-1",
@@ -96,7 +97,7 @@ ansible-playbook \
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| tf_project_path | path to terraform working directory. Example: `~/iac/ipa-client-1` | `string` | n/a | yes |
+| tf_project_path | path to terraform working directory. Example: `~/ewc/ipa-client-1` | `string` | n/a | yes |
 | private_keypair_path | path to the local private keypair to use for SSH access to the instance. Example: `~/.ssh/id_rsa` | `string` | n/a | yes |
 | ipa_domain | domain name managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
 | ipa_server_hostname | hostname of the IPA server. Example: `ipa-server-1` | `string`| n/a | yes |

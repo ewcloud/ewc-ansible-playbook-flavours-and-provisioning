@@ -87,7 +87,7 @@ example:
 ```bash
 ansible-playbook \
   -i inventory.yml \
-  -e '{"whitelisted_ip_ranges": ["10.0.0.0/24"]}' \
+  -e '{"fail2ban_whitelisted_ip_ranges": ""}' \
   remote-desktop-flavour.yml
 ```
 
@@ -110,7 +110,7 @@ Desktop section of
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| whitelisted_ip_ranges | IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Example: `['10.0.0.0/24','192.168.1.0/24']` | `list(string)` | n/a | no |
+| fail2ban_whitelisted_ip_ranges | IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Example: `['10.0.0.0/24','192.168.1.0/24']` | `list(string)` | n/a | no |
 
 
 ## Dependencies
@@ -124,4 +124,4 @@ stable operation.
 
 | Name | Version | License |Home URL |
 |------|---------|-------|---|
-| ewc-ansible-role-remote-desktop | 1.1 | MIT |  https://github.com/ewcloud/ewc-ansible-role-remote-desktop |
+| ewc-ansible-role-remote-desktop | 1.2 | MIT |  https://github.com/ewcloud/ewc-ansible-role-remote-desktop |

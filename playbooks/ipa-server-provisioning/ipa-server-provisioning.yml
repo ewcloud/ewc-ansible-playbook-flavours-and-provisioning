@@ -9,27 +9,27 @@
       prompt: choose your target EWC provider to be either 'ecmwf' or 'eumetsat'
       private: false
 
-    - name: tf_project_path
+    - name: ipa_server_tf_project_path
       prompt: path to terraform working directory
       private: false
 
-    - name: app_name
+    - name: ipa_server_app_name
       prompt: application name, used as prefix in the full instance name
       private: false
 
-    - name: instance_name
+    - name: ipa_server_instance_name
       prompt: name of the instance, used in the full instance name
       private: false
 
-    - name: instance_index
+    - name: ipa_server_instance_index
       prompt: index or identifier for the instance, used as suffix in the full instance name
       private: false
 
-    - name: flavor_name
+    - name: ipa_server_flavor_name
       prompt: name the flavor to use for the instance
       private: false
 
-    - name: image_name
+    - name: ipa_server_image_name
       prompt: name the image to use for the instance
       private: false
 
@@ -85,14 +85,14 @@
         that:
           - ewc_provider is defined and ewc_provider != ''
           - ewc_provider | lower in ['ecmwf', 'eumetsat']
-          - tf_project_path is defined and tf_project_path != ''
+          - ipa_server_tf_project_path is defined and ipa_server_tf_project_path != ''
           - private_keypair_path is defined and private_keypair_path != ''
         fail_msg: "Input validation failed. See README.md for information on required inputs and their format."
         success_msg: "User input configuration is valid."
 
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
-        tf_project_path_fact: "{{ tf_project_path }}"
+        tf_project_path_fact: "{{ ipa_server_tf_project_path }}"
         private_keypair_path_fact: "{{ private_keypair_path }}"
 
         defaults: >-
@@ -101,11 +101,11 @@
           }}
 
         ewc_tf_module_openstack_compute:
-          app_name_fact: "{{ app_name }}"
-          instance_name_fact: "{{ instance_name }}"
-          instance_index_fact: "{{ instance_index }}"
-          flavor_name_fact: "{{ flavor_name }}"
-          image_name_fact: "{{ image_name }}"
+          app_name_fact: "{{ ipa_server_app_name }}"
+          instance_name_fact: "{{ ipa_server_instance_name }}"
+          instance_index_fact: "{{ ipa_server_instance_index }}"
+          flavor_name_fact: "{{ ipa_server_flavor_name }}"
+          image_name_fact: "{{ ipa_server_image_name }}"
           security_group_name_fact: "{{ security_group_name }}"
           public_keypair_name_fact: "{{ public_keypair_name }}"
           private_network_name_fact: "{{ private_network_name }}"
@@ -216,18 +216,20 @@
       ansible.builtin.wait_for:
         host: "{{ remote_host_public_ip_fact }}"
         port: 22
-        timeout: 300
+        timeout: 600
 
     - name: Add dynamic host to inventory
       ansible.builtin.add_host:
-        name: "remote_host"
+        name: "{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['app_name_fact'] }}-{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['instance_name_fact'] }}-{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['instance_index_fact'] }}"
+        groups:
+          - "ipa_server"
         ansible_host: "{{ remote_host_public_ip_fact }}"
         ansible_user: "cloud-user"
-        ansible_ssh_private_key_file: "{{ hostvars['localhost']['private_keypair_path'] }}"
+        ansible_ssh_private_key_file: "{{ hostvars['localhost']['private_keypair_path_fact'] }}"
         ansible_ssh_common_args: "-o StrictHostKeyChecking=accept-new"
 
 - name: Install IPA server
-  hosts: remote_host
+  hosts: ipa_server
   become: true
   become_user: root
   become_method: ansible.builtin.sudo

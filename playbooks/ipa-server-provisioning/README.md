@@ -1,4 +1,6 @@
 # IPA server provisioning
+>✅ This template can be safely applied from any local work environment, even running outside an EWC tenancy's private network.
+
 IPA (acronym for identity, policy and audit) and its open-source
 implementation [FreeIPA](https://www.freeipa.org/page/Main_Page), serve
 both as a user management system and as your internal DNS nameserver.
@@ -43,6 +45,8 @@ To prevent issues, programatically update each VM via the
 CommunityHub Item. Alternatively, you can manually
 [add the new nameserver](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/domain-dns)
 to their DNS configuration.
+
+>💡 This template can be deployed in combination with complementary infrastructure as part of the [Default Stack Provisioning](https://europeanweather.cloud/community-hub/default-stack-provisioning) Community Hub Item.
 
 ## Authentication
 
@@ -104,13 +108,13 @@ each and every available input (see [inputs section](#inputs) below). For exampl
 ansible-playbook \
   -e '{
         "ewc_provider": "eumetsat",
-        "tf_project_path":"~/iac/ipa-server-1",
-        "app_name":"ipa",
-        "instance_name":"server",
-        "instance_index": 1,
-        "flavor_name":"eo2.medium",
-        "image_name":"Rocky-8.10-20250204105303",
-        "public_keypair_name":"my-public-key",
+        "ipa_server_tf_project_path":"~/ewc/ipa-server-1",
+        "ipa_server_app_name":"ipa",
+        "ipa_server_instance_name":"server",
+        "ipa_server_instance_index": 1,
+        "ipa_server_flavor_name":"eo2.medium",
+        "ipa_server_image_name":"Rocky-8.10-20250204105303",
+        "public_keypair_name":"my-public-key-name",
         "private_keypair_path":"~/.ssh/id_rsa",
         "private_network_name": "private",
         "security_group_name": "ipa",
@@ -127,12 +131,12 @@ ansible-playbook \
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
 | ewc_provider | your target EWC provider. Must match that the provider of your OpenStack application credentials. Valid input values are `ecmwf` or `eumetsat`. | `string` | n/a | yes |
-| tf_project_path | path to terraform working directory. Example: `~/iac/ipa-server-1` | `string` | n/a | yes |
-| app_name | application name, used as prefix in the full instance name. Example: `ipa` | `string` | n/a | yes |
-| instance_name| name of the instance, used in the full instance name.  Example: `server` | `string` | n/a | yes |
-| instance_index | index or identifier for the instance, used as suffix in the full instance name. Example: `1` | `number` | n/a | yes |
-| flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation. | `string` | n/a | yes |
-| image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 VM images are currently supported. This is due to constrains imposed by the required ewc-ansible-role-ipa-server Ansible Role. Example: `Rocky-8.10-20250204105303`  | `string` | n/a | yes |
+| ipa_server_tf_project_path | path to terraform working directory. Example: `~/ewc/ipa-server-1` | `string` | n/a | yes |
+| ipa_server_app_name | application name, used as prefix in the full instance name. Example: `ipa` | `string` | n/a | yes |
+| ipa_server_instance_name| name of the instance, used in the full instance name.  Example: `server` | `string` | n/a | yes |
+| ipa_server_instance_index | index or identifier for the instance, used as suffix in the full instance name. Example: `1` | `number` | n/a | yes |
+| ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation. | `string` | n/a | yes |
+| ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 VM images are currently supported. This is due to constrains imposed by the required ewc-ansible-role-ipa-server Ansible Role. Example: `Rocky-8.10-20250204105303`  | `string` | n/a | yes |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
 | private_keypair_path | path to the local private keypair to use for SSH access to the instance. Example: `~/.ssh/id_rsa` | `string` | n/a | yes |
 | private_network_name | private network name to attach the instance. Example: `private` | `string` | n/a | yes |

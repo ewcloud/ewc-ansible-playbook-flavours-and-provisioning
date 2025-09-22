@@ -5,10 +5,6 @@
   gather_facts: false
 
   vars_prompt:
-    - name: ipa_client_hostname
-      prompt: hostname of the target vm where the IPA client will be installed
-      private: false
-
     - name: ipa_domain
       prompt: domain name managed by the IPA server
       private: false
@@ -30,14 +26,13 @@
   tasks:
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
-        ipa_client_hostname_fact: "{{ ipa_client_hostname }}"
         ipa_domain_fact: "{{ ipa_domain }}"
         ipa_server_hostname_fact: "{{ ipa_server_hostname }}"
         ipa_admin_username_fact: "{{ ipa_admin_username }}"
         ipa_admin_password_fact: "{{ ipa_admin_password }}"
 
 - name: Install IPA client and enroll into an IPA server's LDAP/DNS services
-  hosts: all
+  hosts: ipa_client
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
@@ -45,9 +40,9 @@
   tasks:
     - name: EWC Ansible Role IPA Client Enroll
       ansible.builtin.include_role:
-        name: ewc-ansible-role-ipa-client-enroll-1.0
+        name: ewc-ansible-role-ipa-client-enroll-1.1
       vars:
-        ipa_client_hostname: "{{ hostvars['localhost']['ipa_client_hostname_fact'] }}"
+        ipa_client_hostname: "{{ inventory_hostname_short }}"
         ipa_domain: "{{ hostvars['localhost']['ipa_domain_fact'] }}"
         ipa_server_hostname: "{{ hostvars['localhost']['ipa_server_hostname_fact'] }}"
         ipa_admin_username: "{{ hostvars['localhost']['ipa_admin_username_fact'] }}"

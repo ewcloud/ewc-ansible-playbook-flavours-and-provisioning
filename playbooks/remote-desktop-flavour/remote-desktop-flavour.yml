@@ -5,14 +5,14 @@
   gather_facts: false
 
   vars_prompt:
-    - name: whitelisted_ip_ranges
+    - name: fail2ban_whitelisted_ip_ranges
       prompt: IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Press Enter to skip
       private: false
 
   tasks:
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
-        whitelisted_ip_ranges_fact: "{{ whitelisted_ip_ranges }}"
+        fail2ban_whitelisted_ip_ranges_fact: "{{ fail2ban_whitelisted_ip_ranges }}"
 
 - name: Configure Remote Desktop server
   hosts: all
@@ -23,6 +23,6 @@
   tasks:
     - name: EWC Ansible Role Remote Desktop
       ansible.builtin.include_role:
-        name: ewc-ansible-role-remote-desktop-1.1
+        name: ewc-ansible-role-remote-desktop-1.2
       vars:
-        whitelisted_ip_ranges: "{{ hostvars['localhost']['whitelisted_ip_ranges_fact'] }}"
+        fail2ban_whitelisted_ip_ranges: "{{ hostvars['localhost']['fail2ban_whitelisted_ip_ranges_fact'] }}"

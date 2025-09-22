@@ -1,4 +1,5 @@
 # IPA client provisioning
+>✅ This template can be applied from any local work environment, even running outside an EWC tenancy's private network.
 
 This is a configuration template
 (i.e. an [Ansible Playbook](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks.html))
@@ -92,13 +93,13 @@ each and every available input (see [inputs section](#inputs) below). For exampl
 ansible-playbook \
   -e '{
         "ewc_provider": "eumetsat",
-        "tf_project_path": "~/iac/ipa-client-1",
+        "tf_project_path": "~/ewc/ipa-client-1",
         "app_name": "ipa",
         "instance_name": "client",
         "instance_index": 1,
         "flavor_name": "eo2.medium",
         "image_name": "ubuntu-22.04-20250204105649",
-        "public_keypair_name": "john-claudy-publickey",
+        "public_keypair_name": "my-public-key-name",
         "private_keypair_path": "~/.ssh/id_rsa",
         "private_network_name": "private",
         "security_group_name": "ipa",
@@ -115,7 +116,7 @@ ansible-playbook \
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
 | ewc_provider | your target EWC provider. Must match that the provider of your OpenStack application credentials. Valid input values are `ecmwf` or `eumetsat`. | `string` | n/a | yes |
-| tf_project_path | path to terraform working directory. Example: `~/iac/ipa-client-1` | `string` | n/a | yes |
+| tf_project_path | path to terraform working directory. Example: `~/ewc/ipa-client-1` | `string` | n/a | yes |
 | app_name | application name, used as prefix in the full instance name. Example: `ipa` | `string` | n/a | yes |
 | instance_name| name of the instance, used in the full instance name.  Example: `client` | `string` | n/a | yes |
 | instance_index | index or identifier for the instance, used as suffix in the full instance name. Example: `1` | `number` | n/a | yes |

@@ -50,6 +50,10 @@
       prompt: security group name to apply to the instance
       private: false
 
+    - name: instance_has_fip
+      prompt: whether to assign a floating IP to the instance. Only `yes` will be accepted to approve
+      private: false
+
     - name: ipa_domain
       prompt: domain name to be managed by the IPA server
       private: false
@@ -213,14 +217,16 @@
 
     - name: Add dynamic host to inventory
       ansible.builtin.add_host:
-        name: "remote_host"
+        name: "{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['app_name_fact'] }}-{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['instance_name_fact'] }}-{{ hostvars['localhost']['ewc_tf_module_openstack_compute']['instance_index_fact'] }}"
+        groups:
+          - "ipa_client"
         ansible_host: "{{ remote_host_public_ip_fact }}"
         ansible_user: "{{ 'ubuntu' if image_name | lower | regex_search('^ubuntu') else 'cloud-user' }}"
-        ansible_ssh_private_key_file: "{{ hostvars['localhost']['private_keypair_path'] }}"
+        ansible_ssh_private_key_file: "{{ hostvars['localhost']['private_keypair_path_fact'] }}"
         ansible_ssh_common_args: "-o StrictHostKeyChecking=accept-new"
 
 - name: Install IPA client and enroll into an IPA server's LDAP/DNS services
-  hosts: remote_host
+  hosts: ipa_client
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
