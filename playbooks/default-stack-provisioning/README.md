@@ -97,7 +97,7 @@ ansible-playbook \
         "ipa_server_instance_index": 1,
         "ipa_server_hostname":"ipa-server-1",
         "ipa_server_flavor_name":"eo1.large",
-        "ipa_server_image_name":"Rocky-8.10-20250204105303",
+        "ipa_server_image_name":"Rocky-8.10-20250604144456",
         "ipa_domain":"eumetsat.sandbox.ewc",
         "ipa_admin_username":"ipaadmin",
         "ipa_admin_password":"my-secret-password",
@@ -108,7 +108,7 @@ ansible-playbook \
         "ssh_bastion_instance_name":"bastion",
         "ssh_bastion_instance_index": 1,
         "ssh_bastion_flavor_name":"eo1.large",
-        "ssh_bastion_image_name":"Rocky-8.10-20250204105303",
+        "ssh_bastion_image_name":"Rocky-8.10-20250604144456",
         "remote_desktop_tf_project_path":"~/ewc/remote-desktop-1",
         "remote_desktop_app_name":"remote",
         "remote_desktop_instance_name":"desktop",
@@ -127,35 +127,35 @@ ansible-playbook \
 |------|-------------|------|---------|----------|
 | ewc_provider | your target EWC provider. Must match that the provider of your OpenStack application credentials. Valid input values are `ecmwf` or `eumetsat`. | `string` | n/a | yes |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
-| private_keypair_path | path to the local private keypair to use for SSH access to the instance. Example: `~/.ssh/id_rsa` | `string` | n/a | yes |
+| private_keypair_path | path to the local private keypair to use for SSH access to the instance.  | `string` | `~/.ssh/id_rsa` | yes |
 | private_network_name | private network name to attach the instance. Example: `private` | `string` | n/a | yes |
-| security_group_name | security group name to apply to the instance. Example: `ipa` | `string` | n/a | yes |
-| ipa_server_tf_project_path | path to terraform working directory. Example: `~/ewc/ipa-server-1` | `string` | n/a | yes |
-| ipa_server_app_name | application name, used as prefix in the full instance name. Example: `ipa` | `string` | n/a | yes |
-| ipa_server_instance_name| name of the instance, used in the full instance name.  Example: `server` | `string` | n/a | yes |
-| ipa_server_instance_index | index or identifier for the instance, used as suffix in the full instance name. Example: `1` | `number` | n/a | yes |
-| ipa_server_hostname | hostname of the IPA server. Should match the pattern "<ipa_server_app_name>-<ipa_server_instance_name>-<ipa_server_instance_index>". Required for input validation purpose. Example: `ipa-server-1` | `string` | n/a | yes |
-| ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation. | `string` | n/a | yes |
-| ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 VM images are currently supported. This is due to constrains imposed by the required ewc-ansible-role-ipa-server Ansible Role. Example: `Rocky-8.10-20250204105303`  | `string` | n/a | yes |
+| security_group_name | security group name to apply to the instance | `string` |  `ipa` | yes |
+| ipa_server_tf_project_path | path to terraform working directory  | `string` | `~/ewc/ipa-server-1` | yes |
+| ipa_server_app_name | application name, used as prefix in the full instance name  | `string` | `ipa` | yes |
+| ipa_server_instance_name| name of the instance, used in the full instance name  | `string` | `server` | yes |
+| ipa_server_instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
+| ipa_server_hostname | hostname of the IPA server. Should match the pattern "<ipa_server_app_name>-<ipa_server_instance_name>-<ipa_server_instance_index>". Required for input validation purpose | `string` | `ipa-server-1` | yes |
+| ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation | `string` | `eo1.large` | yes |
+| ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 VM images are currently supported. This is due to constrains imposed by the required ewc-ansible-role-ipa-server Ansible Role  | `string` | `Rocky-8.10-20250604144456` | yes |
 | ipa_domain | domain name to be managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
 | ipa_admin_username | username of administrator account to replace the default IPA admin | `string` | n/a | yes |
 | ipa_admin_password | password of administrator account to replace the default IPA admin | `string` | n/a | yes |
-| ipa_admin_givenname | given name of the administrator to replace the default IPA admin (needs not be a physical person). Example: `EWC` | `string` | n/a | yes |
-| ipa_admin_surname | surname of the administrator to replace the default IPA admin (needs not to belong to a physical person). Example: `IPAADMIN` | `string` | n/a | yes |
-| ssh_bastion_tf_project_path | path to terraform working directory. Example: `~/ewc/ssh-bastion-1` | `string` | n/a | yes |
-| ssh_bastion_app_name | application name, used as prefix in the full instance name. Example: `ssh-bastion` | `string` | n/a | yes |
-| ssh_bastion_instance_name| name of the instance, used in the full instance name.  Example: `server` | `string` | n/a | yes |
-| ssh_bastion_instance_index | index or identifier for the instance, used as suffix in the full instance name. Example: `1` | `number` | n/a | yes |
-| ssh_bastion_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation. | `string` | n/a | yes |
-| ssh_bastion_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 instances are currently supported due to constrains imposed by the required ewc-ansible-role-ssh-bastion Ansible Role. Example: `Rocky-8.10-20250204105303`  | `string` | n/a | yes |
-| remote_desktop_tf_project_path | path to terraform working directory. Example: `~/ewc/remote-desktop-1` | `string` | n/a | yes |
-| remote_desktop_app_name | application name, used as prefix in the full instance name. Example: `remote` | `string` | n/a | yes |
-| remote_desktop_instance_name| name of the instance, used in the full instance name.  Example: `desktop` | `string` | n/a | yes |
-| remote_desktop_instance_index | index or identifier for the instance, used as suffix in the full instance name. Example: `1` | `number` | n/a | yes |
-| remote_desktop_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation. | `string` | n/a | yes |
-| remote_desktop_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 8.10 and 9.5 instances are currently supported due to constrains imposed by the required ewc-ansible-role-remote-desktop Ansible Role. Example: `Rocky-8.10-20250204105303`  | `string` | n/a | yes |
+| ipa_admin_givenname | given name of the administrator to replace the default IPA admin (needs not be a physical person) | `string` | `EWC` | yes |
+| ipa_admin_surname | surnamew of the administrator to replace the default IPA admin (needs not to belong to a physical person) | `string` | `IPAADMIN`  | yes |
+| ssh_bastion_tf_project_path | path to terraform working directory | `string` |  `~/ewc/ssh-bastion-1` | yes |
+| ssh_bastion_app_name | application name, used as prefix in the full instance name  | `string` | `ssh-bastion` | yes |
+| ssh_bastion_instance_name| name of the instance, used in the full instance name  | `string` | `server` | yes |
+| ssh_bastion_instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1`  | yes |
+| ssh_bastion_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation | `string` | `eo1.large` | yes |
+| ssh_bastion_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 instances are currently supported due to constrains imposed by the required ewc-ansible-role-ssh-bastion Ansible Role | `string` | `Rocky-8.10-20250604144456` | yes |
+| remote_desktop_tf_project_path | path to terraform working directory | `string` | `~/ewc/remote-desktop-1` | yes |
+| remote_desktop_app_name | application name, used as prefix in the full instance name | `string` | `remote`  | yes |
+| remote_desktop_instance_name| name of the instance, used in the full instance name | `string` | `desktop` | yes |
+| remote_desktop_instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
+| remote_desktop_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation | `string` | `eo1.large` | yes |
+| remote_desktop_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 8.10 and 9.5 instances are currently supported due to constrains imposed by the required ewc-ansible-role-remote-desktop Ansible Role| `string` | `Rocky-8.10-20250604144456`  | yes |
 | remote_desktop_instance_has_fip | technically required to temporarily assign a floating IP to the instance to securely connect from localhost during initial configuration. 💡 The template ensures to remove the floating IP during post-provisioning | `string` | `yes` | yes |
-| fail2ban_whitelisted_ip_ranges | IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Example: `['10.0.0.0/24','192.168.1.0/24']` | `list(string)` | n/a | no |
+| fail2ban_whitelisted_ip_ranges | IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set `['10.0.0.0/24','192.168.1.0/24']` | `list(string)` | `''` | no |
 
 
 ## Dependencies
