@@ -5,7 +5,7 @@ The default stack provides an integrated environment for secure access and centr
 
 This configuration template (i.e., an [Ansible Playbook](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks.html)) builds upon the individual templates for [IPA server](https://europeanweather.cloud/community-hub/ipa-server-provisioning), [SSH bastion](https://europeanweather.cloud/community-hub/ssh-bastion-provisioning), [remote desktop](https://europeanweather.cloud/community-hub/remote-desktop-provisioning), and [IPA client](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour) to automate their deployment and integration.
 
-![](./docs/images/default-stack.png)
+![Overview Diagram](https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/refs/heads/main/playbooks/default-stack-provisioning/docs/images/default-stack.png)
 
 ## Functionality
 The template is designed to:
