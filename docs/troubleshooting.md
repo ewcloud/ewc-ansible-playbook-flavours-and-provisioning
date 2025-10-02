@@ -279,7 +279,7 @@ new default, or by swapping the virtual image used by your instance with a newer
 If technical or organizational reasons prevent you from updating the remote host, or updating its Python version does not solve the issue, try downgrading
 the Python version used on your localhost to trigger the execution, such that it matches that of the remote host.
 
-## 12. IPA Client Enroll Flavour copmleted without errors but LDAP users are unable to SSH into the VM
+## 12. IPA Client Enroll Flavour completed without errors but LDAP users are unable to SSH into the VM
 
 It is possible that the execution of the template goes from start to finish without errors, but you still find yourself unable to use an LDAP account to access the target host.
 In such cases, take note of how fast the template runtime took to complete; anything less than 30 seconds is a clear sign that Ansible could not hit its target.
