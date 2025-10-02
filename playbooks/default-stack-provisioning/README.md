@@ -16,11 +16,9 @@ The template is designed to:
 * Provision the remote desktop instance via Terraform, equipped for graphical access over varying bandwidths.
 * Enroll the newly provisioned remote desktop as an IPA client, integrating it with the IPA server for unified access control.
 
-Each component's provisioning follows the create-or-update logic based on the presence of its respective `terraform.tfstate` file in the user-defined directories, allowing for independent specification of VM images, flavors, and other parameters.
-
 After successful provisioning, you can leverage Terraform's functionality to modify or delete individual components safely. Each will have its own `main.tf` definition and `terraform.tfstate` state file under the corresponding user-defined local directories.
 
-To learn the basics about managing infrastructure with Terraform, check out the [official documentation examples](https://developer.hashicorp.com/terraform/tutorials/aws-get-started).
+To learn the basics about managing infrastructure with Terraform, check out [Terraform in 100 seconds](https://youtu.be/tomUWcQ0P3k?si=CJwZJ7UaqpynDU-d) on YouTube. You can also find a step-by-step example applied to the EWC on [the official EWC documentation](https://confluence.ecmwf.int/x/2EDOIQ).
 
 >⚠️ Successful execution includes provisioning the IPA server, which updates the DNS nameserver(s) in your OpenStack subnet to point exclusively to the new IPA server. This may impact existing VMs; mitigate by enrolling them as IPA clients or manually updating their DNS configurations as detailed in the IPA server template.
 
