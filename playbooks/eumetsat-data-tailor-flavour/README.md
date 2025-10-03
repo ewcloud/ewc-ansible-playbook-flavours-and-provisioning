@@ -14,15 +14,14 @@ The Data Tailor is a product customization toolbox designed to:
 For more information on capabilities of the Data Tailor, please refer to [Data Tailor Standalone Guide on User Portal](https://user.eumetsat.int/resources/user-guides/data-tailor-standalone-guide) and for more information about the available products and customisations inside the Data Tailor, please go to [Products and Customisations Available in the Data Tailor](https://user.eumetsat.int/resources/user-guides/data-store-detailed-guide#ID-Products-and-customisation-available-in-the-Data-Tailor) page.
 
 ## Prerequisites
->💡 Versions listed correspond to minimal prerequisites.
 
 To successfully run this playbook, the following packages should be available in your work environment:
 
 | Name | Version | License | Home URL |
 |------|---------|----- |-----|
-| git | 2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | 3.9   | PSF | https://www.python.org/downloads  |
-| ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+| git | >=2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | >=3.9   | PSF | https://www.python.org/downloads  |
+| ansible | >=2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
 
 ## Usage
 

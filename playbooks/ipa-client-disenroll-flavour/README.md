@@ -25,15 +25,14 @@ The template is designed to:
 - Remove IPA server-internal DNS records referencing the target instance, if present.
 
 ## Prerequisites
->💡 Versions listed correspond to minimal prerequisites.
 
 To successfully run this playbook, the following packages should be available in your work environment:
 
 | Name | Version | License | Home URL |
 |------|---------|----- |-----|
-| git | 2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | 3.9   | PSF | https://www.python.org/downloads  |
-| ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+| git | >=2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | >=3.9   | PSF | https://www.python.org/downloads  |
+| ansible | >=2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
 
 ## Usage
 
