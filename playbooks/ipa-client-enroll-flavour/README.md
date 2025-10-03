@@ -101,8 +101,8 @@ ansible-playbook \
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
 | ipa_domain | domain name managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
-| ipa_server_hostname | hostname of the IPA server. Example: `ipa-server-1` | `string`| n/a | yes |
-| ipa_admin_username | username of the administrator account from the IPA server. Example: `ipaadmin` | `string` | n/a | yes |
+| ipa_server_hostname | hostname of the IPA server | `string`| `ipa-server-1` | yes |
+| ipa_admin_username | username of the administrator account from the IPA server | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of the administrator account from the IPA server. Example: `my-secret-password` | `string` | n/a | yes |
 
 ## Dependencies
