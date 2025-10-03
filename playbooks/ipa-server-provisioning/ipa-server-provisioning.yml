@@ -6,57 +6,67 @@
 
   vars_prompt:
     - name: ewc_provider
-      prompt: choose your target EWC provider to be either 'ecmwf' or 'eumetsat'
+      prompt: choose your target EWC provider to be either 'ecmwf' or 'eumetsat'. Press Enter to accept default
       private: false
+      default: "eumetsat"
 
     - name: ipa_server_tf_project_path
-      prompt: path to terraform working directory
+      prompt: path to terraform working directory. Press Enter to accept default
       private: false
+      default: "~/ewc/ipa-server-1"
 
     - name: ipa_server_app_name
-      prompt: application name, used as prefix in the full instance name
+      prompt: application name, used as prefix in the full instance name. Press Enter to accept default
       private: false
+      default: "ipa"
 
     - name: ipa_server_instance_name
-      prompt: name of the instance, used in the full instance name
+      prompt: name of the instance, used in the full instance name. Press Enter to accept default
       private: false
+      default: "server"
 
     - name: ipa_server_instance_index
-      prompt: index or identifier for the instance, used as suffix in the full instance name
+      prompt: index or identifier for the instance, used as suffix in the full instance name. Press Enter to accept default
       private: false
+      default: "1"
 
     - name: ipa_server_flavor_name
-      prompt: name the flavor to use for the instance
+      prompt: name the flavor to use for the instance. Press Enter to accept default
       private: false
+      default: "eo1.large"
 
     - name: ipa_server_image_name
-      prompt: name the image to use for the instance
+      prompt: name the image to use for the instance. Press Enter to accept default
       private: false
+      default: "Rocky-8.10-20250604144456"
 
     - name: public_keypair_name
       prompt: name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access
       private: false
 
     - name: private_keypair_path
-      prompt: path to the local private keypair to use for SSH access to the instance. Or press Enter to accept default
+      prompt: path to the local private keypair to use for SSH access to the instance. Press Enter to accept default
       private: false
       default: "~/.ssh/id_rsa"
 
     - name: private_network_name
-      prompt: private network name to attach the instance
+      prompt: private network name to attach the instance. Press Enter to accept default
       private: false
+      default: "private"
 
     - name: security_group_name
-      prompt: security group name to apply to the instance
+      prompt: security group name to apply to the instance. Press Enter to accept default
       private: false
+      default: "ipa"
 
     - name: ipa_domain
       prompt: domain name to be managed by the IPA server
       private: false
 
     - name: ipa_admin_username
-      prompt: username of administrator account to replace the default IPA admin
+      prompt: username of administrator account to replace the default IPA admin. Press Enter to accept default
       private: false
+      default: "ipaadmin"
 
     - name: ipa_admin_password
       prompt: password of administrator account to replace the default IPA admin
@@ -65,12 +75,14 @@
       confirm: true
 
     - name: ipa_admin_givenname
-      prompt: given name of the administrator to replace the default IPA admin (not necessarily a real person's name)
+      prompt: given name of the administrator to replace the default IPA admin (not necessarily a real person's name). Press Enter to accept default
       private: false
+      default: "EWC"
 
     - name: ipa_admin_surname
-      prompt: surname of the administrator to replace the default IPA admin (not necessarily a real person's name)
+      prompt: surname of the administrator to replace the default IPA admin (not necessarily a real person's name). Press Enter to accept default
       private: false
+      default: "IPAADMIN"
 
   vars:
     ecmwf_defaults:
