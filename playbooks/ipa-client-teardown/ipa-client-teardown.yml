@@ -10,20 +10,23 @@
       private: false
 
     - name: private_keypair_path
-      prompt: path to the local private keypair to use for SSH access to the instance. Or press Enter to accept default
+      prompt: path to the local private keypair to use for SSH access to the instance. Press Enter to accept default
       private: false
+      default: "~/.ssh/id_rsa"
 
     - name: ipa_domain
       prompt: domain name to be managed by the IPA server
       private: false
 
     - name: ipa_server_hostname
-      prompt: hostname of the IPA server
+      prompt: hostname of the IPA server. Press Enter to accept default
       private: false
+      default: "ipa-server-1"
 
     - name: ipa_admin_username
-      prompt: username of administrator account to replace the default IPA admin
+      prompt: username of administrator account to replace the default IPA admin. Press Enter to accept default
       private: false
+      default: "ipaadmin"
 
     - name: ipa_admin_password
       prompt: password of administrator account to replace the default IPA admin
