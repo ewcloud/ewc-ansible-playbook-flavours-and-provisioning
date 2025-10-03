@@ -10,12 +10,14 @@
       private: false
 
     - name: ipa_server_hostname
-      prompt: hostname of the target vm where the IPA server will be installed
+      prompt: hostname of the target vm where the IPA server will be installed. Press Enter to accept default
       private: false
+      default: "ipa-server-1"
 
     - name: ipa_admin_username
-      prompt: username of administrator account to replace the default IPA admin
+      prompt: username of administrator account to replace the default IPA admin. Press Enter to accept default
       private: false
+      default: "ipaadmin"
 
     - name: ipa_admin_password
       prompt: password of administrator account to replace the default IPA admin (at least 8 characters long)
@@ -24,20 +26,24 @@
       confirm: true
 
     - name: ipa_admin_givenname
-      prompt: given name of the administrator to replace the default IPA admin (not necessarily a real person's name)
+      prompt: given name of the administrator to replace the default IPA admin (not necessarily a real person's name). Press Enter to accept default
       private: false
+      default: "EWC"
 
     - name: ipa_admin_surname
-      prompt: surname of the administrator to replace the default IPA admin (not necessarily a real person's name)
+      prompt: surname of the administrator to replace the default IPA admin (not necessarily a real person's name). Press Enter to accept default
       private: false
+      default: "IPAADMIN"
 
     - name: os_network_name
-      prompt: Openstack network to which the target virtual machine has access to
+      prompt: Openstack network to which the target virtual machine has access to. Press Enter to accept default
       private: false
+      default: "private"
 
     - name: os_security_group_name
-      prompt: OpenStack security group containing all firewall rules required by the IPA server/client communication
+      prompt: OpenStack security group containing all firewall rules required by the IPA server/client communication. Press Enter to accept default
       private: false
+      default: "ipa"
 
   tasks:
     - name: Store user input as localhost facts
