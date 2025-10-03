@@ -6,35 +6,42 @@
 
   vars_prompt:
     - name: ewc_provider
-      prompt: choose your target EWC provider to be either 'ecmwf' or 'eumetsat'
+      prompt: choose your target EWC provider to be either 'ecmwf' or 'eumetsat'. Press Enter to accept default
       private: false
+      default: "eumetsat"
 
     - name: remote_desktop_tf_project_path
-      prompt: path to terraform working directory
+      prompt: path to terraform working directory. Press Enter to accept default
       private: false
+      default: "~/ewc/remote-desktop-1"
 
     - name: remote_desktop_app_name
-      prompt: application name, used as prefix in the full instance name
+      prompt: application name, used as prefix in the full instance name. Press Enter to accept default
       private: false
+      default: "remote"
 
     - name: remote_desktop_instance_name
-      prompt: name of the instance, used in the full instance name
+      prompt: name of the instance, used in the full instance name. Press Enter to accept default
       private: false
+      default: "desktop"
 
     - name: remote_desktop_instance_index
-      prompt: index or identifier for the instance, used as suffix in the full instance name
+      prompt: index or identifier for the instance, used as suffix in the full instance name. Press Enter to accept default
       private: false
+      default: "1"
 
     - name: remote_desktop_flavor_name
-      prompt: name the flavor to use for the instance
+      prompt: name the flavor to use for the instance. Press Enter to accept default
       private: false
+      default: "eo1.large"
 
     - name: remote_desktop_image_name
-      prompt: name the image to use for the instance
+      prompt: name the image to use for the instance. Press Enter to accept default
       private: false
+      default: "Rocky-9.5-20250604142417"
 
     - name: remote_desktop_instance_has_fip
-      prompt: whether to assign a floating IP to the instance. Only `yes` will be accepted to approve. Or press Enter to accept default
+      prompt: whether to assign a floating IP to the instance. Only `yes` will be accepted to approve. Press Enter to accept default
       private: false
       default: "no"
 
@@ -43,17 +50,19 @@
       private: false
 
     - name: private_keypair_path
-      prompt: path to the local private keypair to use for SSH access to the instance. Or press Enter to accept default
+      prompt: path to the local private keypair to use for SSH access to the instance. Press Enter to accept default
       private: false
       default: "~/.ssh/id_rsa"
 
     - name: private_network_name
-      prompt: private network name to attach the instance to
+      prompt: private network name to attach the instance to. Press Enter to accept default
       private: false
+      default: "private"
 
     - name: security_group_name
-      prompt: security group name to apply to the instance
+      prompt: security group name to apply to the instance. Press Enter to accept default
       private: false
+      default: "ipa"
 
     - name: fail2ban_whitelisted_ip_ranges
       prompt: IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Press Enter to skip
