@@ -24,13 +24,9 @@ server running on the same subnet, such that it:
   * Is able to leverage DNS resolution and discover other private
     hosts or public addresses
 
-After successful provisioning, you can take advantage of Terraform built-in
-functionality to safely modify or delete the instance. You'll find the definition of your
-instance in `main.tf`, and its current state in `terraform.tfstate`, under the user-defined
-`tf_project_path` directory.
+After successful provisioning, you can leverage Terraform's functionality to modify or delete individual components safely. Each will have its own `main.tf` definition and `terraform.tfstate` state file under the corresponding user-defined local directories.
 
-To learn the basics about managing infrastructure with Terraform, checkout the
-[official documentation examples](https://developer.hashicorp.com/terraform/tutorials/aws-get-started).
+To learn the basics about managing infrastructure with Terraform, check out [Terraform in 100 seconds](https://youtu.be/tomUWcQ0P3k?si=CJwZJ7UaqpynDU-d) on YouTube. You can also find a step-by-step example applied to the EWC on the [official EWC documentation](https://confluence.ecmwf.int/x/2EDOIQ).
 
 ## Authentication
 
@@ -115,21 +111,21 @@ ansible-playbook \
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| ewc_provider | your target EWC provider. Must match that the provider of your OpenStack application credentials. Valid input values are `ecmwf` or `eumetsat`. | `string` | n/a | yes |
-| tf_project_path | path to terraform working directory. Example: `~/ewc/ipa-client-1` | `string` | n/a | yes |
-| app_name | application name, used as prefix in the full instance name. Example: `ipa` | `string` | n/a | yes |
-| instance_name| name of the instance, used in the full instance name.  Example: `client` | `string` | n/a | yes |
-| instance_index | index or identifier for the instance, used as suffix in the full instance name. Example: `1` | `number` | n/a | yes |
-| flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | n/a | yes |
-| image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available).⚠️ Only Ubuntu 22.04 and RockyLinux 8.10 VM images are currently supported. This is due to constrains imposed by the required ewc-ansible-role-ipa-client-enroll Ansible Role. Example: `ubuntu-22.04-20250204105649`  | `string` | n/a | yes |
+| ewc_provider | your target EWC provider. Must match that the provider of your OpenStack application credentials. Valid input values are `ecmwf` or `eumetsat`. | `string` | `eumetsat` | yes |
+| tf_project_path | path to terraform working directory  | `string` | `~/ewc/ipa-client-1` | yes |
+| app_name | application name, used as prefix in the full instance name | `string` | `ipa` | yes |
+| instance_name| name of the instance, used in the full instance name | `string` |  `client` | yes |
+| instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
+| flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `eo1.large` | yes |
+| image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available).⚠️ Only Ubuntu 22.04 and RockyLinux 8.10 VM images are currently supported. This is due to constrains imposed by the required ewc-ansible-role-ipa-client-enroll Ansible Role | `string` | `ubuntu-22.04-20250204105649` | yes |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
-| private_keypair_path | path to the local private keypair to use for SSH access to the instance. Example: `~/.ssh/id_rsa` | `string` | n/a | yes |
-| private_network_name | private network name to attach the instance to. Example: `private` | `string` | n/a | yes |
-| security_group_name | security group name to apply to the instance. Example: `ipa` | `string` | n/a | yes |
+| private_keypair_path | path to the local private keypair to use for SSH access to the instance  | `string` | `~/.ssh/id_rsa` | yes |
+| private_network_name | private network name to attach the instance to  | `string` | `private`| yes |
+| security_group_name | security group name to apply to the instance  | `string` | `ipa` | yes |
 | instance_has_fip | whether to assign a floating IP to the instance. Only `yes` will be accepted to approve | `string` | n/a | yes |
 | ipa_domain | domain name managed by the IPA server. Example: `eumetsta.sandbox.ewc` | `string` | n/a | yes |
-| ipa_server_hostname | hostname of the IPA server. Example: `ipa-server-1` | `string`| n/a | yes |
-| ipa_admin_username | username of the administrator account from the IPA server | `string` | n/a | yes |
+| ipa_server_hostname | hostname of the IPA server | `string`|  `ipa-server-1` | yes |
+| ipa_admin_username | username of the administrator account from the IPA server | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of the administrator account from the IPA server | `string` | n/a | yes |
 
 ## Dependencies
