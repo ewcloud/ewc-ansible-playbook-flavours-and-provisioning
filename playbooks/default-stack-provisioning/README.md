@@ -140,7 +140,7 @@ ansible-playbook \
 | ipa_admin_username | username of administrator account to replace the default IPA admin | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of administrator account to replace the default IPA admin | `string` | n/a | yes |
 | ipa_admin_givenname | given name of the administrator to replace the default IPA admin (needs not be a physical person) | `string` | `EWC` | yes |
-| ipa_admin_surname | surnamew of the administrator to replace the default IPA admin (needs not to belong to a physical person) | `string` | `IPAADMIN`  | yes |
+| ipa_admin_surname | surname of the administrator to replace the default IPA admin (needs not to belong to a physical person) | `string` | `IPAADMIN`  | yes |
 | ssh_bastion_tf_project_path | path to terraform working directory | `string` |  `~/ewc/ssh-bastion-1` | yes |
 | ssh_bastion_app_name | application name, used as prefix in the full instance name  | `string` | `ssh` | yes |
 | ssh_bastion_instance_name| name of the instance, used in the full instance name  | `string` | `bastion` | yes |

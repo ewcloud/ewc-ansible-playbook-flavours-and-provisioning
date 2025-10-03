@@ -33,10 +33,10 @@ After successful provisioning, you can leverage Terraform's functionality to mod
 
 To learn the basics about managing infrastructure with Terraform, check out [Terraform in 100 seconds](https://youtu.be/tomUWcQ0P3k?si=CJwZJ7UaqpynDU-d) on YouTube. You can also find a step-by-step example applied to the EWC on the [official EWC documentation](https://confluence.ecmwf.int/x/2EDOIQ).
 
->⚠️ Successfulexecution leads to changes of the DNS nameserver(s) in your
+>⚠️ Successful execution leads to changes of the DNS nameserver(s) in your
 OpenStack subnet (includes now only the IP address of the new IPA server).
 This can negatively affect existing VMs within your subnet.
-To prevent issues, programatically update each VM via the
+To prevent issues, programmatically update each VM via the
 [IPA Client Enroll Flavour](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour)
 CommunityHub Item. Alternatively, you can manually
 [add the new nameserver](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/domain-dns)
