@@ -24,7 +24,7 @@ and with a minimum recommended 4GB of RAM, such that it:
 * Automatically update the underlying subnet DNS nameserver to point to the
 newly configured IPA server
 
->⚠️ Successfull execution leads to changes of the DNS nameserver(s) in your
+>⚠️ Successful execution leads to changes of the DNS nameserver(s) in your
 OpenStack subnet (includes now only the IP address of the new IPA server).
 This can negatively affect existing VMs within your subnet.
 To prevent issues, programatically update each VM via the
@@ -115,13 +115,13 @@ ansible-playbook \
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
 | ipa_domain | domain name to be managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
-| ipa_server_hostname | hostname of the target vm where the IPA server will be installed. Example: `ipa-server-1` | `string`| n/a | yes |
-| ipa_admin_username | username of administrator account to replace the default IPA admin. Example: `ipaadmin` | `string` | n/a | yes |
+| ipa_server_hostname | hostname of the target vm where the IPA server will be installed | `string`| `ipa-server-1` | yes |
+| ipa_admin_username | username of administrator account to replace the default IPA admin | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of administrator account to replace the default IPA admin. Example: `my-secret-password` | `string` | n/a | yes |
-| ipa_admin_givenname | given name of the administrator to replace the default IPA admin (not necessarily a real person's name). Example: `EWC` | `string` | n/a | yes |
-| ipa_admin_surname | surname of the administrator to replace the default IPA admin (not necessarily a real person's name). Example: `IPAADMIN` | `string` | n/a | yes |
-| os_network_name | OpenStack network to which the target virtual machine has access to. Example: `private` | `string` | n/a | yes |
-| os_security_group_name | OpenStack security group containing all firewall rules required by the IPA server/client communication. Example: `ipa`  | `string` | n/a | yes |
+| ipa_admin_givenname | given name of the administrator to replace the default IPA admin (not necessarily a real person's name) | `string` | `EWC` | yes |
+| ipa_admin_surname | surname of the administrator to replace the default IPA admin (not necessarily a real person's name) | `string` | `IPAADMIN` | yes |
+| os_network_name | OpenStack network to which the target virtual machine has access to | `string` | `private` | yes |
+| os_security_group_name | OpenStack security group containing all firewall rules required by the IPA server/client communication | `string` | `ipa` | yes |
 
 ## Dependencies
 > ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 VM images are currently supported.
