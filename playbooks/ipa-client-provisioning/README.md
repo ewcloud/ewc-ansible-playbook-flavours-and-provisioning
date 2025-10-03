@@ -47,10 +47,10 @@ To successfully run this playbook, the following packages should be available in
 
 | Name | Version | License | Home URL |
 |------|---------|----- |-----|
-| git | >=2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | >=3.9   | PSF | https://www.python.org/downloads  |
-| ansible | >=2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
-| terraform | >=0.14  | BSL   | https://developer.hashicorp.com/terraform/install |
+| git | >= 2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | >= 3.9   | PSF | https://www.python.org/downloads  |
+| ansible | >= 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+| terraform | >= 0.14  | BSL   | https://developer.hashicorp.com/terraform/install |
 
 ## Usage
 
