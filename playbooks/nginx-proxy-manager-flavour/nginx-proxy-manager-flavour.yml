@@ -6,12 +6,14 @@
 
   vars_prompt:
     - name: os_security_group_name
-      prompt: OpenStack security group containing all firewall rules required for Nginx Proxy Manager operation
+      prompt: OpenStack security group containing all firewall rules required for Nginx Proxy Manager operation. Press Enter to accept default
       private: false
+      default: "nginx-proxy-manager"
 
     - name: npm_admin_ui_port
-      prompt: port number at which the Nginx Proxy Manager admin UI is served
+      prompt: port number at which the Nginx Proxy Manager admin UI is served. Press Enter to accept default
       private: false
+      default: "8080"
 
   tasks:
     - name: Store user input as localhost facts
