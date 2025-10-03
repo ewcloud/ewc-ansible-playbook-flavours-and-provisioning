@@ -19,11 +19,9 @@ your IPA server, such that it:
   instance machine, if and when found
 * Teardown the target instance and any attached volumes or IP addresses.
 
-After successful teardown, you can take advantage of Terraform built-in
-functionality to safely re-provision the instance from scratch.
+After successful provisioning, you can leverage Terraform's functionality to modify or delete individual components safely. Each will have its own `main.tf` definition and `terraform.tfstate` state file under the corresponding user-defined local directories.
 
-To learn the basics about managing infrastructure with Terraform, checkout the
-[official documentation examples](https://developer.hashicorp.com/terraform/tutorials/aws-get-started).
+To learn the basics about managing infrastructure with Terraform, check out [Terraform in 100 seconds](https://youtu.be/tomUWcQ0P3k?si=CJwZJ7UaqpynDU-d) on YouTube. You can also find a step-by-step example applied to the EWC on the [official EWC documentation](https://confluence.ecmwf.int/x/2EDOIQ).
 
 ## Authentication
 
@@ -98,10 +96,10 @@ ansible-playbook \
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
 | tf_project_path | path to terraform working directory. Example: `~/ewc/ipa-client-1` | `string` | n/a | yes |
-| private_keypair_path | path to the local private keypair to use for SSH access to the instance. Example: `~/.ssh/id_rsa` | `string` | n/a | yes |
+| private_keypair_path | path to the local private keypair to use for SSH access to the instance | `string` | `~/.ssh/id_rsa` | yes |
 | ipa_domain | domain name managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
-| ipa_server_hostname | hostname of the IPA server. Example: `ipa-server-1` | `string`| n/a | yes |
-| ipa_admin_username | username of the administrator account from the IPA server | `string` | n/a | yes |
+| ipa_server_hostname | hostname of the IPA server. | `string`| `ipa-server-1` | yes |
+| ipa_admin_username | username of the administrator account from the IPA server | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of the administrator account from the IPA server | `string` | n/a | yes |
 
 
