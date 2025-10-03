@@ -94,7 +94,7 @@ ansible-playbook \
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| os_security_group_name_fact | OpenStack security group containing all firewall rules required for HAProxy operation. Example: `ssh-http-https` | `string` | n/a | yes |
+| os_security_group_name_fact | OpenStack security group containing all firewall rules required for HAProxy operation | `string` | `ssh-http-https` | yes |
 
 ## Dependencies
 > ⚠️ Only Ubuntu 22.04 images are currently supported.
