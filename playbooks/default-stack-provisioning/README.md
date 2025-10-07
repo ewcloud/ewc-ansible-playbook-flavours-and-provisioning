@@ -161,10 +161,10 @@ ansible-playbook \
 
 | Name | Version | License | Home URL |
 |------|---------|-------|------|
-| ewc-ansible-playbook-ipa-server-provisioning | 1.3 | MIT | https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning |
-| ewc-ansible-playbook-ssh-bastion-provisioning | 1.3 | MIT | https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning |
-| ewc-ansible-playbook-remote-desktop-provisioning | 1.3 | MIT | https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning |
-| ewc-ansible-playbook-ipa-client-enroll-flavour | 1.3 | MIT | https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning |
+| ewc-ansible-playbook-ipa-server-provisioning | 1.4 | MIT | https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning |
+| ewc-ansible-playbook-ssh-bastion-provisioning | 1.4 | MIT | https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning |
+| ewc-ansible-playbook-remote-desktop-provisioning | 1.4 | MIT | https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning |
+| ewc-ansible-playbook-ipa-client-enroll-flavour | 1.4 | MIT | https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning |
 
 ## Operation
 Checkout the following how-to guides to learn about management of Item after initial setup:
