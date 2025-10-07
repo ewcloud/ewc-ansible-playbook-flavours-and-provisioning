@@ -106,3 +106,9 @@ stable operation.
 | Name | Version | License | Home URL |
 |------|---------|------|------|
 | ewc-ansible-role-haproxy | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-role-haproxy |
+
+## Operation
+Checkout the following how-to guides to learn about management of Item after initial setup:
+* [How to add a new backend server to HAProxy](./docs/how-to/how-to-add-a-new-backend-server-to-haproxy.md)
+* [How to add a new SSL certificate to a server in HAProxy](./docs/how-to/how-to-add-a-new-ssl-certifacte-to-server-in-haproxy.md)
+* [How to modify HAproxy config file](./docs/how-to/how-to-modify-haproxy-config-file.md)

@@ -166,6 +166,11 @@ ansible-playbook \
 | ewc-ansible-playbook-remote-desktop-provisioning | 1.3 | MIT | https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning |
 | ewc-ansible-playbook-ipa-client-enroll-flavour | 1.3 | MIT | https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning |
 
+## Operation
+Checkout the following how-to guides to learn about management of Item after initial setup:
+* [How to configure the IPA Server](../ipa-server-flavour/docs/how-to/how-to-configure-the-ipa-server.md)
+* [How to connect to a VM hidden behind the SSH Bastion](../ssh-bastion-flavour/docs/how-to/how-to-connect-to-a-vm-hidden-behind-the-ssh-bastion.md)
+
 ## Troubleshooting
 Checkout the [troubleshooting documentation](../../docs/troubleshooting.md) for
 information on common problems and how to troubleshoot them.

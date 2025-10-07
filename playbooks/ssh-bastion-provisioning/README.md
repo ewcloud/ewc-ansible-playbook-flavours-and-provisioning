@@ -136,6 +136,10 @@ stable operation.
 | ewc-tf-module-openstack-compute | 1.0 | MIT | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
 | ewc-ansible-role-ssh-bastion | 1.4 | MIT | https://github.com/ewcloud/ewc-ansible-role-ssh-bastion |
 
+## Operation
+Checkout the following how-to guides to learn about management of Item after initial setup:
+* [How to connect to a VM hidden behind the SSH Bastion](../ssh-bastion-flavour/docs/how-to/how-to-connect-to-a-vm-hidden-behind-the-ssh-bastion.md)
+
 
 ## Troubleshooting
 Checkout the [troubleshooting documentation](../../docs/troubleshooting.md) for

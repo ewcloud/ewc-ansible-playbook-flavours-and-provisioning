@@ -103,3 +103,7 @@ stable operation.
 | Name | Version | License |Home URL |
 |------|---------|-------|-------|
 | ewc-ansible-role-ssh-bastion | 1.4 | MIT | https://github.com/ewcloud/ewc-ansible-role-ssh-bastion |
+
+## Operation
+Checkout the following how-to guides to learn about management of Item after initial setup:
+* [How to connect to a VM hidden behind the SSH Bastion](./docs/how-to/how-to-connect-to-a-vm-hidden-behind-the-ssh-bastion.md)
