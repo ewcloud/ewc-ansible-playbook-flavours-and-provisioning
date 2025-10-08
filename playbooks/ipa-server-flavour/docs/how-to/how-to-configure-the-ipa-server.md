@@ -35,6 +35,7 @@ If you deployed the IPA server via the EWC Community Hub, use the self-service s
 
 
 ## Configure the IPA Sever Using Command Line Interface
+>⚠️ This sections assumes your tenancy hosts a working [SSH bastion server](../../../ssh-bastion-flavour/). 
 
 1. **SSH into the IPA (LDAP and DNS) Instance**:
    Use the bastion host for secure access:
@@ -307,4 +308,5 @@ ipa dnsrecord-del <Zone Name> <Record Name> --del-all
 
 
 ## Resources
+
 - [FreeIPA Official Documentation](https://www.freeipa.org/page/Documentation)
