@@ -1,11 +1,13 @@
-# Add a new SSL certificate to a server in HAProxy
+# Add a New SSL Certificate to a Server in HAProxy
 
-## Configure HaProxy
+This guide explains how to configure HAProxy to support SSL certificates and request a new certificate using Certbot for the European Weather Cloud. Follow these steps to ensure secure HTTPS traffic for your server.
 
-In order to request certificates you need to add letsencrypt backend exposed to port 8080 and have similar structure to the below section. Remember to configure the backend to your own server
+## Configure HAProxy
+
+To request SSL certificates from Let's Encrypt, configure a dedicated backend for the Let's Encrypt ACME challenge, exposed on port 8080. This backend handles the validation process for certificate issuance. Below is an example HAProxy configuration. Replace placeholders (e.g., `YOUR_DOMAIN`, `YOUR_SERVER_IP`) with your actual server details.
 
 ```
-#HA Proxy Config
+# HAProxy Config
 global
   ulimit-n 500000
   maxconn 99999
@@ -30,9 +32,7 @@ defaults
   timeout http-request 10s
  
 frontend http-in
-# Receive HTTP traffic on all IP addresses assigned to the server at port 80
   bind *:80
- 
   option forwardfor
  
   http-request add-header "X-Forwarded-Proto" "http"
@@ -42,7 +42,6 @@ frontend http-in
   redirect scheme https if !letsencrypt_http_acl { env(FORCE_HTTPS_REDIRECT) -m str true }
  
   use_backend letsencrypt_http if letsencrypt_http_acl
- 
   default_backend webservers
  
  
@@ -55,39 +54,70 @@ frontend https_in
  
   default_backend webservers
  
- 
 backend letsencrypt_http
   server letsencrypt_http_srv 127.0.0.1:8080
- 
  
 backend webservers
   balance leastconn
  
   option tcp-check
   option log-health-checks
- 
   server mapserver 10.0.0.96:8999 check inter 5s
   http-request set-header X-Forwarded-Port %[dst_port]
 ```
 
->⚠️ the docker compose needs to expose the correct port. Moreover the VMs needs to have the required ports open!
+### Configuration Notes
+- **Global Section**: Configures system limits, logging, and SSL cipher suites for secure connections. The `ssl-default-bind-ciphers` ensures modern, secure ciphers are used, excluding weak protocols like MD5.
+- **Defaults Section**: Sets HTTP mode and reasonable timeouts for client, server, and connection handling.
+- **Frontend `http-in`**: Listens on port 80 for HTTP traffic, redirects to HTTPS unless handling Let's Encrypt ACME challenges, and forwards traffic to the appropriate backend.
+- **Frontend `https-in`**: Listens on port 443 for HTTPS traffic, using SSL certificates stored in `/usr/local/etc/haproxy/certs.d`.
+- **Backend `letsencrypt_http`**: Handles Let's Encrypt ACME challenges on port 8080.
+- **Backend `webservers`**: Routes traffic to your application servers (e.g., `10.0.0.96:8999`), with health checks to ensure only healthy servers receive traffic.
 
-![](../images/haproxy.png)
+> ⚠️ Ensure your Docker Compose file exposes port 8080 for the Let's Encrypt backend and that your VM's firewall allows traffic on ports 80, 443, and 8080. Refer to [How to modify HAProxy config file](https://confluence.ecmwf.int/display/EWCLOUDKB/How+to+modify+HAproxy+config+file) for guidance on modifying and validating the configuration.
 
-## Add a new SSL certificate
+![HAProxy Configuration Overview](../images/haproxy.png)
 
-This will add a new cert using a certbot config that is compatible with the haproxy config template below. After creating the cert, you should run the refresh script referenced below to initialize haproxy to use it. After adding the cert and running the refresh script, no further action is needed.
+## Add a New SSL Certificate
 
-```bash
-# request certificate from let's encrypt
-docker exec haproxy-certbot certbot-certonly   --domain YOUR_DOMAIN  --email YOUREMAIL --dry-run
- 
-# create/update haproxy formatted certs in certs.d and then restart haproxy
-docker exec haproxy-certbot haproxy-refresh
-```
+To add a new SSL certificate using Certbot, follow these steps. The certificate will be compatible with the HAProxy configuration above. After generating the certificate, run the refresh script to update HAProxy.
 
-*After testing the setup, remove --dry-run to generate a live certificate*
+1. Request a certificate from Let's Encrypt:
+
+   ```bash
+   docker exec haproxy-certbot certbot certonly --webroot --webroot-path /var/www/html --domain YOUR_DOMAIN --email YOUR_EMAIL --dry-run
+   ```
+
+   - Replace `YOUR_DOMAIN` with your domain (e.g., `example.com`).
+   - Replace `YOUR_EMAIL` with your email address for renewal notifications.
+   - The `--dry-run` flag tests the setup without issuing a real certificate.
+
+2. After verifying the setup, remove the `--dry-run` flag to request a live certificate:
+
+   ```bash
+   docker exec haproxy-certbot certbot certonly --webroot --webroot-path /var/www/html --domain YOUR_DOMAIN --email YOUR_EMAIL
+   ```
+
+3. Update HAProxy with the new certificate and restart the service:
+
+   ```bash
+   docker exec haproxy-certbot haproxy-refresh
+   ```
+
+   This command formats the certificate for HAProxy and restarts the service to apply the changes. No further action is required.
+
+### Notes
+- The certificate is stored in `/usr/local/etc/haproxy/certs.d` and automatically loaded by HAProxy (as specified in the `frontend https-in` section).
+- Ensure the domain is correctly pointed to your server's public IP address.
+- If you encounter issues, check the Certbot logs or validate the HAProxy configuration using:
+
+   ```bash
+   docker exec -it <CONTAINER_ID> haproxy -c -f /config/haproxy.cfg
+   ```
+
+   (Replace `<CONTAINER_ID>` with the actual ID, found using `docker ps`.)
 
 ## Resources
-
-* [https://github.com/thingsboard/docker/blob/master/haproxy-certbot/README.md](https://github.com/thingsboard/docker/blob/master/haproxy-certbot/README.md)
+- [ThingsBoard HAProxy-Certbot Documentation](https://github.com/thingsboard/docker/blob/master/haproxy-certbot/README.md)
+- [HAProxy SSL Configuration Guide](https://www.haproxy.com/documentation/haproxy/configuration/ssl/)
+- [How to modify HAProxy config file](./how-to-modify-haproxy-config-file.md)
