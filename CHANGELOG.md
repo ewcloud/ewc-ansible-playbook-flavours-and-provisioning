@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.3.0...1.4.0) (2025-10-08)
+
+
+### Features
+
+* Complete set of input defaults on all tems ([#8](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/8)) ([7f88ecd](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/7f88ecd533226912031a70f62f7da81fd8f522b4))
+
 # [1.3.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.2.0...1.3.0) (2025-09-22)
 
 
