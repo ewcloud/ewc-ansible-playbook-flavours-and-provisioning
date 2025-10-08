@@ -18,6 +18,13 @@ The template is designed to:
 address, and a minimum recommended 4GB of RAM, as entrypoint for users who
 wish to reach private EWC networks, from the public internet, via SSH.
 
+## Authentication
+
+In order to configure the virtual machine, you
+required a private and public SSH keypair. Checkout this
+[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
+for details on how import your public key into OpenStack.
+
 ## Prerequisites
 
 To successfully run this playbook, the following packages should be available in your work environment:

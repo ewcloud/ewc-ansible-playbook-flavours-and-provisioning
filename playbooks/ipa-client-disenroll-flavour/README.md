@@ -24,6 +24,13 @@ The template is designed to:
 - Disable user authentication and authorization (LDAP) for the target instance.
 - Remove IPA server-internal DNS records referencing the target instance, if present.
 
+## Authentication
+
+In order to configure the virtual machine, you
+required a private and public SSH keypair. Checkout this
+[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
+for details on how import your public key into OpenStack.
+
 ## Prerequisites
 
 To successfully run this playbook, the following packages should be available in your work environment:

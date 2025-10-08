@@ -13,6 +13,13 @@ The Data Tailor is a product customization toolbox designed to:
 
 For more information on capabilities of the Data Tailor, please refer to [Data Tailor Standalone Guide on User Portal](https://user.eumetsat.int/resources/user-guides/data-tailor-standalone-guide) and for more information about the available products and customizations inside the Data Tailor, please go to [Products and Customizations Available in the Data Tailor](https://user.eumetsat.int/resources/user-guides/data-store-detailed-guide#ID-Products-and-customisation-available-in-the-Data-Tailor) page.
 
+## Authentication
+
+In order to configure the virtual machine, you
+required a private and public SSH keypair. Checkout this
+[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
+for details on how import your public key into OpenStack.
+
 ## Prerequisites
 
 To successfully run this playbook, the following packages should be available in your work environment:

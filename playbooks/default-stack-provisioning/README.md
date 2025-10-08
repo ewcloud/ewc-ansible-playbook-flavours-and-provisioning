@@ -30,7 +30,7 @@ to check out [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+Ho
 and [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-GettingStarted)
 from EWC documentation.
 
-Additionally, in order to configure the virtual machine after provisioning, you
+Additionally, in order to configure the virtual machines after provisioning, you
 required a private and public SSH keypair. Checkout this
 [EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
 for details on how import your public key into OpenStack.

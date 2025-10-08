@@ -22,6 +22,13 @@ the [MATE desktop environment](https://mate-desktop.org/).
 - Enable end-users to interact with the VM through a graphical interface using the X2Go client
 application.
 
+## Authentication
+
+In order to configure the virtual machine, you
+required a private and public SSH keypair. Checkout this
+[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
+for details on how import your public key into OpenStack.
+
 ## Prerequisites
 
 To successfully run this playbook, the following packages should be available in your work environment:

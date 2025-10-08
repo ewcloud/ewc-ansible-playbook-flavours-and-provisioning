@@ -19,6 +19,13 @@ IPA server on the same subnet.
 - Enable DNS resolution for discovering private hosts and public addresses.
 - Allow remote access to the VM using centrally managed LDAP users via password authentication.
 
+## Authentication
+
+In order to configure the virtual machine, you
+required a private and public SSH keypair. Checkout this
+[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
+for details on how import your public key into OpenStack.
+
 ## Prerequisites
 
 To successfully run this playbook, the following packages should be available in your work environment:

@@ -19,6 +19,19 @@ Nginx Proxy Manager is full-featured tool that helps to lower the barriers to en
 * Nginx Proxy
 * Manager log auditing
 
+## Authentication
+
+Before proceeding, if you lack OpenStack Application Credentials or do not know
+how to make them available to Ansible in your development environment, make sure
+to check out [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials)
+and [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-GettingStarted)
+from EWC documentation.
+
+Additionally, in order to configure, you
+required a private and public SSH keypair. Checkout this
+[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
+for details on how import your public key into OpenStack.
+
 ## Prerequisites
 
 To successfully run this playbook, the following packages should be available in your work environment:
