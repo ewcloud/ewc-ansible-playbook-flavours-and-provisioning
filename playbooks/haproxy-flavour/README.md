@@ -22,16 +22,28 @@ Users can leverage HAProxy to distribute workloads and improve website and appli
 * Health checking.
 * Rate limits.
 
+## Authentication
+
+Before proceeding, if you lack OpenStack Application Credentials or do not know
+how to make them available to Ansible in your development environment, make sure
+to check out [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials)
+and [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-GettingStarted)
+from EWC documentation.
+
+Additionally, in order to configure the virtual machine, you
+required a private and public SSH keypair. Checkout this
+[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
+for details on how import your public key into OpenStack.
+
 ## Prerequisites
->💡 Versions listed correspond to minimal prerequisites.
 
 To successfully run this playbook, the following packages should be available in your work environment:
 
 | Name | Version | License | Home URL |
 |------|---------|----- |-----|
-| git | 2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | 3.9   | PSF | https://www.python.org/downloads  |
-| ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+| git | >= 2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | >= 3.9   | PSF | https://www.python.org/downloads  |
+| ansible |>= 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
 
 ## Usage
 
@@ -94,7 +106,7 @@ ansible-playbook \
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| os_security_group_name_fact | OpenStack security group containing all firewall rules required for HAProxy operation. Example: `ssh-http-https` | `string` | n/a | yes |
+| os_security_group_name_fact | OpenStack security group containing all firewall rules required for HAProxy operation | `string` | `ssh-http-https` | yes |
 
 ## Dependencies
 > ⚠️ Only Ubuntu 22.04 images are currently supported.
@@ -107,3 +119,9 @@ stable operation.
 | Name | Version | License | Home URL |
 |------|---------|------|------|
 | ewc-ansible-role-haproxy | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-role-haproxy |
+
+## Operation
+Checkout the following how-to guides to learn about management of the Item after initial setup:
+* [How to add a new backend server to HAProxy](./docs/how-to/how-to-add-a-new-backend-server-to-haproxy.md)
+* [How to add a new SSL certificate to a server in HAProxy](./docs/how-to/how-to-add-a-new-ssl-certifacte-to-server-in-haproxy.md)
+* [How to modify HAproxy config file](./docs/how-to/how-to-modify-haproxy-config-file.md)

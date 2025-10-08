@@ -6,8 +6,9 @@
 
   vars_prompt:
     - name: os_security_group_name
-      prompt: OpenStack security group containing all firewall rules required for HAProxy operation
+      prompt: OpenStack security group containing all firewall rules required for HAProxy operation. Press Enter to accept default
       private: false
+      default: "ssh-http-https"
 
   tasks:
     - name: Store user input as localhost facts

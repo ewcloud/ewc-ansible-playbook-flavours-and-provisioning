@@ -14,12 +14,14 @@
       private: false
 
     - name: ipa_server_hostname
-      prompt: hostname of the IPA server
+      prompt: hostname of the IPA server. Press Enter to accept default
       private: false
+      default: "ipa-server-1"
 
     - name: ipa_admin_username
-      prompt: username of the administrator account from the IPA server
+      prompt: username of the administrator account from the IPA server. Press Enter to accept default
       private: false
+      default: "ipaadmin"
 
     - name: ipa_admin_password
       prompt: password of the administrator account from the IPA server

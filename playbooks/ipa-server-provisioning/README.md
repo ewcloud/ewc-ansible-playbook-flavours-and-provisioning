@@ -29,18 +29,14 @@ with your specified VM image and desired flavor (a.k.a VM plan):
 * Automatically update the underlying subnet DNS nameserver to point to the
 newly configured IPA server
 
-After successful provisioning, you can take advantage of Terraform built-in
-functionality to safely modify or delete the instance. You'll find the definition of your
-instance in `main.tf`, and its current state in `terraform.tfstate`, under the user-defined
-`tf_project_path` directory.
+After successful provisioning, you can leverage Terraform's functionality to modify or delete individual components safely. Each will have its own `main.tf` definition and `terraform.tfstate` state file under the corresponding user-defined local directories.
 
-To learn the basics about managing infrastructure with Terraform, checkout the
-[official documentation examples](https://developer.hashicorp.com/terraform/tutorials/aws-get-started).
+To learn the basics about managing infrastructure with Terraform, check out [Terraform in 100 seconds](https://youtu.be/tomUWcQ0P3k?si=CJwZJ7UaqpynDU-d) on YouTube. You can also find a step-by-step example applied to the EWC on the [official EWC documentation](https://confluence.ecmwf.int/x/2EDOIQ).
 
->⚠️ Successfull execution leads to changes of the DNS nameserver(s) in your
+>⚠️ Successful execution leads to changes of the DNS nameserver(s) in your
 OpenStack subnet (includes now only the IP address of the new IPA server).
 This can negatively affect existing VMs within your subnet.
-To prevent issues, programatically update each VM via the
+To prevent issues, programmatically update each VM via the
 [IPA Client Enroll Flavour](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour)
 CommunityHub Item. Alternatively, you can manually
 [add the new nameserver](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/domain-dns)
@@ -62,16 +58,15 @@ required a private and public SSH keypair. Checkout this
 for details on how import your public key into OpenStack.
 
 ## Prerequisites
->💡 Versions listed correspond to minimal prerequisites.
 
 To successfully run this playbook, the following packages should be available in your work environment:
 
 | Name | Version | License | Home URL |
 |------|---------|----- |-----|
-| git | 2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | 3.9   | PSF | https://www.python.org/downloads  |
-| ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
-| terraform | 0.14  | BSL   | https://developer.hashicorp.com/terraform/install |
+| git | >= 2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | >= 3.9   | PSF | https://www.python.org/downloads  |
+| ansible | >= 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+| terraform | >= 0.14  | BSL   | https://developer.hashicorp.com/terraform/install |
 
 ## Usage
 
@@ -112,8 +107,8 @@ ansible-playbook \
         "ipa_server_app_name":"ipa",
         "ipa_server_instance_name":"server",
         "ipa_server_instance_index": 1,
-        "ipa_server_flavor_name":"eo2.medium",
-        "ipa_server_image_name":"Rocky-8.10-20250204105303",
+        "ipa_server_flavor_name":"eo1.large",
+        "ipa_server_image_name":"Rocky-8.10-20250604144456",
         "public_keypair_name":"my-public-key-name",
         "private_keypair_path":"~/.ssh/id_rsa",
         "private_network_name": "private",
@@ -130,22 +125,22 @@ ansible-playbook \
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| ewc_provider | your target EWC provider. Must match that the provider of your OpenStack application credentials. Valid input values are `ecmwf` or `eumetsat`. | `string` | n/a | yes |
-| ipa_server_tf_project_path | path to terraform working directory. Example: `~/ewc/ipa-server-1` | `string` | n/a | yes |
-| ipa_server_app_name | application name, used as prefix in the full instance name. Example: `ipa` | `string` | n/a | yes |
-| ipa_server_instance_name| name of the instance, used in the full instance name.  Example: `server` | `string` | n/a | yes |
-| ipa_server_instance_index | index or identifier for the instance, used as suffix in the full instance name. Example: `1` | `number` | n/a | yes |
-| ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation. | `string` | n/a | yes |
-| ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 VM images are currently supported. This is due to constrains imposed by the required ewc-ansible-role-ipa-server Ansible Role. Example: `Rocky-8.10-20250204105303`  | `string` | n/a | yes |
+| ewc_provider | your target EWC provider. Must match that the provider of your OpenStack application credentials. Valid input values are `ecmwf` or `eumetsat`. | `string` | `eumetsat` | yes |
+| ipa_server_tf_project_path | path to terraform working directory | `string` | `~/ewc/ipa-server-1` | yes |
+| ipa_server_app_name | application name, used as prefix in the full instance name | `string` | `ipa` | yes |
+| ipa_server_instance_name| name of the instance, used in the full instance name | `string` | `server` | yes |
+| ipa_server_instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
+| ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation. | `string` | `eo1.large` | yes |
+| ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 VM images are currently supported. This is due to constrains imposed by the required ewc-ansible-role-ipa-server Ansible Role | `string` | `Rocky-8.10-20250604144456` | yes |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
-| private_keypair_path | path to the local private keypair to use for SSH access to the instance. Example: `~/.ssh/id_rsa` | `string` | n/a | yes |
-| private_network_name | private network name to attach the instance. Example: `private` | `string` | n/a | yes |
-| security_group_name | security group name to apply to the instance. Example: `ipa` | `string` | n/a | yes |
+| private_keypair_path | path to the local private keypair to use for SSH access to the instance  | `string` | `~/.ssh/id_rsa` | yes |
+| private_network_name | private network name to attach the instance | `string` | `private`  | yes |
+| security_group_name | security group name to apply to the instance  | `string` | `ipa` | yes |
 | ipa_domain | domain name to be managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
-| ipa_admin_username | username of administrator account to replace the default IPA admin | `string` | n/a | yes |
+| ipa_admin_username | username of administrator account to replace the default IPA admin | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of administrator account to replace the default IPA admin | `string` | n/a | yes |
-| ipa_admin_givenname | given name of the administrator to replace the default IPA admin (needs not be a physical person). Example: `EWC` | `string` | n/a | yes |
-| ipa_admin_surname | surname of the administrator to replace the default IPA admin (needs not to belong to a physical person). Example: `IPAADMIN` | `string` | n/a | yes |
+| ipa_admin_givenname | given name of the administrator to replace the default IPA admin (needs not be a physical person) | `string` | `EWC` | yes |
+| ipa_admin_surname | surname of the administrator to replace the default IPA admin (needs not to belong to a physical person)  | `string` | `IPAADMIN` | yes |
 
 
 ## Dependencies
@@ -161,6 +156,10 @@ stable operation.
 | ewc-tf-module-openstack-compute | 1.4 | MIT | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
 | ewc-ansible-role-ipa-server | 1.0 | MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-server |
 
+
+## Operation
+Checkout the following how-to guides to learn about management of the Item after initial setup:
+* [How to configure the IPA Server](../ipa-server-flavour/docs/how-to/how-to-configure-the-ipa-server.md)
 
 ## Troubleshooting
 Checkout the [troubleshooting documentation](../../docs/troubleshooting.md) for

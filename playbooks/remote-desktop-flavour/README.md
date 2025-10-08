@@ -22,16 +22,22 @@ the [MATE desktop environment](https://mate-desktop.org/).
 - Enable end-users to interact with the VM through a graphical interface using the X2Go client
 application.
 
+## Authentication
+
+In order to configure the virtual machine, you
+required a private and public SSH keypair. Checkout this
+[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
+for details on how import your public key into OpenStack.
+
 ## Prerequisites
->💡 Versions listed correspond to minimal prerequisites.
 
 To successfully run this playbook, the following packages should be available in your work environment:
 
 | Name | Version | License | Home URL |
 |------|---------|----- |-----|
-| git | 2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | 3.9   | PSF | https://www.python.org/downloads  |
-| ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+| git | >= 2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | >= 3.9   | PSF | https://www.python.org/downloads  |
+| ansible | >= 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
 
 ## Usage
 
@@ -110,7 +116,7 @@ Desktop section of
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| fail2ban_whitelisted_ip_ranges | IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Example: `['10.0.0.0/24','192.168.1.0/24']` | `list(string)` | n/a | no |
+| fail2ban_whitelisted_ip_ranges | IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Example: `['10.0.0.0/24','192.168.1.0/24']` | `list(string)` | `''` | no |
 
 
 ## Dependencies

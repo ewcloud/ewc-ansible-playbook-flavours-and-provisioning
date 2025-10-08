@@ -19,16 +19,28 @@ Nginx Proxy Manager is full-featured tool that helps to lower the barriers to en
 * Nginx Proxy
 * Manager log auditing
 
+## Authentication
+
+Before proceeding, if you lack OpenStack Application Credentials or do not know
+how to make them available to Ansible in your development environment, make sure
+to check out [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials)
+and [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-GettingStarted)
+from EWC documentation.
+
+Additionally, in order to configure, you
+required a private and public SSH keypair. Checkout this
+[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
+for details on how import your public key into OpenStack.
+
 ## Prerequisites
->💡 Versions listed correspond to minimal prerequisites.
 
 To successfully run this playbook, the following packages should be available in your work environment:
 
 | Name | Version | License | Home URL |
 |------|---------|----- |-----|
-| git | 2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | 3.9   | PSF | https://www.python.org/downloads  |
-| ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+| git | >= 2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | >= 3.9   | PSF | https://www.python.org/downloads  |
+| ansible | >= 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
 
 ## Usage
 
@@ -93,8 +105,8 @@ ansible-playbook \
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| npm_admin_ui_port | port number at which the Nginx Proxy Manager admin UI is served. Example: `8080` | `number` | n/a | yes |
-| os_security_group_name | OpenStack security group containing all firewall rules required for Nginx Proxy Manager operation. Example: `nginx-proxy-manager` | `string` | n/a | yes |
+| npm_admin_ui_port | port number at which the Nginx Proxy Manager admin UI is served | `number` | `8080`  | yes |
+| os_security_group_name | OpenStack security group containing all firewall rules required for Nginx Proxy Manager operation  | `string` | `nginx-proxy-manager` | yes |
 
 
 ## Dependencies
@@ -108,3 +120,10 @@ stable operation.
 | Name | Version | License | Home URL |
 |------|---------|------|------|
 | ewc-ansible-role-nginx-proxy-manager | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-role-nginx-proxy-manager |
+
+## Operation
+Checkout the following how-to guides to learn about management of the Item after initial setup:
+* [How to configure the NGINX Proxy manager initial setup](./docs/how-to/how-to-configure-the-nginx-proxy-manager-initial-setup.md)
+* [How to add a new proxy host for specific domain](./docs/how-to/how-to-add-a-new-proxy-host-for-specific-domain.md)
+* [How to add a new SSL Certificate for domain/s](./docs/how-to/how-to-add-a-new-ssl-certificate-for-domains.md)
+* [How to create/modify an access list](./docs/how-to/how-to-create-modify-an-access-list.md)

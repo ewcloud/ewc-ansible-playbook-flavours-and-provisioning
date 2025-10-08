@@ -19,16 +19,22 @@ IPA server on the same subnet.
 - Enable DNS resolution for discovering private hosts and public addresses.
 - Allow remote access to the VM using centrally managed LDAP users via password authentication.
 
+## Authentication
+
+In order to configure the virtual machine, you
+required a private and public SSH keypair. Checkout this
+[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
+for details on how import your public key into OpenStack.
+
 ## Prerequisites
->💡 Versions listed correspond to minimal prerequisites.
 
 To successfully run this playbook, the following packages should be available in your work environment:
 
 | Name | Version | License | Home URL |
 |------|---------|----- |-----|
-| git | 2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | 3.9   | PSF | https://www.python.org/downloads  |
-| ansible | 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+| git | >= 2.0 | GPLv2  | https://git-scm.com/downloads |
+| python | >= 3.9   | PSF | https://www.python.org/downloads  |
+| ansible | >= 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
 
 ## Usage
 
@@ -101,8 +107,8 @@ ansible-playbook \
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
 | ipa_domain | domain name managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
-| ipa_server_hostname | hostname of the IPA server. Example: `ipa-server-1` | `string`| n/a | yes |
-| ipa_admin_username | username of the administrator account from the IPA server. Example: `ipaadmin` | `string` | n/a | yes |
+| ipa_server_hostname | hostname of the IPA server | `string`| `ipa-server-1` | yes |
+| ipa_admin_username | username of the administrator account from the IPA server | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of the administrator account from the IPA server. Example: `my-secret-password` | `string` | n/a | yes |
 
 ## Dependencies
