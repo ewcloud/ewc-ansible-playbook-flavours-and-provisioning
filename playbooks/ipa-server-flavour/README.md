@@ -142,5 +142,5 @@ stable operation.
 | ewc-ansible-role-ipa-server | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-server |
 
 ## Operation
-Checkout the following how-to guides to learn about management of Item after initial setup:
+Checkout the following how-to guides to learn about management of the Item after initial setup:
 * [How to configure the IPA Server](./docs/how-to/how-to-configure-the-ipa-server.md)

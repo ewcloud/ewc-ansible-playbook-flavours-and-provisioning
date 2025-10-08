@@ -158,7 +158,7 @@ stable operation.
 
 
 ## Operation
-Checkout the following how-to guides to learn about management of Item after initial setup:
+Checkout the following how-to guides to learn about management of the Item after initial setup:
 * [How to configure the IPA Server](../ipa-server-flavour/docs/how-to/how-to-configure-the-ipa-server.md)
 
 ## Troubleshooting
