@@ -1,4 +1,4 @@
-# Remote desktop provisioning
+# Remote Desktop Provisioning
 >✅ This template can be safely applied from any local work environment, even running outside an EWC tenancy's private network.
 
 The remote desktop is a regular RockyLinux instance equipped with [X2Go](https://wiki.x2go.org/doku.php).
@@ -13,6 +13,8 @@ This is a configuration template
 to customize your environment in the
 [European Weather Cloud (EWC)](https://europeanweather.cloud/).
 
+## Functionality
+
 The template is designed to:
 
 * Provision an instance via [Terraform](https://developer.hashicorp.com/terraform),
@@ -21,10 +23,9 @@ with your specified Linux distribution and desired flavor (a.k.a VM plan):
   is not found under the user-defined directory, attempts to create the
   instance from scratch
 
-  OR
-  * if  `terraform.tfstate` file is found, leverages Terraform's out-of-the-box
-
-  functionality to update the instance referenced on it
+    OR
+  * If  `terraform.tfstate` file is found, leverages Terraform's out-of-the-box
+    functionality to update the instance referenced on it
 * Configure the existing or newly provisioned instance such that it:
   * Enables users to operate the remote hosts through a graphical desktop
     (i.e. a [MATE desktop environment](https://mate-desktop.org/)), over a low or high bandwidth connection.
@@ -36,33 +37,38 @@ To learn the basics about managing infrastructure with Terraform, check out [Ter
 
 >💡 This template can be deployed in combination with complementary infrastructure as part of the [Default Stack Provisioning](https://europeanweather.cloud/community-hub/default-stack-provisioning) Community Hub Item.
 
-## Authentication
-
-Before proceeding, if you lack OpenStack Application Credentials or do not know
-how to make them available to Ansible in your development environment, make sure
-to check out [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials)
-and [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-GettingStarted)
-from EWC documentation.
-
-Additionally, in order to configure the virtual machine after provisioning, you
-required a private and public SSH keypair. Checkout this
-[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
-for details on how import your public key into OpenStack.
-
 ## Prerequisites
 
-To successfully run this playbook, the following packages should be available in your work environment:
-
-| Name | Version | License | Home URL |
-|------|---------|----- |-----|
-| git | >= 2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | >= 3.9   | PSF | https://www.python.org/downloads  |
-| ansible | >= 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
-| terraform | >= 0.14  | BSL   | https://developer.hashicorp.com/terraform/install |
+* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
+* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
+* Install [terraform](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+IaC+via+Terraform+and+OpenTofu#EWCIaCviaTerraformandOpenTofu-InstallationoftheCLI) (version 1.0 or higher)
+* Get OpenStack API credentials (see [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials) section of the EWC documentation)
+* Create an SSH keypair (see [Creating Keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
+* Import your public SSH key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey) section of the EWC documentation).
 
 ## Usage
 
-### 1. Download  Ansible dependencies
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning.git
+```
+
+#### 1.1. Change to the specific Item's subdirectory
+
+```bash
+cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/remote-desktop-provisioning
+```
+
+#### 1.2. (Optional) Checkout an specific Item's version
+>⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
+
+```bash
+git checkout x.y.z
+```
+
+### 2. Download  Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
@@ -71,9 +77,9 @@ Download the correct version of the Ansible dependencies, if you haven't done so
 ansible-galaxy role install -r requirements.yml
 ```
 
-### 2. Configure and apply the template
+### 3. Configure and apply the template
 
-#### 2.1. Interactive Mode
+#### 3.1. Interactive Mode
 
 By running the following command, you can trigger an interactive session that
 prompts you for the necessary user inputs, and then applies changes to your
@@ -83,7 +89,7 @@ target EWC environment:
 ansible-playbook remote-desktop-provisioning.yml
 ```
 
-#### 2.2. Non-Interactive Mode
+#### 3.2. Non-Interactive Mode
 
 >💡 To learn more about defining variables at runtime, checkout the
 [official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
@@ -112,7 +118,7 @@ ansible-playbook \
   remote-desktop-provisioning.yml
 ```
 
-### 3. Install the local client and connect to your remote desktop
+### 4. Install the local client and connect to your remote desktop
 >⚠️ When configuring a connection, be sure to select "MATE" (instead of
 "KDE" or any other options) in the `Session Type` drop-down list, towards the
 bottom of the `Session` tab. This is required for the local client to correctly

@@ -1,4 +1,4 @@
-# Remote desktop flavour
+# Remote Desktop Flavour
 
 This Ansible Playbook configures virtual machines within the
 [European Weather Cloud (EWC)](https://europeanweather.cloud/) to
@@ -22,26 +22,54 @@ the [MATE desktop environment](https://mate-desktop.org/).
 - Enable end-users to interact with the VM through a graphical interface using the X2Go client
 application.
 
-## Authentication
-
-In order to configure the virtual machine, you
-required a private and public SSH keypair. Checkout this
-[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
-for details on how import your public key into OpenStack.
-
 ## Prerequisites
 
-To successfully run this playbook, the following packages should be available in your work environment:
+* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
+* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
+* If you plan to configure an existing VM, jump to the [Usage](#usage) section below
+* If you have not yet provisioned a VM, it is required to do so. You may choose one of the following approaches:
+  * A) Provision a new VM via UI:
+    * Create an SSH keypair (see [Creating the keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
+    * Import the SSH public key into Morpheus (see [Adding the keys in Morpheus](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-AddingthekeysinMorpheus) section of the EWC documentation)
+    * Provision a new VM through the web portal (see [Provision a new Instance - Web](https://confluence.ecmwf.int/display/EWCLOUDKB/Provision+a+new+instance+-+web) section of the EWC) documentation
 
-| Name | Version | License | Home URL |
-|------|---------|----- |-----|
-| git | >= 2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | >= 3.9   | PSF | https://www.python.org/downloads  |
-| ansible | >= 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+    OR 
+  * B) Provision a new VM via CLI:
+    * Create an SSH keypair (see [Creating the keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
+    * Add you SSH public key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey) section of the EWC documentation).
+    * Provision a new VM via the OpenStack CLI (see [How to create a VM using the OpenStack CLI](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+create+a+VM+using+the+Openstack+CLI) section of the EWC documentation)
+  
+    OR
+  * C) Deploy this template, together with a new VM, as part of the [Remote Desktop Provisioning Community Hub Item](https://europeanweather.cloud/community-hub/remote-desktop-provisioning)
+
+    OR
+  * D) Deploy this template, together with a new VM, via the [EWCCLI](https://pypi.org/project/ewccli/)
+
 
 ## Usage
 
-### 1. Download  Ansible dependencies
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning.git
+```
+
+#### 1.1. Change to the specific Item's subdirectory
+
+```bash
+cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/remote-desktop-flavour
+```
+
+#### 1.2. (Optional) Checkout an specific Item's version
+>⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
+
+```bash
+git checkout x.y.z
+```
+
+
+### 2. Download  Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
@@ -50,7 +78,7 @@ Download the correct version of the Ansible dependencies, if you haven't done so
 ansible-galaxy role install -r requirements.yml
 ```
 
-### 2. Specify the target host and SSH credentials
+### 3. Specify the target host and SSH credentials
 Create an inventory file to specify address/credentials that Ansible should use
 to reach the virtual machine you wish to configure:
 
@@ -68,9 +96,9 @@ ewcloud:
 
 ```
 
-### 3. Configure and apply the template
+### 4. Configure and apply the template
 
-#### 3.1. Interactive Mode
+#### 4.1. Interactive Mode
 
 By running the following command, you can trigger an interactive session that
 prompts you for the necessary user inputs, and then applies changes to your
@@ -80,7 +108,7 @@ target EWC environment:
 ansible-playbook -i inventory.yml remote-desktop-flavour.yml
 ```
 
-#### 3.2. Non-Interactive Mode
+#### 4.2. Non-Interactive Mode
 
 >💡 To learn more about defining variables at runtime, checkout the
 [official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
@@ -97,7 +125,7 @@ ansible-playbook \
   remote-desktop-flavour.yml
 ```
 
-### 4. Install the local client and connect to your remote desktop
+### 5. Install the local client and connect to your remote desktop
 >⚠️ When configuring a connection, be sure to select "MATE" (instead of
 "KDE" or any other options) in the `Session Type` drop-down list, towards the
 bottom of the `Session` tab. This is required for the local client to correctly

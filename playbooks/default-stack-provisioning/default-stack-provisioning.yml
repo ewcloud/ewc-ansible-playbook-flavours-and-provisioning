@@ -164,6 +164,9 @@
         that:
           - ipa_server_hostname is defined and ipa_server_hostname != ''
           - ipa_server_hostname == [ipa_server_app_name, ipa_server_instance_name, ipa_server_instance_index] | join('-')
+          - ipa_server_tf_project_path != ssh_bastion_tf_project_path
+          - ssh_bastion_tf_project_path != remote_desktop_tf_project_path
+          - remote_desktop_tf_project_path != ipa_server_tf_project_path
         fail_msg: "Input validation failed. See README.md for information on required inputs and their format."
         success_msg: "User input configuration is valid."
 
