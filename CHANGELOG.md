@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.4.0...1.4.1) (2025-10-16)
+
+
+### Bug Fixes
+
+* Prerequesites and input validation ([#9](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/9)) ([fa346a6](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/fa346a68f23f310bcc302abb251fd6dae564ead5))
+
 # [1.4.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.3.0...1.4.0) (2025-10-08)
 
 
