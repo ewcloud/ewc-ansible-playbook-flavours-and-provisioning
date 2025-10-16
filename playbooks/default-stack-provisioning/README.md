@@ -20,37 +20,49 @@ After successful provisioning, you can leverage Terraform's functionality to mod
 
 To learn the basics about managing infrastructure with Terraform, check out [Terraform in 100 seconds](https://youtu.be/tomUWcQ0P3k?si=CJwZJ7UaqpynDU-d) on YouTube. You can also find a step-by-step example applied to the EWC on the [official EWC documentation](https://confluence.ecmwf.int/x/2EDOIQ).
 
->⚠️ Successful execution includes provisioning the IPA server, which updates the DNS nameserver(s) in your OpenStack subnet to point exclusively to the new IPA server. This may impact existing VMs; mitigate by enrolling them as IPA clients or manually updating their DNS configurations as detailed in the IPA server template.
-
-## Authentication
-
-Before proceeding, if you lack OpenStack Application Credentials or do not know
-how to make them available to Ansible in your development environment, make sure
-to check out [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials)
-and [this page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-GettingStarted)
-from EWC documentation.
-
-Additionally, in order to configure the virtual machines after provisioning, you
-required a private and public SSH keypair. Checkout this
-[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
-for details on how import your public key into OpenStack.
+>⚠️ Successful execution leads to changes of the DNS nameserver(s) in your
+OpenStack subnet (includes now only the IP address of the new IPA server).
+This can negatively affect existing VMs within your subnet.
+To prevent issues, programmatically update each VM via the
+[IPA Client Enroll Flavour](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour)
+CommunityHub Item. Alternatively, you can manually
+[add the new nameserver](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/domain-dns)
+to their DNS configuration.
 
 ## Prerequisites
 
-To successfully run this playbook, the following packages should be available in your work environment:
-
-| Name | Version | License | Home URL |
-|------|---------|----- |-----|
-| git | >= 2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | >= 3.9   | PSF | https://www.python.org/downloads  |
-| ansible | >= 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
-| terraform | >= 0.14  | BSL   | https://developer.hashicorp.com/terraform/install |
+* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
+* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
+* Install [terraform](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+IaC+via+Terraform+and+OpenTofu#EWCIaCviaTerraformandOpenTofu-InstallationoftheCLI) (version 1.0 or higher)
+* Get OpenStack API credentials (see [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials) section of the EWC documentation)
+* Create an SSH keypair (see [Creating Keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
+* Import your public SSH key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey) section of the EWC documentation).
 
 ## Usage
 
 ![Template Edition and Running](https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/refs/heads/main/playbooks/default-stack-provisioning/docs/images/item-edit-run.webp)
 
-### 1. Download  Ansible dependencies
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning.git
+```
+
+#### 1.1. Change to the specific Item's subdirectory
+
+```bash
+cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/default-stack-provisioning
+```
+
+#### 1.2. (Optional) Checkout an specific Item's version
+>⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
+
+```bash
+git checkout x.y.z
+```
+
+### 2. Download  Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
@@ -59,12 +71,12 @@ Download the correct version of the Ansible dependencies, if you haven't done so
 ansible-galaxy role install -r requirements.yml
 ```
 
-### 2. Configure and apply the template
+### 3. Configure and apply the template
 
-This template can used interactively or non-interactively (i.e. with one single command to configure and also execute).
+This template can be used interactively or non-interactively (i.e. with one single command to configure and also execute).
 Please beware that, regardless of your mode of choice, the complete execution may take several minutes, up to an hour.
 
-#### 2.1. Interactive Mode
+#### 3.1. Interactive Mode
 
 By running the following command, you can trigger an interactive session that
 prompts you for the necessary user inputs, and then applies changes to your
@@ -74,7 +86,7 @@ target EWC environment:
 ansible-playbook default-stack-provisioning.yml
 ```
 
-#### 2.2. Non-Interactive Mode
+#### 3.2. Non-Interactive Mode
 >💡 To learn more about defining variables at runtime, checkout the
 [official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
 
