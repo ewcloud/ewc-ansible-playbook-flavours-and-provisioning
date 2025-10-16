@@ -1,4 +1,4 @@
-# IPA Client Disenrollment flavour
+# IPA Client Disenrollment Flavour
 
 This Ansible Playbook configures an existing virtual machine in the
 [European Weather Cloud (EWC)](https://europeanweather.cloud/) to disenroll
@@ -24,26 +24,37 @@ The template is designed to:
 - Disable user authentication and authorization (LDAP) for the target instance.
 - Remove IPA server-internal DNS records referencing the target instance, if present.
 
-## Authentication
-
-In order to configure the virtual machine, you
-required a private and public SSH keypair. Checkout this
-[EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey)
-for details on how import your public key into OpenStack.
 
 ## Prerequisites
 
-To successfully run this playbook, the following packages should be available in your work environment:
-
-| Name | Version | License | Home URL |
-|------|---------|----- |-----|
-| git | >= 2.0 | GPLv2  | https://git-scm.com/downloads |
-| python | >= 3.9   | PSF | https://www.python.org/downloads  |
-| ansible | >= 2.15 |  GPLv3+ | https://pypi.org/project/ansible  |
+* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
+* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
+* You require an existing VM already enrolled into your IPA Server.
+* Your require SSH access to the exiting VM (i.e. your public SSH key must be registered on the target machine)
 
 ## Usage
 
-### 1. Download  Ansible dependencies
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning.git
+```
+
+#### 1.1. Change to the specific Item's subdirectory
+
+```bash
+cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/ipa-client-disenroll-flavour
+```
+
+#### 1.2. (Optional) Checkout an specific Item's version
+>⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
+
+```bash
+git checkout x.y.z
+```
+
+### 2. Download  Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
@@ -52,7 +63,7 @@ Download the correct version of the Ansible dependencies, if you haven't done so
 ansible-galaxy role install -r requirements.yml
 ```
 
-### 2. Specify the target host and SSH credentials
+### 3. Specify the target host and SSH credentials
 >💡 To find out which is the default user for your chosen VM image,
 checkout the [official EWC documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+VM+images+and+default+users).
 
@@ -73,9 +84,9 @@ ewcloud:
 
 ```
 
-### 3. Configure and apply the template
+### 4. Configure and apply the template
 
-#### 3.1. Interactive Mode
+#### 4.1. Interactive Mode
 
 By running the following command, you can trigger an interactive session that
 prompts you for the necessary user inputs, and then applies changes to your
@@ -85,7 +96,7 @@ target EWC environment:
 ansible-playbook -i inventory.yml ipa-client-disenroll-flavour.yml
 ```
 
-#### 3.2. Non-Interactive Mode
+#### 4.2. Non-Interactive Mode
 
 >💡 To learn more about defining variables at runtime, checkout the
 [official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
