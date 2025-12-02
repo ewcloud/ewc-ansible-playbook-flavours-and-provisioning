@@ -20,6 +20,10 @@ Nginx Proxy Manager is full-featured tool that helps to lower the barriers to en
 * Manager log auditing
 
 ## Prerequisites
+> ⚠️ Only Ubuntu version 24 and 22 supported due to constrains imposed by [dependencies](#dependencies).
+
+> 💡 A VM plan with at least 8GB of RAM is recommended for successful setup and
+stable operation.
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
@@ -125,16 +129,11 @@ ansible-playbook \
 
 
 ## Dependencies
-> ⚠️ Only Ubuntu 22.04 images are currently supported.
-This is due to constrains imposed by the required ewc-ansible-role-nginx-proxy-manager
-Ansible Role.
+> 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
-> 💡 A VM plan with at least 8GB of RAM is recommended for successful setup and
-stable operation.
-
-| Name | Version | License | Home URL |
-|------|---------|------|------|
-| ewc-ansible-role-nginx-proxy-manager | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-role-nginx-proxy-manager |
+| Name | Home URL |
+|------|---------|
+| ewc-ansible-role-nginx-proxy-manager | https://github.com/ewcloud/ewc-ansible-role-nginx-proxy-manager |
 
 ## Operation
 Checkout the following how-to guides to learn about management of the Item after initial setup:

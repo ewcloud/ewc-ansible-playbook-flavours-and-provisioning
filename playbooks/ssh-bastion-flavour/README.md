@@ -19,7 +19,6 @@ address, and a minimum recommended 4GB of RAM, as entrypoint for users who
 wish to reach private EWC networks, from the public internet, via SSH.
 
 ## Prerequisites
-
 > ⚠️ Only RockyLinux versions 9 or 8 are supported due
 to constrains imposed by [dependencies](#dependencies).
 

@@ -14,6 +14,8 @@ The Data Tailor is a product customization toolbox designed to:
 For more information on capabilities of the Data Tailor, please refer to [Data Tailor Standalone Guide on User Portal](https://user.eumetsat.int/resources/user-guides/data-tailor-standalone-guide) and for more information about the available products and customizations inside the Data Tailor, please go to [Products and Customizations Available in the Data Tailor](https://user.eumetsat.int/resources/user-guides/data-store-detailed-guide#ID-Products-and-customisation-available-in-the-Data-Tailor) page.
 
 ## Prerequisites
+> 💡 A VM plan with at least 16GB of RAM is recommended for successful setup and
+stable operation.
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
@@ -130,10 +132,9 @@ ansible-playbook \
 | conda_user | user that will own the conda installation | `string` | `root` | yes |
 
 ## Dependencies
-> 💡 A VM plan with at least 16GB of RAM is recommended for successful setup and
-stable operation.
+> 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
-| Name | Version | License | Home URL |
-|------|---------|------|------|
-| ewc-ansible-role-conda | 1.1 |  Apache-2.0 | https://github.com/ewcloud/ewc-ansible-role-conda |
-| ewc-ansible-role-data-tailor | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-role-data-tailor |
+| Name | Home URL |
+|------|---------|
+| ewc-ansible-role-conda | https://github.com/ewcloud/ewc-ansible-role-conda |
+| ewc-ansible-role-data-tailor | https://github.com/ewcloud/ewc-ansible-role-data-tailor |

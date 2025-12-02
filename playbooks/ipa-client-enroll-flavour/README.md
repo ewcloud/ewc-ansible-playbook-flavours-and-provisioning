@@ -20,6 +20,7 @@ IPA server on the same subnet.
 - Allow remote access to the VM using centrally managed LDAP users via password authentication.
 
 ## Prerequisites
+> ⚠️ Only Ubuntu version 24 and 22, or RockyLinux versions 9 or 8 supported due to constrains imposed by [dependencies](#dependencies).
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
@@ -140,10 +141,8 @@ ansible-playbook \
 | ipa_admin_password | password of the administrator account from the IPA server. Example: `my-secret-password` | `string` | n/a | yes |
 
 ## Dependencies
-> ⚠️ Only Ubuntu 22.04 and RockyLinux 8.10 VM images are currently supported.
-This is due to constrains imposed by the required
-ewc-ansible-role-ipa-client-enroll Ansible Role.
+> 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
-| Name | Version | License |Home URL |
-|------|---------|------|-----|
-| ewc-ansible-role-ipa-client-enroll | 1.1 | MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-client-enroll |
+| Name | Home URL |
+|------|---------|
+| ewc-ansible-role-ipa-client-enroll | https://github.com/ewcloud/ewc-ansible-role-ipa-client-enroll |

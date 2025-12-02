@@ -23,6 +23,10 @@ Users can leverage HAProxy to distribute workloads and improve website and appli
 * Rate limits.
 
 ## Prerequisites
+> ⚠️ Only Ubuntu version 24 and 22 supported due to constrains imposed by [dependencies](#dependencies).
+
+> 💡 A VM plan with at least 8GB of RAM is recommended for successful setup and
+stable operation.
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
@@ -124,16 +128,11 @@ ansible-playbook \
 | os_security_group_name_fact | OpenStack security group containing all firewall rules required for HAProxy operation | `string` | `ssh-http-https` | yes |
 
 ## Dependencies
-> ⚠️ Only Ubuntu 22.04 images are currently supported.
-This is due to constrains imposed by the required ewc-ansible-role-haproxy
-Ansible Role.
+> 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
-> 💡 A VM plan with at least 8GB of RAM is recommended for successful setup and
-stable operation.
-
-| Name | Version | License | Home URL |
-|------|---------|------|------|
-| ewc-ansible-role-haproxy | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-role-haproxy |
+| Name | Home URL |
+|------|---------|
+| ewc-ansible-role-haproxy | https://github.com/ewcloud/ewc-ansible-role-haproxy |
 
 ## Operation
 Checkout the following how-to guides to learn about management of the Item after initial setup:

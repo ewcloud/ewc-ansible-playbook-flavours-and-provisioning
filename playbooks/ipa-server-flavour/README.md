@@ -168,9 +168,9 @@ openstack subnet set \
 ## Dependencies
 > 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
-| Name | Version | License | Home URL |
-|------|---------|------|------|
-| ewc-ansible-role-ipa-server | 1.1 |  MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-server |
+| Name | Home URL |
+|------|---------|
+| ewc-ansible-role-ipa-server | https://github.com/ewcloud/ewc-ansible-role-ipa-server |
 
 ## Operation
 Checkout the following how-to guides to learn about management of the Item after initial setup:
