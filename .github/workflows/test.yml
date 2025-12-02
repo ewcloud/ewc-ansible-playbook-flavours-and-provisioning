@@ -1,0 +1,294 @@
+name: Test Ansible Playbook 
+
+on:
+  workflow_dispatch:
+    inputs:
+      path-to-main-file:
+        description: 'Path to main file for deployment triggering. Example: playbooks/ssh-bastion-flavour/ssh-bastion-flavour.yml'
+        required: true
+        type: string
+
+      path-to-requirements-file:
+        description: 'Path to requirements file needed for deployment. Example: playbooks/ssh-bastion-flavour/requirements.yml'
+        required: false
+        type: string
+        default: ''
+
+      input-spec:
+        description: 'Input variables for deployment, in JSON format. Example: {"fail2ban_whitelisted_ip_ranges":""}'
+        required: false
+        type: string
+        default: '{}'
+
+      image-name:
+        description: 'Name of the image to use for the instance'
+        required: true
+        default: 'Rocky-9.5-20250604142417'
+
+      flavor-name:
+        description: 'Name the flavor to use for the instance'
+        required: true
+        default: '4cpu-8gbmem-40gbdisk'
+
+      instance-name-prefix:
+        description: 'Prefix for instance (will append run ID)'
+        required: true
+        default: 'github'
+
+      private-network-name:
+        description: 'Private network name to attach the instance to'
+        required: true
+        default: 'private'
+
+      external-network-name:
+        description: 'Name of the external network for floating IPs'
+        required: true
+        default: 'external'
+
+      security-group-name:
+        required: true
+        default: 'ssh'
+
+      public-keypair-name:
+        description: 'Name of pre-uploaded keypair in OpenStack'
+        required: true
+        default: 'github-keypair'
+
+      default-linux-user:
+        description: 'Default Linux users to impersonate when connecting to the newly created intance'
+        required: true
+        default: 'cloud-user'
+
+      ewc-site:
+        description: 'Target EWC site'
+        required: true
+        type: choice
+        options:
+          - ecmwf
+          - eumetsat
+        default: ecmwf
+
+permissions:
+  contents: read
+  actions: write    # Needed for upload-artifact
+
+jobs:
+  test-ansible-playbook:
+    runs-on: ubuntu-latest
+    env:
+      TF_VERSION: "1.12"
+      PYTHON_VERSION: "3.12"
+      ANSIBLE_VERSION: "2.20"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Register playbook git reference (version)
+        id: playbook_ref
+        run: |
+          # If triggered from a branch/tag/PR
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.sha }}" ]; then
+            COMMIT="${{ github.sha }}"
+            REF="${{ github.ref }}"
+          else
+            # Fallback: current HEAD
+            COMMIT=$(git rev-parse HEAD)
+            REF=$(git rev-parse --abbrev-ref HEAD || echo "detached")
+          fi
+
+          echo "commit=$COMMIT" >> $GITHUB_OUTPUT
+          echo "ref=$REF" >> $GITHUB_OUTPUT
+
+          echo "#Test Ansible Playbook"
+          echo "## Source" >> $GITHUB_JOB_SUMMARY
+          echo "- Repository: ${{ github.repository }}" >> $GITHUB_JOB_SUMMARY
+          echo "- Commit: \`$COMMIT\`" >> $GITHUB_JOB_SUMMARY
+          echo "- Ref: \`$REF\`" >> $GITHUB_JOB_SUMMARY
+          echo "- Playbook path: ${{ inputs.path-to-main-file }}" >> $GITHUB_JOB_SUMMARY
+
+      - name: Configure OpenStack application credentials
+        run: |
+          case "${{ inputs.ewc-site }}" in
+            ecmwf)
+              echo "OS_AUTH_URL=${{ secrets.ECMWF_OS_AUTH_URL }}" >> $GITHUB_ENV
+              echo "OS_REGION_NAME=${{ secrets.ECMWF_OS_REGION_NAME }}" >> $GITHUB_ENV
+              echo "OS_APPLICATION_CREDENTIAL_ID=${{ secrets.ECMWF_OS_APPLICATION_CREDENTIAL_ID }}" >> $GITHUB_ENV
+              echo "OS_APPLICATION_CREDENTIAL_SECRET=${{ secrets.ECMWF_OS_APPLICATION_CREDENTIAL_SECRET }}" >> $GITHUB_ENV
+              ;;
+            eumetsat)
+              echo "OS_AUTH_URL=${{ secrets.EUMETSAT_OS_AUTH_URL }}" >> $GITHUB_ENV
+              echo "OS_REGION_NAME=${{ secrets.EUMETSAT_OS_REGION_NAME }}" >> $GITHUB_ENV
+              echo "OS_APPLICATION_CREDENTIAL_ID=${{ secrets.EUMETSAT_OS_APPLICATION_CREDENTIAL_ID }}" >> $GITHUB_ENV
+              echo "OS_APPLICATION_CREDENTIAL_SECRET=${{ secrets.EUMETSAT_OS_APPLICATION_CREDENTIAL_SECRET }}" >> $GITHUB_ENV
+              ;;
+          esac
+          echo "OS_AUTH_TYPE=v3applicationcredential" >> $GITHUB_ENV
+          echo "OS_IDENTITY_API_VERSION=3" >> $GITHUB_ENV
+
+      - name: Configure SSH keypair
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}" > ~/.ssh/id_github
+          chmod 600 ~/.ssh/id_github
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: $TF_VERSION
+          terraform_wrapper: true
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: $PYTHON_VERSION
+
+      - name: Setup Ansible 
+        run: pip install ansible==$ANSIBLE_VERSION
+
+      - name: Setup addional tooling 
+        run: sudo apt-get update -y && sudo apt-get install -y jq
+
+      - name: Download Terraform module
+        uses: actions/checkout@v4
+        with:
+          repository: https://github.com/ewcloud/ewc-tf-module-openstack-compute.git
+          ref: 1.4.0
+          path: /tmp/ewc-tf-module-openstack-compute
+          fetch-depth: 0
+
+      - name: Terraform Apply
+        id: tf_apply
+        working-directory: /tmp/ewc-tf-module-openstack-compute
+        run: |
+          terraform init
+          terraform apply -auto-approve \
+            -var="image_name=${{ inputs.image-name }}" \
+            -var="flavor_name=${{ inputs.flavor-name }}" \
+            -var="app_name=${{ inputs.instance_name_prefix }}" \
+            -var="instance_name=vm" \
+            -var="instance_index=${{ github.run_id }}" \
+            -var="networks=[\"${{ inputs.private-network-name }}\"]" \
+            -var="external_network_name=${{ inputs.external-network-name }}" \
+            -var="security_groups=[\"${{ inputs.security-group-name }}\"]" \
+            -var="keypair_name=${{ inputs.public-keypair-name }}" \
+            -var="instance_has_fip=true"
+
+      - name: Extract instance IP
+        id: tf_output
+        working-directory: /tmp/ewc-tf-module-openstack-compute
+        run: |
+          IP=$(terraform output -json instance | jq .floating_ip)
+          echo "floating_ip=$IP" >> $GITHUB_OUTPUT
+          echo "Instance IP: $IP" >> $GITHUB_JOB_SUMMARY
+
+      - name: Wait for SSH (max 15 minutes)
+        run: |
+          echo "Waiting for SSH on ${{ steps.tf_output.outputs.floating_ip }}:22..."
+          for i in $(seq 1 90); do
+            if nc -z -w 5 ${{ steps.tf_output.outputs.flao }} 22 2>/dev/null; then
+              echo "SSH is up!"
+              break
+            fi
+            echo "Attempt $i/90 - SSH not ready yet..."
+            sleep 10
+          done
+          nc -z -w 5 ${{ steps.tf_output.outputs.floating_ip }} 22 || (echo "SSH timeout after 15 minutes" && exit 1)
+
+      - name: Create dynamic inventory
+        run: |
+          cat > inventory.yml <<EOF
+          ewcloud:
+            hosts:
+              test_instance:
+                ansible_python_interpreter: /usr/bin/python3
+                ansible_host: ${{ steps.tf_output.outputs.floating_ip }}
+                ansible_ssh_private_key_file: ~/.ssh/id_github
+                ansible_user: ${{ inputs.default-linux-user }}
+                ansible_ssh_common_args: -o StrictHostKeyChecking=no
+          EOF
+          cat inventory.yml
+
+      - name: Build Ansible Command
+        id: ansible_cmd
+        run: |
+          CMD="ansible-playbook -i inventory.yml \"${{ inputs.path-to-main-file }}\""
+          CMD="$CMD --extra-vars '${{ steps.validate_json.outputs.input_spec }}'"
+          [ -n "${{ inputs.path-to-requirements-file }}" ] && CMD="ansible-galaxy install -r ${{ inputs.path-to-requirements-file }} && $CMD"
+
+          echo "full_command=$CMD" >> $GITHUB_OUTPUT
+
+          echo "## Ansible Command" >> $GITHUB_JOB_SUMMARY
+          echo "\`\`\`bash" >> $GITHUB_JOB_SUMMARY
+          echo "$CMD" >> $GITHUB_JOB_SUMMARY
+          echo "\`\`\`" >> $GITHUB_JOB_SUMMARY
+
+      - name: Run Ansible playbook
+        id: ansible
+        env:
+          ANSIBLE_FULL_CMD: ${{ steps.ansible_cmd.outputs.full_command }}
+        run: |
+          echo "Executing audited command:"
+          echo "$ANSIBLE_FULL_CMD"
+          echo ""
+          eval "$ANSIBLE_FULL_CMD" || echo "ANSIBLE_FAILED=true" >> $GITHUB_ENV
+
+      - name: Start collecting artifacts
+        if: always()
+        run: mkdir -p artifacts
+
+      - name: Extract Terraform output and store as artifact
+        if: always()
+        working-directory: /tmp/ewc-tf-module-openstack-compute
+        run: terraform output -json > ../artifacts/tf_output.json 2>/dev/null || "No tf_output.json"
+
+      - name: Extract SBOM and store as artifact (if avialble)
+        if: always()
+        run: |
+          scp -i ~/.ssh/id_github -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+            ${{ inputs.default-linux-user }}@${{ steps.tf_output.outputs.floating_ip }}:/sbom.json artifacts/ 2>/dev/null || echo "No sbom.json"
+
+      - name: Terraform Destroy
+        id: tf_destroy
+        if: always()
+        working-directory: ./tmp/ewc-tf-module-openstack-compute
+        continue-on-error: true
+        run: |
+          terraform destroy -auto-approve \
+            -var="image_name=${{ inputs.image-name }}" \
+            -var="flavor_name=${{ inputs.flavor-name }}" \
+            -var="app_name=${{ inputs.instance_name_prefix }}" \
+            -var="instance_name=vm" \
+            -var="instance_index=${{ github.run_id }}" \
+            -var="networks=[\"${{ inputs.private-network-name }}\"]" \
+            -var="external_network_name=${{ inputs.external-network-name }}" \
+            -var="security_groups=[\"${{ inputs.security-group-name }}\"]" \
+            -var="keypair_name=${{ inputs.public-keypair-name }}" \
+            -var="instance_has_fip=true" || echo "Destroy completed with warnings (normal on partial failure)"
+
+      - name: Final Job Summary
+        if: always()
+        run: |
+          echo "### OpenStack Site: ${{ inputs.ewc-site }}" >> $GITHUB_JOB_SUMMARY
+          echo "### Instance IP: ${{ steps.tf_output.outputs.floating_ip }}" >> $GITHUB_JOB_SUMMARY
+          echo "### Status: ${{ job.status }}" >> $GITHUB_JOB_SUMMARY
+          if [ "${{ env.ANSIBLE_FAILED }}" = "true" ]; then
+            echo "### Ansible Playbook: Failed" >> $GITHUB_JOB_SUMMARY
+          else
+            echo "### Ansible Playbook: Success" >> $GITHUB_JOB_SUMMARY
+          fi
+          echo "### Run ID: ${{ github.run_id }}" >> $GITHUB_JOB_SUMMARY
+      
+      - name: Write out sumamry to file annd store as artifact
+        if: always()
+        run: echo $GITHUB_JOB_SUMMARY > artifacts/github_job_summary.md
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts-${{ github.run_id }}
+          path: artifacts/
+          retention-days: 7
