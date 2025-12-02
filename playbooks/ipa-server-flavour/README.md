@@ -139,7 +139,7 @@ ansible-playbook \
   ipa-server-flavour.yml
 ```
 
-### 5. Update DNS nameserver(s)
+### 5. Manullay update DNS nameserver(s)
 
 After successful execution of the template, additional changes to the OpenStack subnet is required.
 You can edit your specific OpenStack subnet, as well as any other OpenStack resource, with the native [OpenStack CLI](pypi.org/project/python-openstackclient/).
