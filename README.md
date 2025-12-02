@@ -27,7 +27,7 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 ## Index
 >💡 Grouped by capability and ordered alphabetically.
 
-### Capability: Configuration (Only)
+### Configuration
 
 | Name  | Summary  |
 |------|-----|
@@ -40,7 +40,7 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 | [remote-desktop-flavour](./playbooks/remote-desktop-flavour/) | Transforms an existing VM into a secure, graphical desktop environment using X2Go and MATE, enabling simple remote access and intuitive cloud-based development for tenant users.  | 
 | [ssh-bastion-flavour](./playbooks/ssh-bastion-flavour/)   | Tightens the configuration of a running VM, to operate as a secure SSH proxy with Fail2ban, providing tenant admins and users a fortified entry point to safely access private EWC networks from the public internet. | 
 
-### Capability: Self-provisioning + Configuration
+### Self-provisioning + Configuration
 
 | Name  | Summary  |
 |------|-----|
