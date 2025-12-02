@@ -21,19 +21,14 @@ and with a minimum recommended 4GB of RAM, such that it:
   machines)
   * Enables centralized user and credentials creation/edition/deletion/authentication
   * Allows centralized authorization between users and resources
-* Automatically update the underlying subnet DNS nameserver to point to the
-newly configured IPA server
-
->⚠️ Successful execution leads to changes of the DNS nameserver(s) in your
-OpenStack subnet (includes now only the IP address of the new IPA server).
-This can negatively affect existing VMs within your subnet.
-To prevent issues, programmatically update each VM via the
-[IPA Client Enroll Flavour](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour)
-CommunityHub Item. Alternatively, you can manually
-[add the new nameserver](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/domain-dns)
-to their DNS configuration.
 
 ## Prerequisites
+
+> ⚠️ Only RockyLinux versions 9 or 8 are supported due
+to constrains imposed by [dependencies](#dependencies).
+
+> 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
+stable operation.
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
@@ -144,6 +139,19 @@ ansible-playbook \
   ipa-server-flavour.yml
 ```
 
+### 5. Update DNS nameserver(s)
+
+After successful execution of the template, additional changes to the OpenStack subnet is required.
+You can edit your specific OpenStack subnet, as well as any other OpenStack resource, with the native [OpenStack CLI](pypi.org/project/python-openstackclient/).
+
+Take note of the IP address of your newly configured IPA server and the subnet attached to it, replace these information in the command below, and execute:
+
+```bash
+openstack subnet set \
+  --dns-nameserver <IPV4 address of the IPA server> \
+  <ID or name of the OpenStack Subnet attached to the IPA server>
+```
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -158,16 +166,11 @@ ansible-playbook \
 | os_security_group_name | OpenStack security group containing all firewall rules required by the IPA server/client communication | `string` | `ipa` | yes |
 
 ## Dependencies
-> ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 VM images are currently supported.
-This is due to constrains imposed by the required ewc-ansible-role-ipa-server
-Ansible Role.
-
-> 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
-stable operation.
+> 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
 | Name | Version | License | Home URL |
 |------|---------|------|------|
-| ewc-ansible-role-ipa-server | 1.0 |  MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-server |
+| ewc-ansible-role-ipa-server | 1.1 |  MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-server |
 
 ## Operation
 Checkout the following how-to guides to learn about management of the Item after initial setup:

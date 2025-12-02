@@ -30,7 +30,7 @@
   tasks:
     - name: EWC Ansible Role NGINX Proxy Manager
       ansible.builtin.include_role:
-        name: ewc-ansible-role-nginx-proxy-manager-1.0
+        name: ewc-ansible-role-nginx-proxy-manager-1.1
       vars:
         os_security_group_name: "{{ hostvars['localhost']['os_security_group_name_fact'] }}"
         npm_admin_ui_port: "{{ hostvars['localhost']['npm_admin_ui_port_fact'] }}"

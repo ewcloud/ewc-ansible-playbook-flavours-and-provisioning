@@ -63,7 +63,7 @@
 
     - name: EWC Ansible Data Tailor
       ansible.builtin.include_role:
-        name: ewc-ansible-role-data-tailor-1.0
+        name: ewc-ansible-role-data-tailor-1.1
       vars:
         data_tailor_env_wipe: "{{ hostvars['localhost']['data_tailor_env_wipe_fact'] }}"
         data_tailor_env_name: "{{ hostvars['localhost']['data_tailor_env_name_fact'] }}"

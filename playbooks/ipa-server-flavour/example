@@ -1,0 +1,13 @@
+ansible-playbook \
+  -i inventory.yml \
+  -e '{
+      "ipa_domain": "eumetsat.sandbox.ewc",
+      "ipa_server_hostname": "ipa-server-1",
+      "ipa_admin_username": "ipaadmin",
+      "ipa_admin_password": "my-secret-password",
+      "ipa_admin_givenname": "EWC",
+      "ipa_admin_surname": "IPAADMIN",
+      "os_network_name": "private-cci1-ewcloud-eumetsat-ewc-communityhub",
+      "os_security_group_name": "ipa"
+    }' \
+  ipa-server-flavour.yml
