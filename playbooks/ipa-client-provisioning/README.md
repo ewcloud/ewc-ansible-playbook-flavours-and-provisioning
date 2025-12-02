@@ -41,6 +41,8 @@ To learn the basics about managing infrastructure with Terraform, check out [Ter
 * Import your public SSH key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey) section of the EWC documentation).
 
 ## Usage
+> ⚠️ Only Ubuntu version 24 and 22, or RockyLinux versions 9 or 8 supported due to constrains imposed by [dependencies](#dependencies).
+
 
 ### 1. Clone the repository
 
@@ -123,7 +125,7 @@ ansible-playbook \
 | instance_name| name of the instance, used in the full instance name | `string` |  `client` | yes |
 | instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
 | flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `eo1.large` | yes |
-| image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available).⚠️ Only Ubuntu 22.04 and RockyLinux 8.10 VM images are currently supported. This is due to constrains imposed by the required ewc-ansible-role-ipa-client-enroll Ansible Role | `string` | `ubuntu-22.04-20250204105649` | yes |
+| image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `ubuntu-22.04-20250204105649` | yes |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
 | private_keypair_path | path to the local private keypair to use for SSH access to the instance  | `string` | `~/.ssh/id_rsa` | yes |
 | private_network_name | private network name to attach the instance to  | `string` | `private`| yes |
@@ -135,14 +137,12 @@ ansible-playbook \
 | ipa_admin_password | password of the administrator account from the IPA server | `string` | n/a | yes |
 
 ## Dependencies
-> ⚠️ Only Ubuntu 22.04 and RockyLinux 8.10 VM images are currently supported.
-This is due to constrains imposed by the required
-ewc-ansible-role-ipa-client-enroll Ansible Role.
+> 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
-| Name | Version | License | Home URL |
-|------|---------|-------|------|
-| ewc-tf-module-openstack-compute | 1.4 | MIT | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
-| ewc-ansible-role-ipa-client-enroll | 1.1 | MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-client-enroll |
+| Name |  Home URL |
+|------|---------|
+| ewc-tf-module-openstack-compute | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
+| ewc-ansible-role-ipa-client-enroll | https://github.com/ewcloud/ewc-ansible-role-ipa-client-enroll |
 
 
 ## Troubleshooting

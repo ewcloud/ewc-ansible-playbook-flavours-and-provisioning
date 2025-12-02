@@ -222,7 +222,7 @@
   tasks:
     - name: EWC Ansible Role SSH Bastion
       ansible.builtin.include_role:
-        name: ewc-ansible-role-ssh-bastion-1.4
+        name: ewc-ansible-role-ssh-bastion-1.5
       vars:
         fail2ban_whitelisted_ip_ranges: "{{ hostvars['localhost']['ewc_ansible_role_ssh_bastion']['fail2ban_whitelisted_ip_ranges_fact'] }}"
 

@@ -57,6 +57,11 @@ to their DNS configuration.
 * Import your public SSH key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey) section of the EWC documentation).
 
 ## Usage
+> ⚠️ Only RockyLinux version 9 and 8 supported due to constrains imposed by [dependencies](#dependencies).
+
+> 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
+stable operation.
+
 
 ### 1. Clone the repository
 
@@ -137,8 +142,8 @@ ansible-playbook \
 | ipa_server_app_name | application name, used as prefix in the full instance name | `string` | `ipa` | yes |
 | ipa_server_instance_name| name of the instance, used in the full instance name | `string` | `server` | yes |
 | ipa_server_instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
-| ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans). 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and stable operation. | `string` | `eo1.large` | yes |
-| ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available). ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 VM images are currently supported. This is due to constrains imposed by the required ewc-ansible-role-ipa-server Ansible Role | `string` | `Rocky-8.10-20250604144456` | yes |
+| ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `eo1.large` | yes |
+| ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `Rocky-8.10-20250604144456` | yes |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
 | private_keypair_path | path to the local private keypair to use for SSH access to the instance  | `string` | `~/.ssh/id_rsa` | yes |
 | private_network_name | private network name to attach the instance | `string` | `private`  | yes |
@@ -151,17 +156,12 @@ ansible-playbook \
 
 
 ## Dependencies
-> ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 VM images are currently supported.
-This is due to constrains imposed by the required ewc-ansible-role-ipa-server
-Ansible Role.
+> 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
-> 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
-stable operation.
-
-| Name | Version | License | Home URL |
-|------|---------|-------|------|
-| ewc-tf-module-openstack-compute | 1.4 | MIT | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
-| ewc-ansible-role-ipa-server | 1.0 | MIT | https://github.com/ewcloud/ewc-ansible-role-ipa-server |
+| Name | Home URL |
+|------|---------|
+| ewc-tf-module-openstack-compute |  https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
+| ewc-ansible-role-ipa-server |  https://github.com/ewcloud/ewc-ansible-role-ipa-server |
 
 
 ## Operation
