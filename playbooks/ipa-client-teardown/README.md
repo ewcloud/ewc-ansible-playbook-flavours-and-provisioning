@@ -111,10 +111,10 @@ ansible-playbook \
 
 ## Dependencies
 
-| Name | Version | License | Home URL |
-|------|---------|-------|-----|
-| ewc-tf-module-openstack-compute | 1.4 | MIT | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
-| ewc-ansible-role-ipa-client-disenroll | 1.0 | MIT |  https://github.com/ewcloud/ewc-ansible-role-ipa-client-disenroll |
+| Name | Home URL |
+|------|---------|
+| ewc-tf-module-openstack-compute | https://github.com/ewcloud/ewc-tf-module-openstack-compute  |
+| ewc-ansible-role-ipa-client-disenroll | https://github.com/ewcloud/ewc-ansible-role-ipa-client-disenroll |
 
 
 ## Troubleshooting

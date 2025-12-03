@@ -23,6 +23,10 @@ the [MATE desktop environment](https://mate-desktop.org/).
 application.
 
 ## Prerequisites
+> ⚠️ Only RockyLinux version 9 and 8 supported due to constrains imposed by [dependencies](#dependencies).
+
+> 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
+stable operation.
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
@@ -148,14 +152,8 @@ Desktop section of
 
 
 ## Dependencies
+> 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
-> ⚠️ Only RockyLinux 8.10 and 9.5 instances are currently supported due
-to constrains imposed by the required ewc-ansible-role-remote-desktop Ansible
-Role.
-
-> 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
-stable operation.
-
-| Name | Version | License |Home URL |
-|------|---------|-------|---|
-| ewc-ansible-role-remote-desktop | 1.2 | MIT |  https://github.com/ewcloud/ewc-ansible-role-remote-desktop |
+| Name | Home URL |
+|------|---------|
+| ewc-ansible-role-remote-desktop | https://github.com/ewcloud/ewc-ansible-role-remote-desktop |

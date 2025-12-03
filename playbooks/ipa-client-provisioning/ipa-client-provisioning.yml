@@ -245,7 +245,7 @@
   tasks:
     - name: EWC Ansible Role IPA Client Enroll
       ansible.builtin.include_role:
-        name: ewc-ansible-role-ipa-client-enroll-1.0
+        name: ewc-ansible-role-ipa-client-enroll-1.2
       vars:
         ipa_client_hostname: "{{ hostvars['localhost']['ipa_client_hostname_fact'] }}"
         ipa_domain: "{{ hostvars['localhost']['ewc_ansible_role_ipa_client_enroll']['ipa_domain_fact'] }}"

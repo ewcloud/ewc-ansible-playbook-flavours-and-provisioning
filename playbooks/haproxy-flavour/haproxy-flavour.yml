@@ -24,6 +24,6 @@
   tasks:
     - name: EWC Ansible Role HAProxy
       ansible.builtin.include_role:
-        name: ewc-ansible-role-haproxy-1.0
+        name: ewc-ansible-role-haproxy-1.1
       vars:
         os_security_group_name: "{{ hostvars['localhost']['os_security_group_name_fact'] }}"

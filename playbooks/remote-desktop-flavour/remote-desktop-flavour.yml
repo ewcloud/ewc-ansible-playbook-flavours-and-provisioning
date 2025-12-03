@@ -23,6 +23,6 @@
   tasks:
     - name: EWC Ansible Role Remote Desktop
       ansible.builtin.include_role:
-        name: ewc-ansible-role-remote-desktop-1.2
+        name: ewc-ansible-role-remote-desktop-1.3
       vars:
         fail2ban_whitelisted_ip_ranges: "{{ hostvars['localhost']['fail2ban_whitelisted_ip_ranges_fact'] }}"

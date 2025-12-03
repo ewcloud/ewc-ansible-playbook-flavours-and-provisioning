@@ -66,7 +66,7 @@
   tasks:
     - name: EWC Ansible Role IPA Server
       ansible.builtin.include_role:
-        name: ewc-ansible-role-ipa-server-1.0
+        name: ewc-ansible-role-ipa-server-1.1
       vars:
         ipa_domain: "{{ hostvars['localhost']['ipa_domain'] }}"
         ipa_server_hostname: "{{ hostvars['localhost']['ipa_server_hostname'] }}"

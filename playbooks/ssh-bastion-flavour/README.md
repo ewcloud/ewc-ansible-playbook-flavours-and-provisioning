@@ -19,6 +19,11 @@ address, and a minimum recommended 4GB of RAM, as entrypoint for users who
 wish to reach private EWC networks, from the public internet, via SSH.
 
 ## Prerequisites
+> ⚠️ Only RockyLinux versions 9 or 8 are supported due
+to constrains imposed by [dependencies](#dependencies).
+
+> 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
+stable operation.
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
@@ -128,16 +133,11 @@ ansible-playbook \
 
 ## Dependencies
 
-> ⚠️ Only RockyLinux 9.5 and RockyLinux 8.10 instances are currently supported due
-to constrains imposed by the required ewc-ansible-role-ssh-bastion Ansible
-Role.
+> 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
-> 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
-stable operation.
-
-| Name | Version | License |Home URL |
-|------|---------|-------|-------|
-| ewc-ansible-role-ssh-bastion | 1.4 | MIT | https://github.com/ewcloud/ewc-ansible-role-ssh-bastion |
+| Name  | Home URL |
+|-------|-------|
+| ewc-ansible-role-ssh-bastion | https://github.com/ewcloud/ewc-ansible-role-ssh-bastion |
 
 ## Operation
 Checkout the following how-to guides to learn about management of Item after initial setup:

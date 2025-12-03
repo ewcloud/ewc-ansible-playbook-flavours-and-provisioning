@@ -1,5 +1,5 @@
 ---
 roles:
-  - name: ewc-ansible-role-nginx-proxy-manager-1.0
+  - name: ewc-ansible-role-nginx-proxy-manager-1.1
     src: https://github.com/ewcloud/ewc-ansible-role-nginx-proxy-manager.git
-    version: 1.0.0
+    version: 1.1.1
