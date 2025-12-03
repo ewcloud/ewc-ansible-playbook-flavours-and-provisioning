@@ -35,15 +35,6 @@ After successful provisioning, you can leverage Terraform's functionality to mod
 
 To learn the basics about managing infrastructure with Terraform, check out [Terraform in 100 seconds](https://youtu.be/tomUWcQ0P3k?si=CJwZJ7UaqpynDU-d) on YouTube. You can also find a step-by-step example applied to the EWC on the [official EWC documentation](https://confluence.ecmwf.int/x/2EDOIQ).
 
->⚠️ Successful execution leads to changes of the DNS nameserver(s) in your
-OpenStack subnet (includes now only the IP address of the new IPA server).
-This can negatively affect existing VMs within your subnet.
-To prevent issues, programmatically update each VM via the
-[IPA Client Enroll Flavour](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour)
-CommunityHub Item. Alternatively, you can manually
-[add the new nameserver](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/domain-dns)
-to their DNS configuration.
-
 >💡 This template can be deployed in combination with complementary infrastructure as part of the [Default Stack Provisioning](https://europeanweather.cloud/community-hub/default-stack-provisioning) Community Hub Item.
 
 ## Prerequisites
@@ -57,7 +48,7 @@ to their DNS configuration.
 * Import your public SSH key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey) section of the EWC documentation).
 
 ## Usage
-> ⚠️ Only RockyLinux version 9 and 8 supported due to constrains imposed by [dependencies](#dependencies).
+> ⚠️ Only RockyLinux version 8 supported due to constrains imposed by [dependencies](#dependencies).
 
 > 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
 stable operation.
@@ -133,6 +124,30 @@ ansible-playbook \
     }' \
   ipa-server-provisioning.yml
 ```
+### 4. Manullay update DNS nameserver(s)
+
+>⛔ Changes described in this section can potentially affect DNS resolution on existing VMs within your subnet. To prevent issues, enroll them to the new IPA server via the
+[IPA Client Enroll Flavour](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour)
+CommunityHub Item, OR manually [edit nameservers in their DNS configuration](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/domain-dns).
+
+After successful execution of the template, additional changes to the OpenStack subnet are required.
+You can edit your specific OpenStack subnet, as well as any other OpenStack resource, with the native [OpenStack CLI](pypi.org/project/python-openstackclient/).
+
+First, take note of the IP address of your newly configured IPA server and the subnet attached to it, replace these information in the command below, and execute:
+
+```bash
+openstack subnet set \
+  --dns-nameserver <IPV4 address of the IPA server> \
+  <ID or name of the OpenStack Subnet attached to the IPA server>
+```
+Then remove any default DNS nameservers which where added to the subnet prior to the IPA server configuration:
+
+```bash
+openstack subnet unset \
+  --dns-nameserver <IPV4 address of any prior default DNS nameserver> \
+  <ID or name of the OpenStack Subnet attached to the IPA server>
+```
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |

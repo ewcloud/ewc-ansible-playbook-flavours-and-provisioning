@@ -2,4 +2,4 @@
 roles:
   - name: ewc-ansible-role-ssh-bastion-1.5
     src: https://github.com/ewcloud/ewc-ansible-role-ssh-bastion.git
-    version: 1.5.0
+    version: 1.5.1
