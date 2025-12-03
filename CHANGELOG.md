@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.4.1...1.5.0) (2025-12-03)
+
+
+### Features
+
+* Test automation support ([#10](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/10)) ([28a684c](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/28a684ccc7981822a88a515d3e319a531ac9283c))
+
 ## [1.4.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.4.0...1.4.1) (2025-10-16)
 
 
