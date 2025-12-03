@@ -49,10 +49,10 @@ to mark breaking, major and minor code changes in accordance with the
 specific keyword (i.e. `docs`, `style`, `feat`, `fix`, `refactor`, `ci`, 
 `chore` or `test`)
 - Value is communicated to the end-users by three of the prefixes:
-  - `fix:` Patches a bug in your codebase.
-  - `feat:` Introduces a new feature to the codebase.
-  - `BREAKING CHANGE:` Introduces a breaking API change. A 
-`BREAKING CHANGE` can be part of commits of any type.
+  - `fix`: Patches a bug in your codebase.
+  - `feat`: Introduces a new feature to the codebase.
+  - `BREAKING CHANGE`: Introduces a breaking API change. A
+`BREAKING CHANGE` can be part of commits of any type (see an [example commit message](https://github.com/ewcloud/ewc-flavours/commit/7c43a7975bb18ff999c85bd0f85353698472fc0d)).
 
 ## Reporting Security Vulnerabilities
 
