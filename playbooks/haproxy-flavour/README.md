@@ -117,7 +117,7 @@ example:
 ```bash
 ansible-playbook \
   -i inventory.yml \
-  -e "os_security_group_name_fact=ssh-http-https" \
+  -e "os_security_group_name=ssh-https" \
   haproxy-flavour.yml
 ```
 
@@ -125,7 +125,7 @@ ansible-playbook \
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| os_security_group_name_fact | OpenStack security group containing all firewall rules required for HAProxy operation | `string` | `ssh-http-https` | yes |
+| os_security_group_name | OpenStack security group containing all firewall rules required for HAProxy operation | `string` | `ssh-http-https` | yes |
 
 ## Dependencies
 > 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).

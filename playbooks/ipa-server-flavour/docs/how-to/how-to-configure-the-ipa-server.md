@@ -8,31 +8,6 @@ This guide ensures basic yet secure management of your IPA server. For advanced 
 
 This guide covers essential tasks for managing IPA (LDAP and DNS) and DNS using the Identity Management (IPA) server on the European Weather Cloud (EWC). It includes instructions for both the command-line interface (CLI) and the web browser interface.
 
-### Important: EWC-managed vs. Self-Service Deployment
-The IPA server configuration differs based on how it was deployed:
-- **EWC-managed Deployment (prior to September 2025)**: Supported only in tenancies created prior to September 2025. The IPA server is ewc-managed, with secrets crated and shared with tenancy admins over Morpheus Cypher upon onboarding.
-- **Self-Service Deployment**: With the release of the [EWC Community Hub](https://europeanweather.cloud/community-hub?page=0), admins can now deploy the IPA server in a self-service manner. Secrets are generated during deployment and stored/updated in Morpheus Cypher.
-
-If you deployed the IPA server via the EWC Community Hub, use the self-service secret names. For ewc-managed setups, use the old secret names. This guide notes differences where applicable.
-
-## Getting Started
-
-1. **Retrieve Admin Credentials from Morpheus Cypher**:
-
-   ![IPA Server Secrets in Cypher](../images/ipa-secrets.png)
-
-   - For **ewc-managed deployments**:
-     - Admin Username: `secret/ipaadmin_username`
-     - Password: `password/ipaadmin`
-     - Domain Name: `secret/ldap_domain`
-     - IPA Server Fully Qualified Domain Name: `secret/ldap_hostname`
-     
-   - For **self-service deployments**: 
-     - Admin Username: `secret/ipa_admin_username`
-     - Password: `secret/ipa_admin_password`
-     - Domain Name: `secret/ipa_domain`
-     - IPA Server Hostname: `secret/ipa_server_hostname`
-
 
 ## Configure the IPA Sever Using Command Line Interface
 >⚠️ This sections assumes your tenancy hosts a working [SSH bastion server](../../../ssh-bastion-flavour/). 
