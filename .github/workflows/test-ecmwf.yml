@@ -25,7 +25,7 @@ on:
 
       os-image-name:
         required: true
-        default: 'Rocky-9.5-20250604142417'
+        default: 'Rocky-9.6-20251107141503'
 
       instance-name-prefix:
         required: true
