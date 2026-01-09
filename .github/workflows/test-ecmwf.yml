@@ -68,7 +68,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Test deployment
-        uses: ewcloud/ewc-gh-action-test-deploy-ansible-playbook@v1
+        uses: ewcloud/ewc-gh-action-test-deploy-ansible-playbook@1.1.0
         with:
           os-auth-url: '${{ secrets.ECMWF_OS_AUTH_URL }}'
           os-region-name: '${{ secrets.ECMWF_OS_REGION_NAME }}'
