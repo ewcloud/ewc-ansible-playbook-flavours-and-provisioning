@@ -41,6 +41,7 @@ To learn the basics about managing infrastructure with Terraform, check out [Ter
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
+* Install [python-openstackclient](https://pypi.org/project/python-openstackclient) (version 8.0 or higher)
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
 * Install [terraform](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+IaC+via+Terraform+and+OpenTofu#EWCIaCviaTerraformandOpenTofu-InstallationoftheCLI) (version 1.0 or higher)
 * Get OpenStack API credentials (see [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials) section of the EWC documentation)
