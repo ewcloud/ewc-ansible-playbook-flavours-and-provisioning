@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.5.0...1.5.1) (2026-02-13)
+
+
+### Bug Fixes
+
+* Full support for none-typed trivial defaults ([#13](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/13)) ([7a326b4](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/7a326b435e302994e39a7909b4c386c0018e93fe))
+
 # [1.5.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.4.1...1.5.0) (2025-12-03)
 
 
