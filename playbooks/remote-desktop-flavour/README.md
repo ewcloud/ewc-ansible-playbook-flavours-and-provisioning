@@ -123,10 +123,7 @@ each and every available input (see [inputs section](#inputs) below). For
 example:
 
 ```bash
-ansible-playbook \
-  -i inventory.yml \
-  -e '{"fail2ban_whitelisted_ip_ranges": ""}' \
-  remote-desktop-flavour.yml
+ansible-playbook -i inventory.yml remote-desktop-flavour.yml
 ```
 
 ### 5. Install the local client and connect to your remote desktop
