@@ -117,8 +117,7 @@ ansible-playbook \
         "public_keypair_name":"my-public-key-name",
         "private_keypair_path":"~/.ssh/id_rsa",
         "private_network_name":"private",
-        "security_group_name":"ssh",
-        "fail2ban_whitelisted_ip_ranges":""
+        "security_group_name":"ssh"
     }' \
   remote-desktop-provisioning.yml
 ```

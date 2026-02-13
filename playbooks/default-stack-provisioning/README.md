@@ -135,8 +135,7 @@ ansible-playbook \
         "remote_desktop_instance_index": 1,
         "remote_desktop_flavor_name":"eo1.large",
         "remote_desktop_image_name":"Rocky-9.5-20250604142417",
-        "remote_desktop_instance_has_fip":"yes",
-        "fail2ban_whitelisted_ip_ranges":""
+        "remote_desktop_instance_has_fip":"yes"
     }' \
     default-stack-provisioning.yml
 ```
