@@ -123,10 +123,7 @@ each and every available input (see [inputs section](#inputs) below). For
 example:
 
 ```bash
-ansible-playbook \
-  -i inventory.yml \
-  -e '{"fail2ban_whitelisted_ip_ranges": ""}' \
-  remote-desktop-flavour.yml
+ansible-playbook -i inventory.yml remote-desktop-flavour.yml
 ```
 
 ### 5. Install the local client and connect to your remote desktop
@@ -148,7 +145,7 @@ Desktop section of
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| fail2ban_whitelisted_ip_ranges | IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Example: `['10.0.0.0/24','192.168.1.0/24']` | `list(string)` | `''` | no |
+| fail2ban_whitelisted_ip_ranges | IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Example: `['10.0.0.0/24','192.168.1.0/24']` | `list(string)` | `null` | no |
 
 
 ## Dependencies
