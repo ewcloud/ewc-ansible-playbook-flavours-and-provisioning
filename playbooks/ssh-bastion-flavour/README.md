@@ -119,10 +119,7 @@ each and every available input (see [inputs section](#inputs) below). For
 example:
 
 ```bash
-ansible-playbook \
-  -i inventory.yml \
-  -e '{"fail2ban_whitelisted_ip_ranges":""}' \
-  ssh-bastion-flavour.yml
+ansible-playbook -i inventory.yml ssh-bastion-flavour.yml
 ```
 
 ## Inputs
