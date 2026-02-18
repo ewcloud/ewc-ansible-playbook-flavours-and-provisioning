@@ -80,7 +80,7 @@ jobs:
           osFlavorName: '${{ inputs.osFlavorName }}'
           osImageName: '${{ inputs.osImageName }}'
           instanceNamePrefix: '${{ inputs.instanceNamePrefix }}'
-          ansibleSshPrivateKey: '${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}'
+          ansibleSshPrivateKey: '${{ secrets.ECMWF_ANSIBLE_SSH_PRIVATE_KEY }}'
           pythonVersion: '${{ inputs.pythonVersion }}'
           ansibleVersion: '${{ inputs.ansibleVersion }}'
           ansibleUser: '${{ inputs.ansibleUser }}'
@@ -90,6 +90,7 @@ jobs:
 
       - name: Upload test deployment result
         uses: actions/upload-artifact@v4
+        if: ${{ always() }}
         with:
           name: artifacts_${{ github.run_id }}
           path: ${{ steps.test-deployment.outputs.artifactPath }}
