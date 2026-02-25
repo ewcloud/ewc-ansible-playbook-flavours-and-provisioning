@@ -2,7 +2,7 @@
 roles:
   - name: ewc-ansible-role-ipa-server-1.1
     src: https://github.com/ewcloud/ewc-ansible-role-ipa-server.git
-    version: 1.1.0
+    version: 1.1.1
 
   - name: ewc-ansible-role-ipa-client-enroll-1.2
     src: https://github.com/ewcloud/ewc-ansible-role-ipa-client-enroll.git
