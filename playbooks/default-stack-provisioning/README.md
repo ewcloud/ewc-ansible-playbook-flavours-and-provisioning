@@ -117,7 +117,7 @@ ansible-playbook \
         "ipa_server_instance_index": 1,
         "ipa_server_hostname":"ipa-server-1",
         "ipa_server_flavor_name":"eo1.large",
-        "ipa_server_image_name":"Rocky-8.10-20250604144456",
+        "ipa_server_image_name":"Rocky-9.5-20250604142417",
         "ipa_domain":"eumetsat.sandbox.ewc",
         "ipa_admin_username":"ipaadmin",
         "ipa_admin_password":"my-secret-password",
