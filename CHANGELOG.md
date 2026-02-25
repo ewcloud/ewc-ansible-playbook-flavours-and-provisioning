@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.3](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.5.2...1.5.3) (2026-02-25)
+
+
+### Bug Fixes
+
+* Bump IPA server requirements version to allow rocky 9 ([#16](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/16)) ([bd57a04](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/bd57a04652dd53ac8ff11533e52bad307e9fcb87))
+
 ## [1.5.2](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.5.1...1.5.2) (2026-02-16)
 
 
