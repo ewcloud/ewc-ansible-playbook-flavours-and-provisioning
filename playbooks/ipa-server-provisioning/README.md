@@ -112,7 +112,7 @@ ansible-playbook \
         "ipa_server_instance_name":"server",
         "ipa_server_instance_index": 1,
         "ipa_server_flavor_name":"eo1.large",
-        "ipa_server_image_name":"Rocky-8.10-20250604144456",
+        "ipa_server_image_name":"Rocky-9.5-20250604142417",
         "public_keypair_name":"my-public-key-name",
         "private_keypair_path":"~/.ssh/id_rsa",
         "private_network_name": "private",
