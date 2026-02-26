@@ -1,0 +1,15 @@
+DataStores:
+  - Identifier: remote
+    StoreId: s3
+    StoreParams:
+      root: wekeo/egu2025
+      storage_options:
+        anon: true
+        client_kwargs:
+          endpoint_url: https://s3.waw3-2.cloudferro.com
+    Datasets:
+      - Path: "OLCI_L2_CHL_cube.zarr"
+        Style: "default"
+Viewer:
+  Configuration:
+    Path: /opt/xcube
