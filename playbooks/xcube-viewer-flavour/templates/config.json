@@ -1,0 +1,39 @@
+{
+  "name": "default",
+  "server": {
+    "id": "local",
+    "name": "Local Server",
+    "url": "http://localhost:80"
+  },
+  "branding": {
+    "appBarTitle": "xcube Viewer on the European Weather Cloud",
+    "windowTitle": "xcube Viewer on the European Weather Cloud",
+    "headerBackgroundColor": "#1d0c5e",
+    "headerIconStyle":{
+      "color": "#FFFFFF"
+    },
+    "themeMode": "system",
+    "compact": false,
+    "organisationUrl": "https://www.europeanweather.cloud",
+    "logoImage": "/logo.png",
+    "logoWidth": 32,
+    "headerTitleStyle": {
+      "fontFamily": "Roboto, Segoe UI, Helvetica, Arial, sans-serif",
+      "fontSize": "1.2rem"
+    },
+    "baseMapUrl": "https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "defaultAgg": "mean",
+    "polygonFillOpacity": 0.2,
+    "mapProjection": "EPSG:3857",
+    "allowAboutPage": true,
+    "allowDownloads": true,
+    "allowRefresh": true,
+    "allowSharing": true,
+    "allowUserVariables": true,
+    "allowViewModePython": true,
+    "allow3D": true,
+    "permalinkExpirationDays": 120,
+    "showProgressBar": true,
+    "showZoomInfoBox": true
+  }
+}

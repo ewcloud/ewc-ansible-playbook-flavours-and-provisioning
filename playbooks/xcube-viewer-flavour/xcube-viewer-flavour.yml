@@ -1,0 +1,242 @@
+---
+- name: Prompt for user inputs
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: tenancy_name
+      prompt: "Tenancy name (required)"
+      private: false
+
+    - name: federee
+      prompt: "Federee - enter EUMETSAT or ECMWF (required)"
+      private: false
+
+    - name: conda_installer
+      prompt: URI of the installer to use. Press Enter to accept default
+      private: false
+      default: "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh"
+
+    - name: conda_prefix
+      prompt: prefix where conda will be installed. Press Enter to accept default
+      private: false
+      default: "/opt/conda"
+
+    - name: conda_update_base
+      prompt: flag to decide whether base environment needs updating. Press Enter to accept default
+      private: false
+      default: "no"
+
+    - name: conda_user
+      prompt: user that will own the conda installation. Press Enter to accept default
+      private: false
+      default: "root"
+
+    - name: xcube_env_wipe
+      prompt: flag to delete existing conda environment where xcube was previously installed. Only yes will be accepted to approve. Press Enter to accept default
+      private: false
+      default: "no"
+
+    - name: xcube_env_name
+      prompt: name of conda environment where xcube will be installed. Press Enter to accept default
+      private: false
+      default: "xcube-demo"
+
+    - name: xcube_config_location
+      prompt: path of the config file for the xcube viewer. Press Enter to accept the default config file (demo)
+      private: false
+      default: "./templates/xcube-demo-config.yml"
+
+  tasks:
+    - name: Validate federee input
+      ansible.builtin.fail:
+        msg: "Federee must be either EUMETSAT or ECMWF (case insensitive)"
+      when: federee | lower not in ['eumetsat', 'ecmwf']
+
+    - name: Store user input as localhost facts
+      ansible.builtin.set_fact:
+        tenancy_name_fact: "{{ tenancy_name }}"
+        federee_fact: "{{ federee | lower }}"
+        conda_installer_fact: "{{ conda_installer }}"
+        conda_prefix_fact: "{{ conda_prefix }}"
+        conda_update_base_fact: "{{ conda_update_base }}"
+        conda_user_fact: "{{ conda_user }}"
+        xcube_env_wipe_fact: "{{ xcube_env_wipe }}"
+        xcube_env_name_fact: "{{ xcube_env_name }}"
+        xcube_env_path_fact: "{{ conda_prefix }}/envs/{{ xcube_env_name }}"
+        xcube_config_location: "{{ xcube_config_location }}"
+
+- name: EUMETSAT xcube
+  hosts: all
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+
+  tasks:
+    - name: Update VM
+      ansible.builtin.include_role:
+        name: ewc-ansible-role-update-system
+
+    - name: Get VM hostname
+      ansible.builtin.command: hostname
+      register: vm_hostname
+      changed_when: false
+
+    - name: Extract short hostname
+      ansible.builtin.set_fact:
+        short_hostname: "{{ vm_hostname.stdout.split('.')[0] }}"
+
+    - name: Map federee to letter code
+      ansible.builtin.set_fact:
+        federee_letter: "{{ 's' if hostvars['localhost']['federee_fact'] == 'eumetsat' else 'f' }}"
+
+    - name: Construct internal URL
+      ansible.builtin.set_fact:
+        internal_url: "{{ short_hostname }}.{{ hostvars['localhost']['tenancy_name_fact'] }}.{{ federee_letter }}.ewcloud.host"
+
+    - name: Display constructed URL
+      ansible.builtin.debug:
+        msg: "Internal URL: {{ internal_url }}"
+
+    - name: EWC Ansible Role Coda
+      ansible.builtin.include_role:
+        name: ewc-ansible-role-conda-1.1
+      vars:
+        conda_installer: "{{ hostvars['localhost']['conda_installer_fact'] }}"
+        conda_prefix: "{{ hostvars['localhost']['conda_prefix_fact'] }}"
+        conda_update_base: "{{ hostvars['localhost']['conda_update_base_fact'] | bool }}"
+        conda_user: "{{ hostvars['localhost']['conda_user_fact'] }}"
+
+    - name: Remove existing xcube conda environment (if requested)
+      ansible.builtin.file:
+        path: "{{ xcube_env_path_fact }}"
+        state: absent
+      when: hostvars['localhost']['xcube_env_wipe_fact'] == 'yes'
+
+    - name: Copy conda environment file
+      ansible.builtin.copy:
+        src: "./environment.yml"
+        dest: /tmp/xcube-environment.yml
+        mode: '0644'
+
+    - name: Create xcube conda environment from environment.yml
+      ansible.builtin.shell: |
+        {{ hostvars['localhost']['conda_prefix_fact'] }}/bin/conda env create -n {{ hostvars['localhost']['xcube_env_name_fact'] }} -f /tmp/xcube-environment.yml
+      args:
+        creates: "{{ hostvars['localhost']['conda_prefix_fact'] }}/envs/{{ hostvars['localhost']['xcube_env_name_fact'] }}"
+
+    - name: Stop xcube viewer service if running
+      ansible.builtin.systemd:
+        name: xcube-viewer
+        state: stopped
+      register: stop_result
+      failed_when:
+        - stop_result.failed
+        - "'Could not find the requested service' not in stop_result.msg | default('')"
+
+    - name: Kill any remaining xcube processes
+      ansible.builtin.command:
+        cmd: pkill -f "xcube serve"
+      register: pkill_result
+      failed_when: false
+      changed_when: pkill_result.rc == 0
+
+    - name: Create xcube config directory
+      ansible.builtin.file:
+        path: /opt/xcube
+        state: directory
+        mode: '0755'
+        owner: "{{ hostvars['localhost']['conda_user_fact'] }}"
+
+    - name: Copy xcube config file
+      ansible.builtin.copy:
+        src: "{{ hostvars['localhost']['xcube_config_location'] | default('./templates/xcube-demo-config.yml') }}"
+        dest: /opt/xcube/xcube-serve-config.yml
+        mode: '0644'
+        owner: "{{ hostvars['localhost']['conda_user_fact'] }}"
+
+    - name: Copy all config files from templates
+      ansible.builtin.copy:
+        src: "./templates/"
+        dest: /opt/xcube/
+        mode: '0644'
+        owner: "{{ hostvars['localhost']['conda_user_fact'] }}"
+
+    - name: Copy EWC logo
+      ansible.builtin.copy:
+        src: "./docs/img/logo.png"
+        dest: /opt/xcube/logo.png
+        mode: '0644'
+        owner: "{{ hostvars['localhost']['conda_user_fact'] }}"
+
+    - name: Update server URL in config.json
+      ansible.builtin.replace:
+        path: /opt/xcube/config.json
+        regexp: '"url":\s*"[^"]*"'
+        replace: '"url": "http://{{ internal_url }}:80"'
+
+    - name: Create systemd service for xcube viewer
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/xcube-viewer.service
+        content: |
+          [Unit]
+          Description=xcube Viewer Service
+          After=network.target
+
+          [Service]
+          Type=simple
+          User={{ hostvars['localhost']['conda_user_fact'] }}
+          WorkingDirectory=/opt/xcube
+          ExecStart={{ hostvars['localhost']['conda_prefix_fact'] }}/envs/{{ hostvars['localhost']['xcube_env_name_fact'] }}/bin/xcube serve -p 80 -vvvv -c /opt/xcube/xcube-serve-config.yml
+          Restart=on-failure
+          RestartSec=10
+
+          [Install]
+          WantedBy=multi-user.target
+        mode: '0644'
+
+    - name: Reload systemd daemon
+      ansible.builtin.systemd:
+        daemon_reload: true
+
+    - name: Enable and start xcube viewer service
+      ansible.builtin.systemd:
+        name: xcube-viewer
+        enabled: true
+        state: started
+
+    - name: Probe for readiness
+      ansible.builtin.uri:
+        url: "http://{{ internal_url }}:80/viewer"
+        status_code: 200
+        validate_certs: false
+      register: service_response
+      retries: 10
+      delay: 5
+      until: service_response.status == 200
+
+    - name: Display service information
+      ansible.builtin.debug:
+        msg: "xcube Viewer is running successfully! Access it at http://{{ internal_url }}:80/viewer"
+      when: service_response.status == 200
+
+    - name: Raise if readiness probe failed
+      ansible.builtin.debug:
+        msg: "xcube Viewer failed to start. For details see application logs, by running: sudo journalctl -u xcube-viewer -f"
+      when: service_response.status != 200
+
+    - name: Temporary setup Trivy for SBOM auto-generation (standalone binary file at /tmp/trivy)
+      ansible.builtin.shell:
+        cmd: |
+          set -o pipefail
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /tmp
+        creates: /tmp/trivy
+      args:
+        executable: /bin/bash
+
+    - name: Auto-generate SBOM (SPDX file at /sbom.json)
+      ansible.builtin.command:
+        cmd: ./trivy rootfs --pkg-types os --format spdx-json --output /sbom.json --scanners vuln /
+        chdir: /tmp
+      changed_when: true
