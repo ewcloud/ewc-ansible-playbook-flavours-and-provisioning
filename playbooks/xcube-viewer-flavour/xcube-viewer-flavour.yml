@@ -112,7 +112,7 @@
       ansible.builtin.file:
         path: "{{ xcube_env_path_fact }}"
         state: absent
-      when: hostvars['localhost']['xcube_env_wipe_fact']
+      when: hostvars['localhost']['xcube_env_wipe_fact'] == 'yes'
 
     - name: Copy conda environment file
       ansible.builtin.copy:
@@ -206,38 +206,25 @@
         enabled: true
         state: started
 
-    - name: Wait for xcube viewer to start
-      ansible.builtin.pause:
-        seconds: 5
-
-    - name: Get xcube viewer service logs
-      ansible.builtin.command:
-        cmd: journalctl -u xcube-viewer -n 50 --no-pager
-      register: xcube_logs
-      changed_when: false
-
-    - name: Display xcube viewer logs
-      ansible.builtin.debug:
-        msg: "{{ xcube_logs.stdout_lines }}"
-
-    - name: Check for errors in logs
-      ansible.builtin.fail:
-        msg: "xcube viewer failed to start. Error in logs: {{ xcube_logs.stdout }}"
-      when: "'ERROR:' in xcube_logs.stdout or 'Address already in use' in xcube_logs.stdout"
-
-    - name: Check if service started successfully
-      ansible.builtin.set_fact:
-        service_started: "{{ 'Service running' in xcube_logs.stdout }}"
+    - name: Probe for readiness
+      ansible.builtin.uri:
+        url: "http://{{ internal_url }}:80/viewer"
+        status_code: 200
+        validate_certs: false
+      register: service_response
+      retries: 10
+      delay: 5
+      until: service_response.status == 200
 
     - name: Display service information
       ansible.builtin.debug:
         msg: "xcube Viewer is running successfully! Access it at http://{{ internal_url }}:80/viewer"
-      when: service_started
+      when: service_response.status == 200
 
-    - name: Warn if service status unclear
+    - name: Raise if readiness probe failed
       ansible.builtin.debug:
-        msg: "xcube Viewer service started but 'Service running' message not found in logs. Please check: sudo journalctl -u xcube-viewer -f"
-      when: not service_started
+        msg: "xcube Viewer failed to start. For details see application logs, by running: sudo journalctl -u xcube-viewer -f"
+      when: service_response.status != 200
 
     - name: Temporary setup Trivy for SBOM auto-generation (standalone binary file at /tmp/trivy)
       ansible.builtin.shell:
