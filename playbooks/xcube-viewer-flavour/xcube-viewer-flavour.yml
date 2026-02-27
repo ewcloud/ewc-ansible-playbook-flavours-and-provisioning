@@ -93,7 +93,7 @@
 
     - name: Construct internal URL
       ansible.builtin.set_fact:
-        internal_url: "{{ short_hostname }}.{{ hostvars['localhost']['tenancy_name_fact'] }}.{{ federee_letter }}.ewcloud.host"
+        internal_url: "127.0.0.1"
 
     - name: Display constructed URL
       ansible.builtin.debug:
