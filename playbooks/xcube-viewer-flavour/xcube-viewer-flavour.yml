@@ -112,7 +112,7 @@
       ansible.builtin.file:
         path: "{{ xcube_env_path_fact }}"
         state: absent
-      when: xcube_env_wipe_fact == "yes"
+      when: hostvars['localhost']['xcube_env_wipe_fact']
 
     - name: Copy conda environment file
       ansible.builtin.copy:
