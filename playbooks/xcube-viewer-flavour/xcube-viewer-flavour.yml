@@ -26,7 +26,7 @@
     - name: conda_update_base
       prompt: flag to decide whether base environment needs updating. Press Enter to accept default
       private: false
-      default: false
+      default: "no"
 
     - name: conda_user
       prompt: user that will own the conda installation. Press Enter to accept default
@@ -64,6 +64,7 @@
         conda_user_fact: "{{ conda_user }}"
         xcube_env_wipe_fact: "{{ xcube_env_wipe }}"
         xcube_env_name_fact: "{{ xcube_env_name }}"
+        xcube_env_path_fact: "{{ conda_prefix }}/envs/{{ xcube_env_name }}"
         xcube_config_location: "{{ xcube_config_location }}"
 
 - name: EUMETSAT xcube
@@ -108,10 +109,10 @@
         conda_user: "{{ hostvars['localhost']['conda_user_fact'] }}"
 
     - name: Remove existing xcube conda environment (if requested)
-      ansible.builtin.shell: |
-        {{ hostvars['localhost']['conda_prefix_fact'] }}/bin/conda env remove -n {{ hostvars['localhost']['xcube_env_name_fact'] }} -y
-      when: hostvars['localhost']['xcube_env_wipe_fact'] == 'yes'
-      ignore_errors: yes
+      ansible.builtin.file:
+        path: "{{ xcube_env_path_fact }}"
+        state: absent
+      when: xcube_env_wipe_fact == "yes"
 
     - name: Copy conda environment file
       ansible.builtin.copy:
@@ -129,12 +130,17 @@
       ansible.builtin.systemd:
         name: xcube-viewer
         state: stopped
-      ignore_errors: yes
+      register: stop_result
+      failed_when:
+        - stop_result.failed
+        - "'Could not find the requested service' not in stop_result.msg | default('')"
 
     - name: Kill any remaining xcube processes
-      ansible.builtin.shell: pkill -f "xcube serve"
+      ansible.builtin.command:
+        cmd: pkill -f "xcube serve"
+      register: pkill_result
       failed_when: false
-      changed_when: false
+      changed_when: pkill_result.rc == 0
 
     - name: Create xcube config directory
       ansible.builtin.file:
@@ -159,7 +165,7 @@
 
     - name: Copy EWC logo
       ansible.builtin.copy:
-        src: "./templates/logo.png"
+        src: "./docs/img/logo.png"
         dest: /opt/xcube/logo.png
         mode: '0644'
         owner: "{{ hostvars['localhost']['conda_user_fact'] }}"
@@ -192,12 +198,12 @@
 
     - name: Reload systemd daemon
       ansible.builtin.systemd:
-        daemon_reload: yes
+        daemon_reload: true
 
     - name: Enable and start xcube viewer service
       ansible.builtin.systemd:
         name: xcube-viewer
-        enabled: yes
+        enabled: true
         state: started
 
     - name: Wait for xcube viewer to start
@@ -205,8 +211,10 @@
         seconds: 5
 
     - name: Get xcube viewer service logs
-      ansible.builtin.shell: journalctl -u xcube-viewer -n 50 --no-pager
+      ansible.builtin.command:
+        cmd: journalctl -u xcube-viewer -n 50 --no-pager
       register: xcube_logs
+      changed_when: false
 
     - name: Display xcube viewer logs
       ansible.builtin.debug:
@@ -230,7 +238,6 @@
       ansible.builtin.debug:
         msg: "xcube Viewer service started but 'Service running' message not found in logs. Please check: sudo journalctl -u xcube-viewer -f"
       when: not service_started
-      when: "'Service running' in xcube_logs.stdout"
 
     - name: Temporary setup Trivy for SBOM auto-generation (standalone binary file at /tmp/trivy)
       ansible.builtin.shell:
