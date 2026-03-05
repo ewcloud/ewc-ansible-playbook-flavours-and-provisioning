@@ -124,15 +124,15 @@ ansible-playbook \
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| tenancy_name | Tenancy name for URL construction | string | - | yes |
-| federee | Federee identifier (EUMETSAT or ECMWF) | string | - | yes |
-| xcube_env_wipe | Flag to delete existing conda environment where xcube was previously installed. Only "yes" will be accepted to approve | string | no | no |
-| xcube_env_name | Name of conda environment where xcube will be installed | string | xcube-demo | no |
-| conda_installer | URI of the installer to use | string | https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh | no |
-| conda_update_base | Boolean to decide whether base environment needs updating | bool | false | no |
-| conda_prefix | Prefix where conda will be installed | string | /opt/conda | no |
-| conda_user | User that will own the conda installation | string | root | no |
-| xcube_config_location | Path of the config file for the xcube viewer | string | ./templates/xcube-demo-config.yml | no |
+| tenancy_name | Tenancy name for URL construction | `string` | n/a | yes |
+| federee | Federee identifier (`EUMETSAT` or `ECMWF`) | `string` | n/a | yes |
+| xcube_env_wipe | Flag to delete existing conda environment where xcube was previously installed. Only `yes` will be accepted to approve | `string` | `no` | no |
+| xcube_env_name | Name of conda environment where xcube will be installed | `string` | `xcube-demo` | no |
+| conda_installer | URI of the installer to use | `string` | `https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh` | no |
+| conda_update_base | Boolean to decide whether base environment needs updating | `bool` | `false` | no |
+| conda_prefix | Prefix where conda will be installed | `string` | `/opt/conda` | no |
+| conda_user | User that will own the conda installation | `string` | `root` | no |
+| xcube_config_location | Path of the config file for the xcube viewer | `string` | `./templates/xcube-demo-config.yml` | no |
 
 ## Dependencies
 
@@ -145,4 +145,3 @@ Applying this template will trigger the installation of the following open-sourc
 | numcodecs | 0.15.1 | MIT | https://anaconda.org/channels/conda-forge/packages/numcodecs/overview |
 | python | 3.11 | PSF License | https://www.python.org/ |
 | xcube | 1.13.0 | MIT | https://anaconda.org/channels/conda-forge/packages/xcube/files |
-
