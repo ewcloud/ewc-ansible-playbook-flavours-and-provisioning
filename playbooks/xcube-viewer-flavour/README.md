@@ -140,8 +140,14 @@ ansible-playbook \
 
 Applying this template will trigger the installation of the following open-source packages onto your desired target host:
 
-| Name | Version | License | Package Info |
-|------|---------|---------|--------------|
-| numcodecs | 0.15.1 | MIT | https://anaconda.org/channels/conda-forge/packages/numcodecs/overview |
-| python | 3.11 | PSF License | https://www.python.org/ |
-| xcube | 1.13.0 | MIT | https://anaconda.org/channels/conda-forge/packages/xcube/files |
+### Ansible Roles
+| Name | Home URL |
+|------|---------|
+| ewc-ansible-role-update-system | https://github.com/ewcloud/ewc-ansible-role-update-system |
+| ewc-ansible-role-conda | https://github.com/ewcloud/ewc-ansible-role-conda |
+
+### Python Packages
+| Name | Home URL |
+|------|---------|
+| numcodecs | https://anaconda.org/channels/conda-forge/packages/numcodecs/overview |
+| xcube | https://anaconda.org/channels/conda-forge/packages/xcube/files |
