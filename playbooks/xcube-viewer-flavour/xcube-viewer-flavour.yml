@@ -84,6 +84,14 @@
   become_method: ansible.builtin.sudo
 
   tasks:
+    - name: Verify Linux distribution version
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['distribution'] == 'Ubuntu'
+          - ansible_facts['distribution_major_version'] in ['22', '24']
+        fail_msg: "Supports Ubuntu versions 22 or 24. Detected: {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_major_version'] }}."
+        success_msg: "Running on Ubuntu {{ ansible_facts['distribution_major_version'] }}."
+
     - name: Update VM
       ansible.builtin.include_role:
         name: ewc-ansible-role-update-system
