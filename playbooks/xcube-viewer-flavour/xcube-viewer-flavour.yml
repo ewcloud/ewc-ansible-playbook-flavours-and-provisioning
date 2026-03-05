@@ -229,6 +229,7 @@
         url: "http://127.0.0.1:80/viewer"
         status_code: 200
         validate_certs: false
+        timeout: 60
       register: service_response
       retries: 10
       delay: 5
