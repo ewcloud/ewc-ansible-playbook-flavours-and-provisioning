@@ -49,10 +49,20 @@
       default: "./templates/xcube-demo-config.yml"
 
   tasks:
-    - name: Validate federee input
-      ansible.builtin.fail:
-        msg: "Federee must be either EUMETSAT or ECMWF (case insensitive)"
-      when: federee | lower not in ['eumetsat', 'ecmwf']
+    - name: Validate user inputs
+      ansible.builtin.assert:
+        that:
+          - tenancy_name is defined and tenancy_name is string and tenancy_name is match('^[a-z]{1,}-[a-z]{1,}-[a-z]{1,}$')
+          - federee is defined and federee is string and federee | lower in ['eumetsat', 'ecmwf']
+          - conda_installer is string and conda_installer is defined and conda_installer != ''
+          - conda_prefix is string and conda_prefix is defined and conda_prefix != ''
+          - conda_update_base is string and conda_update_base is defined and conda_update_base != ''
+          - conda_user is string and conda_user is defined and conda_user != ''
+          - xcube_env_wipe is string and xcube_env_wipe != '' and xcube_env_wipe is defined
+          - xcube_env_name is string and xcube_env_name is defined and xcube_env_name != ''
+          - xcube_config_location is string and xcube_config_location != '' and xcube_config_location is defined
+        fail_msg: "Input validation failed. See README.md for information on required inputs and their format."
+        success_msg: "User input configuration is valid."
 
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
@@ -65,7 +75,7 @@
         xcube_env_wipe_fact: "{{ xcube_env_wipe }}"
         xcube_env_name_fact: "{{ xcube_env_name }}"
         xcube_env_path_fact: "{{ conda_prefix }}/envs/{{ xcube_env_name }}"
-        xcube_config_location: "{{ xcube_config_location }}"
+        xcube_config_location_fact: "{{ xcube_config_location }}"
 
 - name: EUMETSAT xcube
   hosts: all
@@ -89,7 +99,7 @@
 
     - name: Map federee to letter code
       ansible.builtin.set_fact:
-        federee_letter: "{{ 's' if hostvars['localhost']['federee_fact'] == 'eumetsat' else 'f' }}"
+        federee_letter: "{{ 's' if hostvars['localhost']['federee_fact'] | lower == 'eumetsat' else 'f' }}"
 
     - name: Construct internal URL
       ansible.builtin.set_fact:
@@ -147,7 +157,7 @@
 
     - name: Copy xcube config file
       ansible.builtin.copy:
-        src: "{{ hostvars['localhost']['xcube_config_location'] | default('./templates/xcube-demo-config.yml') }}"
+        src: "{{ hostvars['localhost']['xcube_config_location_fact'] }}"
         dest: /opt/xcube/xcube-serve-config.yml
         mode: '0644'
         owner: "{{ hostvars['localhost']['conda_user_fact'] }}"
@@ -184,7 +194,7 @@
           Type=simple
           User={{ hostvars['localhost']['conda_user_fact'] }}
           WorkingDirectory=/opt/xcube
-          ExecStart={{ hostvars['localhost']['conda_prefix_fact'] }}/envs/{{ hostvars['localhost']['xcube_env_name_fact'] }}/bin/xcube serve -p 80 -vvvv -c /opt/xcube/xcube-serve-config.yml
+          ExecStart={{ hostvars['localhost']['xcube_env_path_fact'] }}/bin/xcube serve -p 80 -vvvv -c /opt/xcube/xcube-serve-config.yml
           Restart=on-failure
           RestartSec=10
 
