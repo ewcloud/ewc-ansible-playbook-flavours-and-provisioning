@@ -96,7 +96,7 @@
       ansible.builtin.include_role:
         name: ewc-ansible-role-update-system-1.0
 
-    - name: EWC Ansible Role Coda
+    - name: EWC Ansible Role Conda
       ansible.builtin.include_role:
         name: ewc-ansible-role-conda-1.1
       vars:
