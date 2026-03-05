@@ -39,6 +39,7 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 | [nginx-proxy-manager-flavour](./playbooks/nginx-proxy-manager-flavour/)    | Configures an existing VM as a user-friendly Nginx Proxy Manager server, simplifying virtual host management, SSL/HTTP/2 support, and security features like exploit blocking for efficient and secure proxy operations.  |
 | [remote-desktop-flavour](./playbooks/remote-desktop-flavour/) | Transforms an existing VM into a secure, graphical desktop environment using X2Go and MATE, enabling simple remote access and intuitive cloud-based development for tenant users.  | 
 | [ssh-bastion-flavour](./playbooks/ssh-bastion-flavour/)   | Tightens the configuration of a running VM, to operate as a secure SSH proxy with Fail2ban, providing tenant admins and users a fortified entry point to safely access private EWC networks from the public internet. | 
+| [xcube-viewer-flavour](./playbooks/xcube-viewer-flavour/)   |  Configures an existing VM with the xcube Viewer, to visualize Earth Observation data within a user-friendly graphical user interface | 
 
 ### Self-provisioning + Configuration
 
