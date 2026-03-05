@@ -28,8 +28,6 @@ For more information about xcube capabilities, please refer to the [xcube Docume
 
   * **A) Deploy this template, together with a new VM, via the [EWCCLI](https://pypi.org/project/ewccli/)**
 
-    [→ Go to Usage - Deployment on VM with EWC CLI](#usage---deployment-on-vm-with-ewc-cli)
-  
   OR
   * **B) Provision a new VM via CLI:**
     * Create an SSH keypair (see [Creating the keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
@@ -42,16 +40,7 @@ For more information about xcube capabilities, please refer to the [xcube Docume
       * Security Groups: ssh-http-https, xcube-viewer
       * assign a floating IP
 
-    [→ Go to Usage - Deployment on VM without EWC CLI](#usage---deployment-on-vm-without-ewc-cli)
-
 ## Usage
-### Usage - Deployment on VM with EWC CLI
-
-```bash
-ewc hub deploy ewc-xcube-viewer --security-groups http-https-ssh --item-inputs tenancy_name="your-tenancy-name" --item-inputs federee="EUMETSAT"
-```
-
-### Usage - Deployment on VM without EWC CLI
 
 ### 1. Clone the repository
 
