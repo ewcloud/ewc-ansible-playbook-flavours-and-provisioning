@@ -95,10 +95,6 @@
       ansible.builtin.set_fact:
         internal_url: "{{ short_hostname }}.{{ hostvars['localhost']['tenancy_name_fact'] }}.{{ federee_letter }}.ewcloud.host"
 
-    - name: Display constructed URL
-      ansible.builtin.debug:
-        msg: "Internal URL: {{ internal_url }}"
-
     - name: EWC Ansible Role Coda
       ansible.builtin.include_role:
         name: ewc-ansible-role-conda-1.1
@@ -206,25 +202,24 @@
         enabled: true
         state: started
 
+    - name: Wait for DNS to resolve to correct IP
+      ansible.builtin.command: "dig +short {{ internal_url }}"
+      register: dns_lookup
+      retries: 15
+      delay: 60
+      until: ansible_host in dns_lookup.stdout_lines
+      changed_when: false
+
     - name: Probe for readiness
       ansible.builtin.uri:
-        url: "http://{{ internal_url }}:80/viewer"
+        url: "http://127.0.0.1:80/viewer"
         status_code: 200
         validate_certs: false
       register: service_response
       retries: 10
       delay: 5
       until: service_response.status == 200
-
-    - name: Display service information
-      ansible.builtin.debug:
-        msg: "xcube Viewer is running successfully! Access it at http://{{ internal_url }}:80/viewer"
-      when: service_response.status == 200
-
-    - name: Raise if readiness probe failed
-      ansible.builtin.debug:
-        msg: "xcube Viewer failed to start. For details see application logs, by running: sudo journalctl -u xcube-viewer -f"
-      when: service_response.status != 200
+      changed_when: false
 
     - name: Temporary setup Trivy for SBOM auto-generation (standalone binary file at /tmp/trivy)
       ansible.builtin.shell:
@@ -240,3 +235,7 @@
         cmd: ./trivy rootfs --pkg-types os --format spdx-json --output /sbom.json --scanners vuln /
         chdir: /tmp
       changed_when: true
+
+    - name: Log application entrypoint
+      ansible.builtin.debug:
+        msg: "xcube Viewer is running at: http://{{ internal_url }}:80/viewer"
