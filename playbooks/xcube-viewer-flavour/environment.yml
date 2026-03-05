@@ -1,6 +1,6 @@
 channels:
     - conda-forge
 dependencies:
-    - python=3.11
+    - python=3.11.14
     - xcube=1.13.0
     - numcodecs=0.15.1
