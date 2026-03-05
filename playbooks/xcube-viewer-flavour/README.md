@@ -1,7 +1,7 @@
 # xcube Viewer Flavour
 This Ansible Playbook configures an existing virtual machine running within the [European Weather Cloud (EWC)](https://europeanweather.cloud/) with the [xcube Viewer](https://xcube.readthedocs.io/en/latest/viewer.html) to visualize Earth Observation data in a user-friendly graphical user interface.
 
-![xcube viewer example](img/xcube-viewer-example.png)
+![xcube viewer example](https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/main/playbooks/xcube-viewer-flavour/docs/img/xcube-viewer-example.png)
 
 ## Functionality
 The template is designed to:
