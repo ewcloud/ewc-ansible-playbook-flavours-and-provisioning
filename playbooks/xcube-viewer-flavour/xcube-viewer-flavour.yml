@@ -92,9 +92,9 @@
         fail_msg: "Supports Ubuntu versions 22 or 24. Detected: {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_major_version'] }}."
         success_msg: "Running on Ubuntu {{ ansible_facts['distribution_major_version'] }}."
 
-    - name: Update VM
+    - name: EWC Ansible Role Update System
       ansible.builtin.include_role:
-        name: ewc-ansible-role-update-system
+        name: ewc-ansible-role-update-system-1.0
 
     - name: Get VM hostname
       ansible.builtin.command: hostname
