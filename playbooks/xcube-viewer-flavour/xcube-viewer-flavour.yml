@@ -96,14 +96,6 @@
       ansible.builtin.include_role:
         name: ewc-ansible-role-update-system-1.0
 
-    - name: Map federee to letter code
-      ansible.builtin.set_fact:
-        federee_letter: "{{ 's' if hostvars['localhost']['federee_fact'] | lower == 'eumetsat' else 'f' }}"
-
-    - name: Construct internal URL
-      ansible.builtin.set_fact:
-        internal_url: "{{ ansible_facts['hostname'] }}.{{ hostvars['localhost']['tenancy_name_fact'] }}.{{ federee_letter }}.ewcloud.host"
-
     - name: EWC Ansible Role Coda
       ansible.builtin.include_role:
         name: ewc-ansible-role-conda-1.1
@@ -112,6 +104,14 @@
         conda_prefix: "{{ hostvars['localhost']['conda_prefix_fact'] }}"
         conda_update_base: "{{ hostvars['localhost']['conda_update_base_fact'] | bool }}"
         conda_user: "{{ hostvars['localhost']['conda_user_fact'] }}"
+
+    - name: Map federee to letter code
+      ansible.builtin.set_fact:
+        federee_letter: "{{ 's' if hostvars['localhost']['federee_fact'] | lower == 'eumetsat' else 'f' }}"
+
+    - name: Construct internal URL
+      ansible.builtin.set_fact:
+        internal_url: "{{ ansible_facts['hostname'] }}.{{ hostvars['localhost']['tenancy_name_fact'] }}.{{ federee_letter }}.ewcloud.host"
 
     - name: Remove existing xcube conda environment (if requested)
       ansible.builtin.file:
