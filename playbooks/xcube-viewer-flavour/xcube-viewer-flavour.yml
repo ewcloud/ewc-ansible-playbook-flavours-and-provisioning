@@ -231,6 +231,24 @@
       until: service_response.status == 200
       changed_when: false
 
+    - name: Gather conda environment package versions
+      become: true
+      become_user: "{{ hostvars['localhost']['conda_user_fact'] }}"
+      become_method: ansible.builtin.sudo
+      ansible.builtin.shell: |
+        set -o pipefail
+        source /etc/profile.d/conda.sh
+        source /etc/profile.d/mamba.sh
+        mamba list -p {{ hostvars['localhost']['xcube_env_path_fact'] }} --json '^(xcube|numcodecs)$'
+      args:
+        executable: /bin/bash
+      register: conda_package_versions
+      changed_when: false
+
+    - name: List installed conda package versions
+      ansible.builtin.debug:
+        msg: "{{ conda_package_versions.stdout | from_json | json_query('[].{name: name, version: version}') }}"
+
     - name: Temporary setup Trivy for SBOM auto-generation (standalone binary file at /tmp/trivy)
       ansible.builtin.shell:
         cmd: |
