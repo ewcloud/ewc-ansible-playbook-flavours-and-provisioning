@@ -113,39 +113,56 @@
       ansible.builtin.set_fact:
         internal_url: "{{ ansible_facts['hostname'] }}.{{ hostvars['localhost']['tenancy_name_fact'] }}.{{ federee_letter }}.ewcloud.host"
 
-    - name: Remove existing xcube conda environment (if requested)
+    - name: Wipe existing conda environment (if requested)
       ansible.builtin.file:
-        path: "{{ xcube_env_path_fact }}"
+        path: "{{ hostvars['localhost']['xcube_env_path_fact'] }}"
         state: absent
       when: hostvars['localhost']['xcube_env_wipe_fact'] == 'yes'
 
-    - name: Copy conda environment file
+    - name: Add conda environment dependencies definition
       ansible.builtin.copy:
-        src: "./environment.yml"
-        dest: /tmp/xcube-environment.yml
+        src: "environment.yml"
+        dest: /tmp/{{ hostvars['localhost']['xcube_env_name_fact'] }}.yml
         mode: '0644'
+      register: xcube_env_define
+      notify: Restart xcube viewer
 
-    - name: Create xcube conda environment from environment.yml
+    - name: Create conda environment
+      become: true
+      become_user: "{{ hostvars['localhost']['conda_user_fact'] }}"
+      become_method: ansible.builtin.sudo
       ansible.builtin.shell: |
-        {{ hostvars['localhost']['conda_prefix_fact'] }}/bin/conda env create -n {{ hostvars['localhost']['xcube_env_name_fact'] }} -f /tmp/xcube-environment.yml
+        {{ hostvars['localhost']['conda_prefix_fact'] }}/bin/conda env create -n {{ hostvars['localhost']['xcube_env_name_fact'] }} -f /tmp/{{ hostvars['localhost']['xcube_env_name_fact'] }}.yml
       args:
-        creates: "{{ hostvars['localhost']['conda_prefix_fact'] }}/envs/{{ hostvars['localhost']['xcube_env_name_fact'] }}"
+        executable: /bin/bash
+        creates: "{{ hostvars['localhost']['xcube_env_path_fact'] }}"
+      register: xcube_env_create
+      notify: Restart xcube viewer
 
-    - name: Stop xcube viewer service if running
-      ansible.builtin.systemd:
-        name: xcube-viewer
-        state: stopped
-      register: stop_result
-      failed_when:
-        - stop_result.failed
-        - "'Could not find the requested service' not in stop_result.msg | default('')"
+    - name: Update conda environment
+      become: true
+      become_user: "{{ hostvars['localhost']['conda_user_fact'] }}"
+      become_method: ansible.builtin.sudo
+      ansible.builtin.shell: |
+        {{ hostvars['localhost']['conda_prefix_fact'] }}/bin/conda env update -n {{ hostvars['localhost']['xcube_env_name_fact'] }} -f /tmp/{{ hostvars['localhost']['xcube_env_name_fact'] }}.yml
+      args:
+        executable: /bin/bash
+      when: not xcube_env_create.changed and xcube_env_define.changed
+      register: xcube_env_updated
+      changed_when: xcube_env_updated.rc == 0
+      notify: Restart xcube viewer
 
-    - name: Kill any remaining xcube processes
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+
+    - name: Kill any remaining xcube processes only if service is not running
       ansible.builtin.command:
         cmd: pkill -f "xcube serve"
       register: pkill_result
       failed_when: false
       changed_when: pkill_result.rc == 0
+      when: >
+        'xcube-viewer.service' not in ansible_facts.services or ansible_facts.services['xcube-viewer.service'].state != 'running'
 
     - name: Create xcube config directory
       ansible.builtin.file:
@@ -160,13 +177,7 @@
         dest: /opt/xcube/xcube-serve-config.yml
         mode: '0644'
         owner: "{{ hostvars['localhost']['conda_user_fact'] }}"
-
-    - name: Copy all config files from templates
-      ansible.builtin.copy:
-        src: "./templates/"
-        dest: /opt/xcube/
-        mode: '0644'
-        owner: "{{ hostvars['localhost']['conda_user_fact'] }}"
+      notify: Restart xcube viewer
 
     - name: Copy EWC logo
       ansible.builtin.copy:
@@ -174,42 +185,36 @@
         dest: /opt/xcube/logo.png
         mode: '0644'
         owner: "{{ hostvars['localhost']['conda_user_fact'] }}"
+      notify: Restart xcube viewer
 
-    - name: Update server URL in config.json
-      ansible.builtin.replace:
-        path: /opt/xcube/config.json
-        regexp: '"url":\s*"[^"]*"'
-        replace: '"url": "http://{{ internal_url }}:80"'
-
-    - name: Create systemd service for xcube viewer
-      ansible.builtin.copy:
-        dest: /etc/systemd/system/xcube-viewer.service
-        content: |
-          [Unit]
-          Description=xcube Viewer Service
-          After=network.target
-
-          [Service]
-          Type=simple
-          User={{ hostvars['localhost']['conda_user_fact'] }}
-          WorkingDirectory=/opt/xcube
-          ExecStart={{ hostvars['localhost']['xcube_env_path_fact'] }}/bin/xcube serve -p 80 -vvvv -c /opt/xcube/xcube-serve-config.yml
-          Restart=on-failure
-          RestartSec=10
-
-          [Install]
-          WantedBy=multi-user.target
+    - name: Template config.json
+      ansible.builtin.template:
+        src: templates/config.json.j2
+        dest: /opt/xcube/config.json
         mode: '0644'
+        owner: "{{ hostvars['localhost']['conda_user_fact'] }}"
+      notify: Restart xcube viewer
 
-    - name: Reload systemd daemon
-      ansible.builtin.systemd:
-        daemon_reload: true
+    - name: Template systemd service for xcube viewer
+      ansible.builtin.template:
+        src: templates/xcube-viewer.service.j2
+        dest: /etc/systemd/system/xcube-viewer.service
+        mode: '0644'
+      notify:
+        - Reload systemd daemon
+        - Restart xcube viewer
 
-    - name: Enable and start xcube viewer service
+    - name: Enable xcube viewer service
       ansible.builtin.systemd:
         name: xcube-viewer
         enabled: true
+
+    - name: Start xcube viewer service if not running
+      ansible.builtin.systemd:
+        name: xcube-viewer
         state: started
+      when: >
+        'xcube-viewer.service' not in ansible_facts.services or ansible_facts.services['xcube-viewer.service'].state != 'running'
 
     - name: Wait for DNS to resolve to correct IP
       ansible.builtin.command: "dig +short {{ internal_url }}"

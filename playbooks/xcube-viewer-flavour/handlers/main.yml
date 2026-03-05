@@ -1,0 +1,9 @@
+---
+- name: Restart xcube viewer
+  ansible.builtin.systemd:
+    name: xcube-viewer
+    state: restarted
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
