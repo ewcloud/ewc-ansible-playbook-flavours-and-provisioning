@@ -96,22 +96,13 @@
       ansible.builtin.include_role:
         name: ewc-ansible-role-update-system-1.0
 
-    - name: Get VM hostname
-      ansible.builtin.command: hostname
-      register: vm_hostname
-      changed_when: false
-
-    - name: Extract short hostname
-      ansible.builtin.set_fact:
-        short_hostname: "{{ vm_hostname.stdout.split('.')[0] }}"
-
     - name: Map federee to letter code
       ansible.builtin.set_fact:
         federee_letter: "{{ 's' if hostvars['localhost']['federee_fact'] | lower == 'eumetsat' else 'f' }}"
 
     - name: Construct internal URL
       ansible.builtin.set_fact:
-        internal_url: "{{ short_hostname }}.{{ hostvars['localhost']['tenancy_name_fact'] }}.{{ federee_letter }}.ewcloud.host"
+        internal_url: "{{ ansible_facts['hostname'] }}.{{ hostvars['localhost']['tenancy_name_fact'] }}.{{ federee_letter }}.ewcloud.host"
 
     - name: EWC Ansible Role Coda
       ansible.builtin.include_role:
