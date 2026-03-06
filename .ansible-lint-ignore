@@ -22,6 +22,8 @@ playbooks/remote-desktop-provisioning/remote-desktop-provisioning.yml var-naming
 playbooks/remote-desktop-provisioning/remote-desktop-provisioning.yml yaml[line-length]
 playbooks/ssh-bastion-flavour/ssh-bastion-flavour.yml var-naming[no-role-prefix]
 playbooks/ssh-bastion-flavour/ssh-bastion-flavour.yml yaml[line-length]
+playbooks/xcube-viewer-flavour/xcube-viewer-flavour.yml var-naming[no-role-prefix]
+playbooks/xcube-viewer-flavour/xcube-viewer-flavour.yml yaml[line-length]
 playbooks/ssh-bastion-provisioning/ssh-bastion-provisioning.yml var-naming[no-role-prefix]
 playbooks/ssh-bastion-provisioning/ssh-bastion-provisioning.yml yaml[line-length]
 playbooks/default-stack-provisioning/default-stack-provisioning.yml var-naming[no-role-prefix]

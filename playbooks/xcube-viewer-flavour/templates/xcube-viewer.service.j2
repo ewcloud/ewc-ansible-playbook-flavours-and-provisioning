@@ -1,0 +1,14 @@
+[Unit]
+Description=xcube Viewer Service
+After=network.target
+
+[Service]
+Type=simple
+User={{ hostvars['localhost']['conda_user_fact'] }}
+WorkingDirectory=/opt/xcube
+ExecStart={{ hostvars['localhost']['xcube_env_path_fact'] }}/bin/xcube serve -p 80 -vvvv -c /opt/xcube/xcube-serve-config.yml
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
