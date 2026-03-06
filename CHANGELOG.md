@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.5.3...1.6.0) (2026-03-06)
+
+
+### Features
+
+* Include xcube-viewer-flavour ([#19](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/19)) ([1b10640](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/1b106407cb3d5fdb84c7f691df536ea47aad21cc))
+
 ## [1.5.3](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.5.2...1.5.3) (2026-02-25)
 
 
