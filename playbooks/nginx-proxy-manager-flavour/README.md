@@ -28,7 +28,6 @@ stable operation.
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-* Get OpenStack API credentials (see [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials) section of the EWC documentation)
 * If you plan to configure an existing VM, jump to the [Usage](#usage) section below
 * If you have not yet provisioned a VM, it is required to do so. You may choose one of the following approaches:
   * A) Provision a new VM via UI:
@@ -115,7 +114,6 @@ example:
 ansible-playbook \
   -i inventory.yml \
   -e "npm_admin_ui_port=8080" \
-  -e "os_security_group_name=nginx-proxy-manager" \
   nginx-proxy-manager-flavour.yml
 ```
 
@@ -125,7 +123,6 @@ ansible-playbook \
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | npm_admin_ui_port | port number at which the Nginx Proxy Manager admin UI is served | `number` | `8080`  | yes |
-| os_security_group_name | OpenStack security group containing all firewall rules required for Nginx Proxy Manager operation  | `string` | `nginx-proxy-manager` | yes |
 
 
 ## Dependencies
