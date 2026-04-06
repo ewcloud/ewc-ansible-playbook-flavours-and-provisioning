@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.2](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.6.1...1.6.2) (2026-04-06)
+
+
+### Bug Fixes
+
+* Bump dep versions for haproxy and nginx-proxy-manager flavours ([#21](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/21)) ([b2609b6](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/b2609b6278c52b29b691a6b59055a62eaba97498))
+
 ## [1.6.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.6.0...1.6.1) (2026-04-06)
 
 
