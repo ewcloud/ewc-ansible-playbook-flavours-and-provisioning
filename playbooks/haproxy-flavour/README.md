@@ -31,7 +31,6 @@ stable operation.
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-* Get OpenStack API credentials (see [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials) section of the EWC documentation)
 * If you plan to configure an existing VM, jump to the [Usage](#usage) section below
 * If you have not yet provisioned a VM, it is required to do so. You may choose one of the following approaches:
   * A) Provision a new VM via UI:
@@ -94,8 +93,6 @@ ewcloud:
 
 ### 4. Configure and apply the template
 
-#### 4.1. Interactive Mode
-
 By running the following command, you can trigger an interactive session that
 prompts you for the necessary user inputs, and then applies changes to your
 target EWC environment:
@@ -103,29 +100,6 @@ target EWC environment:
 ```bash
 ansible-playbook -i inventory.yml haproxy-flavour.yml
 ```
-
-#### 4.2. Non-Interactive Mode
-
->💡 To learn more about defining variables at runtime, checkout the
-[official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
-
-You can also run in non-interactive mode by passing the
-`--extra-vars` or `-e` flag, followed by a map of  key-value pairs; one for
-each and every available input (see [inputs section](#inputs) below). For
-example:
-
-```bash
-ansible-playbook \
-  -i inventory.yml \
-  -e "os_security_group_name=ssh-https" \
-  haproxy-flavour.yml
-```
-
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| os_security_group_name | OpenStack security group containing all firewall rules required for HAProxy operation | `string` | `ssh-http-https` | yes |
 
 ## Dependencies
 > 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
