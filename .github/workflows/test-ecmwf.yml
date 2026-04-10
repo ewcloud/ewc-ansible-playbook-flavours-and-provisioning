@@ -60,10 +60,10 @@ permissions:
 jobs:
   deploy-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Test deployment
         id: test-deployment
@@ -89,8 +89,9 @@ jobs:
           inputSpecJson: '${{ inputs.inputSpecJson }}'
 
       - name: Upload test deployment result
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: ${{ always() }}
         with:
           name: artifacts_${{ github.run_id }}
           path: ${{ steps.test-deployment.outputs.artifactPath }}
+          retention-days: 90
