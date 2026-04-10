@@ -94,3 +94,4 @@ jobs:
         with:
           name: artifacts_${{ github.run_id }}
           path: ${{ steps.test-deployment.outputs.artifactPath }}
+          retention-days: 90
