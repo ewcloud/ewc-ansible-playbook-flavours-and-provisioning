@@ -284,4 +284,5 @@ ipa dnsrecord-del <Zone Name> <Record Name> --del-all
 
 ## Resources
 
+- [How to administrate IPA users' public SSH keys](../how-to/how-to-administrate-ipa-user-public-ssh-keys.md)
 - [FreeIPA Official Documentation](https://www.freeipa.org/page/Documentation)

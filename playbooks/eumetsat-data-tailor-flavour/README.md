@@ -138,3 +138,7 @@ ansible-playbook \
 |------|---------|
 | ewc-ansible-role-conda | https://github.com/ewcloud/ewc-ansible-role-conda |
 | ewc-ansible-role-data-tailor | https://github.com/ewcloud/ewc-ansible-role-data-tailor |
+
+## Operation
+Checkout the following how-to guides to learn about management of the Item after initial setup:
+* [How to initialize the environment](./docs/how-to/how-to-initialize-environment.md)

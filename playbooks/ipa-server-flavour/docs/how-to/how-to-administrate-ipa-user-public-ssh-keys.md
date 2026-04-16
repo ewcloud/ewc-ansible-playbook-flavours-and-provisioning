@@ -32,3 +32,7 @@ ipa user-mod bob --sshpubkey="key1==,key2==,key3=="
 
 ![](../images/ipa-ui-add-public-ssh-keys.png)
 
+## Resources
+
+- [How to configure the IPA server](../how-to/how-to-configure-the-ipa-server.md)
+- [FreeIPA Official Documentation](https://www.freeipa.org/page/Documentation)
