@@ -98,13 +98,12 @@ executable_paths:
   epct_plugin_netcdf_generator: null
 ```
 
-The `Data Tailor Standalone` instance is now ready to use. 
-Whenever you want to use the application, just activate your conda environment with
+The `Data Tailor Standalone` instance is now ready for starting data comsuption. 
+Whenever you want to run your data consumption customization, make sure to first activate your environment with a command like:
 
 ```bash
 conda activate epct-desktop
 ```
-The you can start consuming data.
 
 ## Resources
 
