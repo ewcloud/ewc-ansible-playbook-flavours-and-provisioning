@@ -31,6 +31,7 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 
 | Name  | Summary  |
 |------|-----|
+| [eumetcast-terrestrial-amt-flavour](./playbooks/eumetcast-terrestrial-amt-flavour/) | Configures an existing VM to realiably capture and store data streamed by the EUMETCast Terrestrial service over a high-bandwith network |
 | [eumetsat-data-tailor-flavour](./playbooks/eumetsat-data-tailor-flavour/)    |Transforms an existing VM into a powerful satellite data customization hub, enabling users to efficiently subset, aggregate, reproject, and reformat data from METOP, MFG, MSG, MTG, and Sentinel-3 into GIS and image formats, offering faster processing and greater flexibility than web-based alternatives.  |
 | [haproxy-flavour](./playbooks/haproxy-flavour/)    | Configures an existing VM as a high-performance load balancer, enhancing application speed, security, and scalability with easy management for TCP and HTTP workloads.   |
 | [ipa-client-disenroll-flavour](./playbooks/ipa-client-disenroll-flavour/)   |  Simplifies the secure removal of a running VM from a FreeIPA-managed fleet of instances, reducing administrative overhead and enhancing security by eliminating stale credentials and DNS records. |
