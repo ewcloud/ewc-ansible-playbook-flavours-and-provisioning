@@ -250,16 +250,20 @@ ipa dnsrecord-del <Zone Name> <Record Name> --del-all
    
 
 2. **Log In**:
-   Use the retrieved admin credentials to log in.
+   Use your IPA server's administrator username and password to log in.
+   ![IPA login window](../images/ipa-ui-login.png)
 
 ### Common Tasks via Web UI
 
-1. **Create Sudo Commands**:
-   Navigate to **Policy > Sudo > Sudo Commands** and add commands as needed.
+1. **Create a new user**
+   Under the **Users** tab, click on ** + Add** and fill the pop-up form. Then on **Add** at the bottom of the form to complete the action.
+   ![IPA user addition form](../images/ipa-ui-add-user.png)
 
+2. **Create Sudo Commands**:
+   Navigate to **Policy > Sudo > Sudo Commands** and add commands as needed.
    ![IPA UI Create Commands](../images/ipa-ui-create-commands.png)
 
-2. **Create a Sudo Rule** (e.g., `allow_all`):
+3. **Create a Sudo Rule** (e.g., `allow_all`):
    Go to **Policy > Sudo > Sudo Rules** and create a new rule. Configure it to allow all hosts, run-as users/groups, and commands.
 
    ![IPA UI Allow All](../images/ipa-ui-allow-all.png)
