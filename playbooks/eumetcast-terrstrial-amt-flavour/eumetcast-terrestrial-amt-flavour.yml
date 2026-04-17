@@ -1,0 +1,34 @@
+---
+- name: Prompt for user inputs
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: tellicast_username
+      prompt: Tellicast license user identifier, equivalent to your EUMETSAT User Portal username.
+      private: true
+
+    - name: tellicast_user_key
+      prompt:  Tellicast license activation key (i.e. the user key you obtained via from EUMETSAT Helpdesk).
+      private: true
+
+  tasks:
+    - name: Store user input as localhost facts
+      ansible.builtin.set_fact:
+        tellicast_username_fact: "{{ tellicast_username }}"
+        tellicast_user_key_fact: "{{ tellicast_user_key }}"
+
+- name: Install Eumetcast on ATM
+  hosts: all
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+
+  tasks:
+    - name: EWC Ansible Role Eumetcast on ATM
+      ansible.builtin.include_role:
+        name: ewc-ansible-role-eumetcast-terrestrial-amt-1.0
+      vars:
+        tellicast_username: "{{ hostvars['localhost']['tellicast_username_fact'] }}"
+        tellicast_user_key: "{{ hostvars['localhost']['tellicast_user_key_fact'] }}"
