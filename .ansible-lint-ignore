@@ -28,3 +28,5 @@ playbooks/ssh-bastion-provisioning/ssh-bastion-provisioning.yml var-naming[no-ro
 playbooks/ssh-bastion-provisioning/ssh-bastion-provisioning.yml yaml[line-length]
 playbooks/default-stack-provisioning/default-stack-provisioning.yml var-naming[no-role-prefix]
 playbooks/default-stack-provisioning/default-stack-provisioning.yml yaml[line-length]
+playbooks/eumetcast-terrestrial-amt-flavour/eumetcast-terrestrial-amt-flavour.yml var-naming[no-role-prefix]
+playbooks/eumetcast-terrestrial-amt-flavour/eumetcast-terrestrial-amt-flavour.yml yaml[line-length]
