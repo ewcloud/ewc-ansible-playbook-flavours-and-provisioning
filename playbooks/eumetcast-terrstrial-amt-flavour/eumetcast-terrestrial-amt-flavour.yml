@@ -10,7 +10,7 @@
       private: true
 
     - name: tellicast_user_key
-      prompt:  Tellicast license activation key (i.e. the user key you obtained via from EUMETSAT Helpdesk).
+      prompt: Tellicast license activation key (i.e. the user key you obtained via from EUMETSAT Helpdesk).
       private: true
 
   tasks:
