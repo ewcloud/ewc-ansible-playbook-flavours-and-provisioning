@@ -1,0 +1,1 @@
+ansible-playbook -i inventory.yml eumetcast-terrestrial-amt-flavour.yml -e '{"tellicast_license_user_name":"ET_EWC03","tellicast_license_user_key":"u9HgG2JRBR"}'
