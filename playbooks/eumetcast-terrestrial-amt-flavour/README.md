@@ -1,8 +1,25 @@
 # EUMETCast Terrestrial AMT Flavour
 
 This Ansible Playbook configures an existing virtual machine running
-within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the [EUMETCast Terrestrial](https://user.eumetsat.int/data-access/eumetcast-terrestrial) over [AMT software stack](https://gitlab.eumetsat.int/open-source/amt).
+within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the [EUMETCast Terrestrial](https://user.eumetsat.int/data-access/eumetcast-terrestrial) over [AMT software stack](https://gitlab.eumetsat.int/open-source/amt). 
 
+
+EUMETCast is EUMETSAT’s primary dissemination mechanism for the near-real-time delivery of satellite data. EUMETCast serves data through two complementary delivery systems: EUMETCast Satellite and EUMETCast Terrestrial.
+
+![EUMETCast overview](./docs/images/eumetcast-overview.png)
+
+Terrestrial services for data distribution, available and supported, include:
+
+>✅ Additional terrestrial services for data distribution will be created in the future for various missions.
+If unsure of which services your credentials grant you access to, please contact the EUMETSAT User Helpdesk ([ops@eumetsat.int](mailto:ops@eumetsat.int)).
+
+
+| | | | |
+| --- | --- | --- | --- |
+| Terrestrial Service | **Total Bandwidth (Mbps)** | Data | Default |
+| **ter-1** | 240 | **EPS, MSG, Sentinel-3A/B, Sentinel-5P, Third Party data, MTG** | yes |
+| **ter-2** | 168 | **Sentinel-6 data** | |
+| **ter-3** | 230 | **Sentinel-5P L1B, Sentinel-3A/B OLCI L1 FR, Sentinel-3A/B SLSTR L1B, FY3 HIRAS, FY4 GIIRS, GOSAT, MTG HRFI-FD (4 high-res full-disk bands)** | |
 
 ## Functionality
 
@@ -10,12 +27,12 @@ within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to eq
 * Deploys the Tellicast terrestrial receiver runtime
 * Configures network translation required for multicast reception over AMT
 * Creates maintenance jobs for log and data retention
-
-EUMETCast Terrestrial over AMT can serve any network, regardless of native multicast connectivity, but provided `UDP` traffic is allowed on port `2268`. The encapsulated data can travel via GEANT network or the commercial internet.
-
-The downloaded data stream is kept in your target host's disk, under the `/home/eumetuser/data` subdirectory.
+* Automatically cleans up disk space by keeping only the latest 5 minutes of transmited data, under the `/home/eumetuser/data` subdirectory.
 
 ## Prerequisites
+> ⛔ If deploying to an instance on the ECMWF site, using certian port numbers are blocked, even when a valid security group is attached to the instance. This is due to the outer perimeter firewall of the ECMWF site. For details see [EWC Security guidelines - Restrictive firewall (allow-listing)](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Security+guidelines#EWCSecurityguidelines-Restrictivefirewall(allow-listing)).
+
+
 > ⚠️ Only Ubuntu version 22 supported due
 to constrains imposed by [dependencies](#dependencies).
 
@@ -30,7 +47,9 @@ stable operation.
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-* If you plan to configure an existing VM, jump to the [Usage](#usage) section below
+* If you plan to configure an existing VM:
+  * Verfiy your VM has the [prerequired security groups](https://confluence.ecmwf.int/display/EWCLOUDKB/EUMETCast+Terrestrial+on+AMT#EUMETCastTerrestrialonAMT-SecurityGroups) attached
+  * Then skip to the [Usage](#usage) section below
 * If you have not yet provisioned a VM, it is required to do so. You may choose one of the following approaches:
   * **A) Provision a new VM via UI:**
     * Create an SSH keypair (see [Creating the keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
@@ -45,7 +64,7 @@ stable operation.
   
     OR
   * **C) Deploy this template, together with a new VM, via the [EWCCLI](https://pypi.org/project/ewccli/)**
-
+ 
 
 ## Usage
 
