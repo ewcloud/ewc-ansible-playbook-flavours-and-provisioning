@@ -1,23 +1,26 @@
-  
+# How to change the file storage path
 
-By default, all EUMETCast Terrestrial data is stored in **/_root/data/eumetcast/_**.
+By default, all EUMETCast Terrestrial data is stored under `/home/eumetuser/data` (owned by the `eumetuser` account).
 
-In order to change the file storage path:
+To change the storage location:
 
-1.  Open the channel configuration file for the applicable service (e.g. for ter-1)
+1. Log into the instance where EUMETCast Terrestrial on AMT Item has been successfully installed.
 
-vi /etc/cast-client-channels\_ter-1.ini 
+2. Open the channel configuration file with your text editor of choice for the desired service, for example `/etc/cast-client-channels_ter-1.ini`
 
-  
+3. Modify the `target_directory` and `tmp_directory` parameters to point to the new absolute path.
 
-2. Alter the **`target_directory`**  and **`tmp_directory`**  parameters so they point to the desired storage location (absolute path recommended)
+   The line `name=*` stores all data (regardless of channel) in a single directory. Save the file chenges before existing.
 
-![](../images/image-2023-4-3_10-37-2.png "European Weather Cloud Knowledge Base > EUMETCast Terrestrial on AMT - How to change file storage path > image-2023-4-3_10-37-2.png")
+4. (Optional) For per-channel storage, uncomment the relevant channel sections and set individual `target_directory` paths.
 
-**`name=*`**  indicates that all data regardless of channel will be stored in one directory
+5.  Restart the client:
+   ```bash
+   sudo systemctl restart tellicast-client
+   ```
 
-  
+> 💡 Changes made directly to the configuration files will persist until you re-run the Ansible flavour playbook with different variables.
 
-3\. Alternatively, users can store data depending on their channels by uncommenting the channel file and updating the **`target_directory`**  path
+**Resources**
+- [How to add an additional terrestrial service](./how-to-add-an-additional-service.md)
 
-![](../images/image-2023-4-3_10-38-45.png "European Weather Cloud Knowledge Base > EUMETCast Terrestrial on AMT - How to change file storage path > image-2023-4-3_10-38-45.png")

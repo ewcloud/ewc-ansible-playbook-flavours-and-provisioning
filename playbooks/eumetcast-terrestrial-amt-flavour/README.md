@@ -139,3 +139,7 @@ ansible-playbook -i inventory.yml eumetcast-terrestrial-amt-flavour.yml
 | Name  | Home URL |
 |-------|-------|
 | ewc-ansible-role-eumetcast-terrestrial-amt | https://github.com/ewcloud/ewc-ansible-role-eumetcast-terrestrial-amt |
+
+## Operation
+
+Checkout the [how-to guides](./docs/how-to/) to learn about management of the Item after initial setup.

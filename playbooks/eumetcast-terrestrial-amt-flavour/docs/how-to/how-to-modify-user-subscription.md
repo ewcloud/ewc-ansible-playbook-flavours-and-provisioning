@@ -1,13 +1,17 @@
-User management and subscription is controlled entirely via the [EUMETSAT User Portal](https://user.eumetsat.int/). Users wishing to add or remove data products from their subscription should do so in the EUMETSAT User Portal where they will find all available products for the EUMETCast Terrestrial service.
+# How to modify your EUMETCast Terrestrial subscription
 
-  
+User management and product subscriptions are handled exclusively through the [EUMETSAT User Portal](https://user.eumetsat.int/).
 
-By default, all products in a user’s subscription are accepted by the TelliCast Client, as shown by the uncommented **`name=*`** section of the channel configuration file (see image below).
+1. Log in to the portal and adjust the products you want to receive for the EUMETCast Terrestrial service.
 
-However, if a user has altered the channel configuration file and commented out the “name=\*” section in favour of storing their data per channel, the user must ensure that their chosen channel is uncommented in the configuration file _**/etc/cast-client-channels\_ter-1.ini**._
+2. By default, the Tellicast client accepts all subscribed products (`name=*` in the channel configuration file).
 
-  
+3. If you have configured per-channel storage (commented out `name=*`), ensure the channels corresponding to your new subscription are uncommented in `/etc/cast-client-channels_ter-1.ini` and similarly for `ter-2`, `ter-3`, etc.
 
-vi /etc/cast-client-channels\_ter-1.ini
+4. Restart the client after changes:
+   ```bash
+   sudo systemctl restart tellicast-client
+   ```
 
-![](../images/image-2023-4-3_12-54-10.png "European Weather Cloud Knowledge Base > EUMETCast Terrestrial on AMT - How to modify user subscription > image-2023-4-3_12-54-10.png")
+**Resources**
+- [How to change the file storage path](./how-to-change-file-storage-path.md)

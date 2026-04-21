@@ -1,25 +1,32 @@
-You can sync data received by EUMETCast Terrestrial client to object storage with following steps: 
+# How to sync EUMETCast data to Object Storage  (S3)
 
-1. Setup s3cmd following [Object Storage: How to use s3cmd and s3fs](https://confluence.ecmwf.int/display/EWCLOUDKB/Object+Storage%3A+How+to+use+s3cmd+and+s3fs)
+> ✅ Throught this example, we will use [s3cmd](https://s3tools.org/s3cmd) as tool for S3 oject storage management. However, common valid alternatives include the [awscli](https://docs.aws.amazon.com/cli/latest/reference/s3/) and [rclone](https://rclone.org/).
 
-2. Create bucket with preferred name, e.g.
-```bash
-s3cmd mb s3://eumetcast-example
-```
+You can automatically synchronise received data to Object Storage.
 
-3. Copy the .s3cfg to /etc
-```bash
-sudo cp ~./s3cfg /etc/s3cfg
-```
+1. Install and configure `s3cmd` by following the guidelines in the [EWC Knowledge Base](https://confluence.ecmwf.int/x/1LjLCg).
 
-4. Modify crontab
-```bash
-sudo crontab -e
-```
-by adding following line (note that if you have modified the default location of the data, this have to be modified respectively):
+2. Create a bucket:
+   ```bash
+   s3cmd mb s3://eumetcast-example
+   ```
 
-```bash
+3. Copy your `.s3cfg` file to a system-wide location:
+   ```bash
+   sudo cp ~/.s3cfg /etc/s3cfg
+   ```
 
-*/1 * * * * s3cmd -c /etc/s3cfg sync /root/data/eumetcast/ter-1/default s3://eumetcast-example 
-```
+4. Edit root’s crontab:
+   ```bash
+   sudo crontab -e
+   ```
 
+   Add a line similar to the following (adjust the source path if you changed the storage location):
+   ```
+   */5 * * * * s3cmd -c /etc/s3cfg sync /home/eumetuser/data/ter-1/default/ s3://eumetcast-example/ --delete-removed
+   ```
+
+> 💡 Adjust the cron interval and source sub-directory according to your needs and the actual data layout under `/home/eumetuser/data`.
+
+**Resources**
+- [How to sync EUMETCast data to Shared File System (SFS)](./how-to-sync-eumetcast-data-to-shared-file-system-sfs.md)

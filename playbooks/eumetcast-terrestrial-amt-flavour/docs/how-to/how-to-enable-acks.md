@@ -1,6 +1,16 @@
-> 💡 The feedback channel required for retransmission is disabled by default during the trial phase. This results in reduced availability with logs reporting "Lost X messages during the last 60 seconds". Please enable NAKs and ACKs in coordination with EUMETSAT for optimal availability.    
+# How to enable NAKs / ACKs (retransmission feedback)
 
-1. Request EUMETSAT to enable ACKs for your station by emailing the User Helpdesk (ops@eumetsat.int) and providing 24hrs of tellicast client log files (logs for all applicable services, i.e. ter-1 and ter-2).
-2. Once good reception has been verified for the client, EUMETSAT will enable the acknowledgements ensuring that the user’s file availability is monitored
+The EUMETCast Terreistrail on AMT Item automatically configures the necessary NAT rules for the EUMETSAT network. No manual iptables changes are required on the station.
 
-> 💡 No changes required to end-user station
+To enable acknowledgements (which improve file availability through retransmission):
+
+1. Send an email to the EUMETSAT User Helpdesk (ops@eumetsat.int) requesting ACKs/NAKs for your station. Attach 24 hours of Tellicast client log files for all active services (e.g. `recv_ter-1.log`, `recv_ter-2.log`, `recv_ter-3.log`).
+
+2. Once EUMETSAT verifies good reception and enables the feedback channel on their side, no further changes are needed on your instance.
+
+> ⚠️ Enabling retransmission will consume a small portion of the forward channel bandwidth.
+
+**Resources**
+- [How to check file availability](./how-to-check-file-availability.md)
+
+

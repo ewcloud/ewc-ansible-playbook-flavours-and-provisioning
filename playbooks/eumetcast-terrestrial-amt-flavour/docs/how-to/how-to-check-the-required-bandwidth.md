@@ -1,3 +1,7 @@
-Users can also check their required bandwidth via the EUMETCast Terrestrial channel bandwidth calculator:
+# How to check the required bandwidth
 
-[https://eumetsatspace.atlassian.net/wiki/spaces/DSEC/pages/1255866369/Terrestrial+Channels+and+Bandwidth+Calculator](https://eumetsatspace.atlassian.net/wiki/spaces/DSEC/pages/1255866369/Terrestrial+Channels+and+Bandwidth+Calculator)
+Use the official EUMETCast Terrestrial channel bandwidth calculator provided by EUMETSAT to determine the bandwidth needed for your subscribed data:
+
+[EUMETCast Terrestrial Channels and Bandwidth Calculator](https://user.eumetsat.int/resources/user-guides/eumet-cast-channels-and-pi-ds)
+
+Compare the calculated value with the bandwidth available on your last-mile connection.
