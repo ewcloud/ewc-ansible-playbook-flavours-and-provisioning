@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.6.2...1.7.0) (2026-05-04)
+
+
+### Features
+
+* Add EUMETCast Terrestrial AMT flavour ([#26](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/26)) ([6d7e30f](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/6d7e30fa81fe671fb39da2d2baced34b54c4e5d0))
+
 ## [1.6.2](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.6.1...1.6.2) (2026-04-06)
 
 
