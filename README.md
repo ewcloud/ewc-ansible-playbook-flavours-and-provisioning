@@ -1,5 +1,4 @@
 # Flavours and Provisioning
->💡 Two categories of templates in this collection: 1) one to configure previously provisioned instances, 2) another to self-provisioning or manage provisioned instances (i.e. "one-line" deployment and full state management).
 
 A collection of configuration templates
 (i.e. [Ansible Playbooks](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks.html))
@@ -8,31 +7,17 @@ to customize your
 
 Want to learn how other users make the best out of these templates, or have ideas of your own? Head over to [the official discussion platform](https://chat.europeanweather.cloud/) and engage with the EWC community. Feedback is always welcomed! ♥️
 
-
-
-## Copyright and License
-Copyright © EUMETSAT 2025.
-
-The provided code and instructions are licensed under the [MIT license](./LICENSE).
-They are intended to automate the setup of an environment that includes 
-third-party software components.
-The usage and distribution terms of the resulting environment are 
-subject to the individual licenses of those third-party libraries.
-
-Users are responsible for reviewing and complying with the licenses of
-all third-party components included in the environment.
-
-Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distribution terms.
-
 ## Index
->💡 Grouped by capability and ordered alphabetically.
 
-### Configuration
+>💡 Two levels of functionality available in this collection: 1) one to configure previously provisioned instances, 2) another to self-provisioning or manage provisioned instances (i.e. "one-line" deployment and full state management).
+
+### Level 1: Configuration (existing VMs)
 
 | Name  | Summary  |
 |------|-----|
 | [eumetcast-terrestrial-amt-flavour](./playbooks/eumetcast-terrestrial-amt-flavour/) | Configures an existing VM to realiably capture and store data streamed by the EUMETCast Terrestrial service over a high-bandwith network |
 | [eumetsat-data-tailor-flavour](./playbooks/eumetsat-data-tailor-flavour/)    |Transforms an existing VM into a powerful satellite data customization hub, enabling users to efficiently subset, aggregate, reproject, and reformat data from METOP, MFG, MSG, MTG, and Sentinel-3 into GIS and image formats, offering faster processing and greater flexibility than web-based alternatives.  |
+| [eumetsat-s3-mount-flavour](./playbooks/eumetsat-s3-mount-flavour/) | Enables a VM to access public EUMETSAT data, stored in S3 buckets, just as if it was kept on the local filesystem |
 | [haproxy-flavour](./playbooks/haproxy-flavour/)    | Configures an existing VM as a high-performance load balancer, enhancing application speed, security, and scalability with easy management for TCP and HTTP workloads.   |
 | [ipa-client-disenroll-flavour](./playbooks/ipa-client-disenroll-flavour/)   |  Simplifies the secure removal of a running VM from a FreeIPA-managed fleet of instances, reducing administrative overhead and enhancing security by eliminating stale credentials and DNS records. |
 | [ipa-client-enroll-flavour](./playbooks/ipa-client-enroll-flavour) | Seamlessly integrates a running VM into a FreeIPA-managed fleet of instances, enabling centralized user authentication, DNS resolution, and secure remote access for simplified and scalable identity management. | 
@@ -42,7 +27,7 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 | [ssh-bastion-flavour](./playbooks/ssh-bastion-flavour/)   | Tightens the configuration of a running VM, to operate as a secure SSH proxy with Fail2ban, providing tenant admins and users a fortified entry point to safely access private EWC networks from the public internet. | 
 | [xcube-viewer-flavour](./playbooks/xcube-viewer-flavour/)   |  Configures an existing VM with the xcube Viewer, to visualize Earth Observation data within a user-friendly graphical user interface | 
 
-### Self-provisioning + Configuration
+### Level 2: Self-provisioning + Configuration
 
 | Name  | Summary  |
 |------|-----|
@@ -69,6 +54,20 @@ Please make sure to:
 contributing.
 * See [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on how to request 
 or submit changes.
+
+## Copyright and License
+Copyright © EUMETSAT 2025.
+
+The provided code and instructions are licensed under the [MIT license](./LICENSE).
+They are intended to automate the setup of an environment that includes 
+third-party software components.
+The usage and distribution terms of the resulting environment are 
+subject to the individual licenses of those third-party libraries.
+
+Users are responsible for reviewing and complying with the licenses of
+all third-party components included in the environment.
+
+Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distribution terms.
 
 ## Authors
 

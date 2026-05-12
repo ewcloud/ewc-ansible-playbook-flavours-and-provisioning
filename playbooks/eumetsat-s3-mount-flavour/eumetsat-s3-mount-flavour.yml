@@ -1,0 +1,35 @@
+---
+- name: Prompt for user inputs
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: vfs_cache_mode
+      prompt: cache mode. Press Enter to accept default.
+      default: "writes"
+
+
+    - name: vfs_cache_max_size
+      prompt: max total size of objects in the cache. Press Enter to accept default.
+      default: "512Mi"
+
+  tasks:
+    - name: Store user input as localhost facts
+      ansible.builtin.set_fact:
+        vfs_cache_mode_fact: "{{ vfs_cache_mode }}"
+        vfs_cache_max_size_fact: "{{ vfs_cache_max_size }}"
+
+- name: Install EUMETSAT S3 Mount
+  hosts: all
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+
+  tasks:
+    - name: EWC Ansible Role EUMETSAT S3 Mount
+      ansible.builtin.include_role:
+        name: ewc-ansible-role-eumetsat-s3-mount-1.0
+      vars:
+        vfs_cache_mode: "{{ hostvars['localhost']['vfs_cache_mode_fact'] }}"
+        vfs_cache_max_size: "{{ hostvars['localhost']['vfs_cache_max_size_fact'] }}"
