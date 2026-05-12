@@ -1,0 +1,32 @@
+---
+- name: Prompt for user inputs
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: tbd
+      prompt: TBD 
+
+    - name: tbd
+      prompt: TBD 
+
+  tasks:
+    - name: Store user input as localhost facts
+      ansible.builtin.set_fact:
+        tellicast_username_fact: "{{ tellicast_username }}"
+        tellicast_user_key_fact: "{{ tellicast_user_key }}"
+
+- name: Install EUMETSAT S3 Mount
+  hosts: all
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+
+  tasks:
+    - name: EWC Ansible Role EUMETSAT S3 Mount
+      ansible.builtin.include_role:
+        name: ewc-ansible-role-eumetsat-s3-mount-1.0
+      vars:
+        tellicast_username: "{{ hostvars['localhost']['tellicast_username_fact'] }}"
+        tellicast_user_key: "{{ hostvars['localhost']['tellicast_user_key_fact'] }}"
