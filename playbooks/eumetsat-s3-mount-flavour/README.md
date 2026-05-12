@@ -1,4 +1,5 @@
 # EUMETSAT S3 Mount Flavour
+> ✅ Supports instances on both the ECMWF and the EUMETSAT compute sites of the EWC.
 
 This Ansible Playbook configures a virtual machine existing
 within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), enabling to access remote public [EUMETSAT data buckets](https://confluence.ecmwf.int/x/FUEXHQ) as if they were stored on a local disk.
@@ -92,7 +93,7 @@ ansible-playbook \
   -i inventory.yml \
   -e '{
       "vfs_cache_mode":"writes",
-      "vfs_cache_max_size":"writes"
+      "vfs_cache_max_size":"512Mi"
     }' \
   eumetsat-s3-mount-flavour.yml
 ```

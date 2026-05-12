@@ -2,4 +2,4 @@
 roles:
   - name: ewc-ansible-role-eumetsat-s3-mount-1.0
     src: https://github.com/ewcloud/ewc-ansible-role-eumetsat-s3-mount.git
-    version: 1.0.0
+    version: 1.0.1
