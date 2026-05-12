@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.7.0...1.8.0) (2026-05-12)
+
+
+### Features
+
+* EUMETSAT S3 Mount flavour ([#27](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/27)) ([b8a56f7](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/b8a56f753c0e9dc45b896f4858b232a38fda0c71))
+
 # [1.7.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.6.2...1.7.0) (2026-05-04)
 
 
