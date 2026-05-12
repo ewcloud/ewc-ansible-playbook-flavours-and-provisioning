@@ -31,6 +31,7 @@ Contact [EUMETSAT](http://www.eumetsat.int) for details on the usage and distrib
 
 | Name  | Summary  |
 |------|-----|
+| [eumetsat-s3-mount-flavour](./playbooks/eumetsat-s3-mount-flavour/) | Enables a VM to access public EUMETSAT data, stored in S3 buckets, just as if it was kept on the local filesystem |
 | [eumetcast-terrestrial-amt-flavour](./playbooks/eumetcast-terrestrial-amt-flavour/) | Configures an existing VM to realiably capture and store data streamed by the EUMETCast Terrestrial service over a high-bandwith network |
 | [eumetsat-data-tailor-flavour](./playbooks/eumetsat-data-tailor-flavour/)    |Transforms an existing VM into a powerful satellite data customization hub, enabling users to efficiently subset, aggregate, reproject, and reformat data from METOP, MFG, MSG, MTG, and Sentinel-3 into GIS and image formats, offering faster processing and greater flexibility than web-based alternatives.  |
 | [haproxy-flavour](./playbooks/haproxy-flavour/)    | Configures an existing VM as a high-performance load balancer, enhancing application speed, security, and scalability with easy management for TCP and HTTP workloads.   |
