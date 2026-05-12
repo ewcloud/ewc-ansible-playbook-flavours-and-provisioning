@@ -6,13 +6,13 @@
 
   vars_prompt:
     - name: vfs_cache_mode
-      prompt: enter virtual filesystem cache mode (or press enter to accept default)
-      default: writes
+      prompt: cache mode. Press Enter to accept default.
+      default: "writes"
 
 
     - name: vfs_cache_max_size
-      prompt: enter virtual filesystem cache max size (or press enter to accept default)
-      default: 512Mi
+      prompt: max total size of objects in the cache. Press Enter to accept default.
+      default: "512Mi"
 
   tasks:
     - name: Store user input as localhost facts
