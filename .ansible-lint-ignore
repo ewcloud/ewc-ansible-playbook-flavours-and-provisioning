@@ -30,5 +30,5 @@ playbooks/default-stack-provisioning/default-stack-provisioning.yml var-naming[n
 playbooks/default-stack-provisioning/default-stack-provisioning.yml yaml[line-length]
 playbooks/eumetcast-terrestrial-amt-flavour/eumetcast-terrestrial-amt-flavour.yml var-naming[no-role-prefix]
 playbooks/eumetcast-terrestrial-amt-flavour/eumetcast-terrestrial-amt-flavour.yml yaml[line-length]
-playbooks/eumetsat-s3-mount-flavour/eumetsat-s3-mount-flavor.yml var-naming[no-role-prefix]
-playbooks/eumetsat-s3-mount-flavour/eumetsat-s3-mount-flavor.yml yaml[line-length]
+playbooks/eumetsat-s3-mount-flavour/eumetsat-s3-mount-flavour.yml var-naming[no-role-prefix]
+playbooks/eumetsat-s3-mount-flavour/eumetsat-s3-mount-flavour.yml yaml[line-length]

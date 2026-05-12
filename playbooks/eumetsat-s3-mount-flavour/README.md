@@ -1,12 +1,12 @@
 # EUMETSAT S3 Mount Flavour
 
 This Ansible Playbook configures a virtual machine existing
-within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), enabling to access remote public [EUMETSAT data buckets](https://confluence.ecmwf.int/x/FUEXHQ) as if it was stored on a local disk.
+within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), enabling to access remote public [EUMETSAT data buckets](https://confluence.ecmwf.int/x/FUEXHQ) as if they were stored on a local disk.
 
 ## Features
 
 - Self-service access to EUMETSAT data publicly available within the EWC (no credentials required)
-- Strict file permissions for mounted directories
+- Strict file permissions for mounted directories under the `/mnt` directory
 - Boot-safe design; does not block boot on `S3` outage
 
 ## Prerequisites
