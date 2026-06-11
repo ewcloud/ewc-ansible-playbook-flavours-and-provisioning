@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.2](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.8.1...1.8.2) (2026-06-11)
+
+
+### Bug Fixes
+
+* revert-back ([#29](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/29)) ([8bd4a52](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/8bd4a520883408fcafb9c4260aa965807300b476))
+
 ## [1.8.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.8.0...1.8.1) (2026-06-11)
 
 
