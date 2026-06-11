@@ -34,7 +34,7 @@
         ipa_admin_password_fact: "{{ ipa_admin_password }}"
 
 - name: Install IPA client and enroll into an IPA server's LDAP/DNS services
-  hosts: ipa_client
+  hosts: all
   become: true
   become_user: root
   become_method: ansible.builtin.sudo
