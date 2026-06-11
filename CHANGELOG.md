@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.8.0...1.8.1) (2026-06-11)
+
+
+### Bug Fixes
+
+* openstack hide ([#28](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/28)) ([f7294c7](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/f7294c7d2f9fc4f7f534c6346eccd3618e6c3807))
+
 # [1.8.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.7.0...1.8.0) (2026-05-12)
 
 
