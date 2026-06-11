@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.9.0...1.9.1) (2026-06-11)
+
+
+### Bug Fixes
+
+* host in client enroll should be all ([#31](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/31)) ([a09196e](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/a09196e3b3ad94d7c4241bfea6b08354dcfb6c99))
+
 # [1.9.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.8.2...1.9.0) (2026-06-11)
 
 
