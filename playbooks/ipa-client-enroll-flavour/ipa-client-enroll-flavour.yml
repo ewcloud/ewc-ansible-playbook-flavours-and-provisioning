@@ -9,6 +9,10 @@
       prompt: domain name managed by the IPA server
       private: false
 
+    - name: ipa_client_hostname
+      prompt: hostname of the target vm where the IPA client will be installed.
+      private: false
+
     - name: ipa_server_hostname
       prompt: hostname of the IPA server. Press Enter to accept default
       private: false
