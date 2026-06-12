@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.9.1...1.10.0) (2026-06-12)
+
+
+### Features
+
+* missing variable ([#32](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/32)) ([e14b57a](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/e14b57a7c990f1f1507f9ff668ba821afdcd5017))
+
 ## [1.9.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.9.0...1.9.1) (2026-06-11)
 
 
