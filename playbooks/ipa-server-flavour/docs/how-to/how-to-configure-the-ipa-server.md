@@ -178,7 +178,7 @@ ipa dnsrecord-find <Zone Name>
 #### Update a DNS Record in a Zone
 
 ```bash
-ipa dnsrecord-mod <Zone Name> <Record Name> --a-ip-address=<Current IP> --a-rec=<New IP>
+ipa dnsrecord-mod <Zone Name> <Record Name> --a-rec=<Current IP> --a-ip-address=<New IP> 
 ```
 
 #### Remove All DNS Records for a Resource
