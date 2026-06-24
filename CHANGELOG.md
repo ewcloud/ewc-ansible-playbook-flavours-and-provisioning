@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.11.0...1.12.0) (2026-06-24)
+
+
+### Features
+
+* update eumetcast ([#34](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/34)) ([9b38916](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/9b3891673b310f2b3c5389414fb969b1403eb4bc))
+
 # [1.11.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.10.0...1.11.0) (2026-06-24)
 
 
