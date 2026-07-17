@@ -155,6 +155,8 @@ ansible-playbook -i inventory.yml eumetcast-terrestrial-amt-flavour.yml
 
 ## Dependencies
 
+> 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
+
 | Name  | Home URL |
 |-------|-------|
 | ewc-ansible-role-eumetcast-terrestrial-amt | https://github.com/ewcloud/ewc-ansible-role-eumetcast-terrestrial-amt |
