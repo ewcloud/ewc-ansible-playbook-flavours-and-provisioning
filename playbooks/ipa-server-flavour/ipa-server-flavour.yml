@@ -84,7 +84,7 @@
   tasks:
     - name: Manual changes to your OpenStack subnet may be required for IPA to be fully enabled.
       ansible.builtin.debug:
-        msg: 
+        msg:
           - "STEP 1: Note down the private IP address of the VM newly configured as IPA server"
           - "  The IP address may already be in your `inventory.yml` file, or in the logs of your VM deployment method of choice otherwise. You can also obtain it via OpenStack CLI or find it by exploring VMs via the UI"
           - "  Example: `10.0.0.53`"
