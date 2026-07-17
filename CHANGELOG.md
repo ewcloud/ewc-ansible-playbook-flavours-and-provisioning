@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.8.0...1.8.1) (2026-07-17)
+
+
+### Bug Fixes
+
+* Renable EUMETCast playbook input prompts to aligh with role and catalog metadata ([#36](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/36)) ([6c9761a](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/6c9761ac200d74d1596eb2fc528215f62d0c2910))
+
 # [1.8.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.7.0...1.8.0) (2026-05-12)
 
 
