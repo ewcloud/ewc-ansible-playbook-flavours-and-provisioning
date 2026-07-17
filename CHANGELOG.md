@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.4](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.8.3...1.8.4) (2026-07-17)
+
+
+### Bug Fixes
+
+* Bump IPA server dependency version to 1.1.2 ([#39](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/39)) ([d30d61b](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/d30d61b7193d34b4f2b8ac079965d0bbac4bc54c))
+
 ## [1.8.3](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.8.2...1.8.3) (2026-07-17)
 
 
