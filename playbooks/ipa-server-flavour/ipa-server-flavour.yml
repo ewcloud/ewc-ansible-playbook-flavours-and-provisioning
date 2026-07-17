@@ -76,3 +76,20 @@
         ipa_admin_surname: "{{ hostvars['localhost']['ipa_admin_surname'] }}"
         os_network_name: "{{ hostvars['localhost']['os_network_name'] }}"
         os_security_group_name: "{{ hostvars['localhost']['os_security_group_name'] }}"
+
+- name: Display instructions for manually updating DNS nameserver(s)
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Manual changes to your OpenStack subnet may be required for IPA to be fully enabled.
+      ansible.builtin.debug:
+        msg: 
+          - "STEP 1: Note down the private IP address of the VM newly configured as IPA server"
+          - "  The IP address may already be in your `inventory.yml` file, or in the logs of your VM deployment method of choice otherwise. You can also obtain it via OpenStack CLI or find it by exploring VMs via the UI"
+          - "  Example: `10.0.0.53`"
+          - "STEP 2: Ensure the IPA server's IP address is part of the list of subnet DSN nameservers"
+          - "  Example: `openstack subnet set --dns-nameserver 10.0.0.53 private-subnet`"
+          - "STEP 3: Remove any other IP address from the DNS nameservers of the subnet"
+          - "  Example: `openstack subnet unset --dns-nameserver 1.1.1.1 private-subnet && openstack subnet unset --dns-nameserver 8.8.8.8 private-subnet`"
+          - "Please refer to the README.md for additional information"

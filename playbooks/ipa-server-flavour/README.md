@@ -139,28 +139,51 @@ ansible-playbook \
   ipa-server-flavour.yml
 ```
 
-### 5. Manullay update DNS nameserver(s)
+### 5. Manually update DNS nameserver(s)
 
 >⛔ Changes described in this section can potentially affect DNS resolution on existing VMs within your subnet. To prevent issues, enroll them to the new IPA server via the
 [IPA Client Enroll Flavour](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour)
 CommunityHub Item, OR manually [edit nameservers in their DNS configuration](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/domain-dns).
 
-After successful execution of the template, additional changes to the OpenStack subnet are required.
-You can edit your specific OpenStack subnet, as well as any other OpenStack resource, with the native [OpenStack CLI](pypi.org/project/python-openstackclient/).
+Manual changes to your OpenStack subnet are required for IPA to be fully enabled.
 
-First, take note of the IP address of your newly configured IPA server and the subnet attached to it, replace these information in the command below, and execute:
+**Step 1: Note down the private IP address of the VM newly configured as IPA server**
+
+The IP address may already be in your `inventory.yml` file, or in the logs of your VM deployment method of choice otherwise. You can also obtain it via OpenStack CLI or find it by exploring VMs via the UI.
+
+For illustration purposes, supposes it IP is `10.0.0.53`.
+
+
+**Step 2: Ensure the IPA server's IP address is part of the list of subnet DSN nameservers**
+
+Via Openstack CLI:
 
 ```bash
 openstack subnet set \
   --dns-nameserver <IPV4 address of the IPA server> \
   <ID or name of the OpenStack Subnet attached to the IPA server>
 ```
-Then remove any default DNS nameservers which where added to the subnet prior to the IPA server configuration:
 
+Following the example in the prior step and assuming the subnet name `private-subnet`, then we would execute:
+
+```bash
+openstack subnet set --dns-nameserver 10.0.0.53 private-subnet
+```
+
+**Step 3: Remove any other IP address from the DNS nameservers of the subnet**
+
+Via Openstack CLI:
 ```bash
 openstack subnet unset \
   --dns-nameserver <IPV4 address of any prior default DNS nameserver> \
   <ID or name of the OpenStack Subnet attached to the IPA server>
+```
+
+Continuing the example, suppose two additional IP address, `1.1.1.1` and `8.8.8.8`, are still part of the DNS nameservers list. To remove then we would execute:
+
+```bash
+openstack subnet unset --dns-nameserver 1.1.1.1 private-subnet && \
+openstack subnet unset --dns-nameserver 8.8.8.8 private-subnet
 ```
 
 ## Inputs
