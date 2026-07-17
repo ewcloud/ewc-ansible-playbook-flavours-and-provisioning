@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.3](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.8.2...1.8.3) (2026-07-17)
+
+
+### Bug Fixes
+
+* Move from IPA Client host whilelisting to blacklisting ([#38](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/38)) ([7687e78](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/7687e783a152e3879ccc3a0b727fc9facf62ad01))
+
 ## [1.8.2](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.8.1...1.8.2) (2026-07-17)
 
 
