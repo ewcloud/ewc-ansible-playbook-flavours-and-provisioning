@@ -33,7 +33,7 @@
     - name: flavor_name
       prompt: name the flavor to use for the instance. Press Enter to accept default
       private: false
-      default: "eo2.medium"
+      default: "1cpu-4gbmem"
 
     - name: image_name
       prompt: name the image to use for the instance. Press Enter to accept default

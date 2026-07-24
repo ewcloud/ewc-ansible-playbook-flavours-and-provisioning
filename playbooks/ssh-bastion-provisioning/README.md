@@ -107,7 +107,7 @@ ansible-playbook \
         "ssh_bastion_app_name":"ssh",
         "ssh_bastion_instance_name":"bastion",
         "ssh_bastion_instance_index":1,
-        "ssh_bastion_flavor_name":"eo1.large",
+        "ssh_bastion_flavor_name":"4cpu-8gbmem",
         "ssh_bastion_image_name":"Rocky-9.5-20250604142417",
         "public_keypair_name":"my-public-key-name",
         "private_keypair_path":"~/.ssh/id_rsa",
@@ -125,7 +125,7 @@ ansible-playbook \
 | ssh_bastion_app_name | application name, used as prefix in the full instance name  | `string` | `ssh` | yes |
 | ssh_bastion_instance_name| name of the instance, used in the full instance name | `string` | `bastion` | yes |
 | ssh_bastion_instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
-| ssh_bastion_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `eo1.large` | yes |
+| ssh_bastion_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `4cpu-8gbmem` | yes |
 | ssh_bastion_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available)  | `string` | `Rocky-9.5-20250604142417` | yes |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
 | private_keypair_name | path to the local private keypair to use for SSH access to the instance  | `string` | `~/.ssh/id_rsa` | yes |

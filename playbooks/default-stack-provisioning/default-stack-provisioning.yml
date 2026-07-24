@@ -57,7 +57,7 @@
     - name: ipa_server_flavor_name
       prompt: name the flavor to use for the instance of the IPA server. Press Enter to accept default
       private: false
-      default: "eo1.large"
+      default: "4cpu-8gbmem"
 
     - name: ipa_server_image_name
       prompt: name the image to use for the instance of the IPA server. Press Enter to accept default
@@ -112,7 +112,7 @@
     - name: ssh_bastion_flavor_name
       prompt: name the flavor to use for the instanceof the SSH bastion. Press Enter to accept default
       private: false
-      default: "eo1.large"
+      default: "4cpu-8gbmem"
 
     - name: ssh_bastion_image_name
       prompt: name the image to use for the instanceof the SSH bastion. Press Enter to accept default
@@ -142,7 +142,7 @@
     - name: remote_desktop_flavor_name
       prompt: name the flavor to use for the instance of the remote desktop. Press Enter to accept default
       private: false
-      default: "eo1.large"
+      default: "4cpu-8gbmem"
 
     - name: remote_desktop_image_name
       prompt: name the image to use for the instance of the remote desktop. Press Enter to accept default

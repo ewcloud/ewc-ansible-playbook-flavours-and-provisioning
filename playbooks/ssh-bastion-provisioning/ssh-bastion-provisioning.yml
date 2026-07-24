@@ -33,7 +33,7 @@
     - name: ssh_bastion_flavor_name
       prompt: name the flavor to use for the instance. Press Enter to accept default
       private: false
-      default: "eo1.large"
+      default: "4cpu-8gbmem"
 
     - name: ssh_bastion_image_name
       prompt: name the image to use for the instance. Press Enter to accept default
