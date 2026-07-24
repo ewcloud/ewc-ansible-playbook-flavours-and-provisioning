@@ -102,8 +102,8 @@ ansible-playbook \
         "app_name": "ipa",
         "instance_name": "client",
         "instance_index": 1,
-        "flavor_name": "eo2.medium",
-        "image_name": "ubuntu-22.04-20250204105649",
+        "flavor_name": "1cpu-4gbmem",
+        "image_name": "Ubuntu-22.04-20260519071848",
         "public_keypair_name": "my-public-key-name",
         "private_keypair_path": "~/.ssh/id_rsa",
         "private_network_name": "private",
@@ -125,8 +125,8 @@ ansible-playbook \
 | app_name | application name, used as prefix in the full instance name | `string` | `ipa` | yes |
 | instance_name| name of the instance, used in the full instance name | `string` |  `client` | yes |
 | instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
-| flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `eo1.large` | yes |
-| image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `ubuntu-22.04-20250204105649` | yes |
+| flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `4cpu-8gbmem` | yes |
+| image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `Ubuntu-22.04-20260519071848` | yes |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
 | private_keypair_path | path to the local private keypair to use for SSH access to the instance  | `string` | `~/.ssh/id_rsa` | yes |
 | private_network_name | private network name to attach the instance to  | `string` | `private`| yes |

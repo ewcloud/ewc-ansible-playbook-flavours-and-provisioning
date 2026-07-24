@@ -111,8 +111,8 @@ ansible-playbook \
         "ipa_server_app_name":"ipa",
         "ipa_server_instance_name":"server",
         "ipa_server_instance_index": 1,
-        "ipa_server_flavor_name":"eo1.large",
-        "ipa_server_image_name":"Rocky-9.5-20250604142417",
+        "ipa_server_flavor_name":"4cpu-8gbmem",
+        "ipa_server_image_name":"Rocky-9.7-20260519081947",
         "public_keypair_name":"my-public-key-name",
         "private_keypair_path":"~/.ssh/id_rsa",
         "private_network_name": "private",
@@ -158,8 +158,8 @@ openstack subnet unset \
 | ipa_server_app_name | application name, used as prefix in the full instance name | `string` | `ipa` | yes |
 | ipa_server_instance_name| name of the instance, used in the full instance name | `string` | `server` | yes |
 | ipa_server_instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
-| ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `eo1.large` | yes |
-| ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `Rocky-8.10-20250604144456` | yes |
+| ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `4cpu-8gbmem` | yes |
+| ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `Rocky-8.10-20260519112324` | yes |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
 | private_keypair_path | path to the local private keypair to use for SSH access to the instance  | `string` | `~/.ssh/id_rsa` | yes |
 | private_network_name | private network name to attach the instance | `string` | `private`  | yes |
