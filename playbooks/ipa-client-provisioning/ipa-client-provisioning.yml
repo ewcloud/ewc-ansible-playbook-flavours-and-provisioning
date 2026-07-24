@@ -38,7 +38,7 @@
     - name: image_name
       prompt: name the image to use for the instance. Press Enter to accept default
       private: false
-      default: "ubuntu-22.04-20250204105649"
+      default: "Ubuntu-22.04-20260519071848"
 
     - name: public_keypair_name
       prompt: name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access

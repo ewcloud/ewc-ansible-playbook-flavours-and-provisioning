@@ -112,7 +112,7 @@ ansible-playbook \
         "remote_desktop_instance_name":"desktop",
         "remote_desktop_instance_index":1,
         "remote_desktop_flavor_name":"4cpu-8gbmem",
-        "remote_desktop_image_name":"Rocky-9.5-20250604142417",
+        "remote_desktop_image_name":"Rocky-9.7-20260519081947",
         "remote_desktop_instance_has_fip":"no",
         "public_keypair_name":"my-public-key-name",
         "private_keypair_path":"~/.ssh/id_rsa",
@@ -148,7 +148,7 @@ Desktop section of
 | remote_desktop_instance_name| name of the instance, used in the full instance name | `string` | `desktop` | yes |
 | remote_desktop_instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
 | remote_desktop_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `4cpu-8gbmem` | yes |
-| remote_desktop_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `Rocky-9.5-20250604142417` | yes |
+| remote_desktop_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `Rocky-9.7-20260519081947` | yes |
 | remote_desktop_instance_has_fip | whether to assign a floating IP to the instance. Only `yes` will be accepted to approve | `string` | `no` | no |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
 | private_keypair_path| path to the local private keypair to use for SSH access to the instance | `string` | `~/.ssh/id_rsa` | yes |

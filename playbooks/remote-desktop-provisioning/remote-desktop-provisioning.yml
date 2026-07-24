@@ -38,7 +38,7 @@
     - name: remote_desktop_image_name
       prompt: name the image to use for the instance. Press Enter to accept default
       private: false
-      default: "Rocky-9.5-20250604142417"
+      default: "Rocky-9.7-20260519081947"
 
     - name: remote_desktop_instance_has_fip
       prompt: whether to assign a floating IP to the instance. Only `yes` will be accepted to approve. Press Enter to accept default
