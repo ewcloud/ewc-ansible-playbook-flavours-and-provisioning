@@ -1,0 +1,5 @@
+---
+roles:
+  - name: ewc-ansible-role-htcondor-execute-1.0
+    src: https://github.com/ewcloud/ewc-ansible-role-htcondor-execute.git
+    version: 1.0.0
