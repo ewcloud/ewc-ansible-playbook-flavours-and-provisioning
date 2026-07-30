@@ -31,8 +31,8 @@ To learn the basics about managing infrastructure with Terraform, check out [Ter
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [python-openstackclient](https://pypi.org/project/python-openstackclient) (version 8.0 or higher)
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-* Install [terraform](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+IaC+via+Terraform+and+OpenTofu#EWCIaCviaTerraformandOpenTofu-InstallationoftheCLI) (version 1.0 or higher)
-* Get OpenStack API credentials (see [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials) section of the EWC documentation)
+* Install [terraform](https://confluence.ecmwf.int/x/UyRNH) (version 1.0 or higher)
+* Get OpenStack application credentials and add them to your shell's environment variables (see the [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/x/TiRNH) and [Using OpenStack RC files](https://confluence.ecmwf.int/x/TyRNH#EWCOpenStackAPIaccessInstallanduseCommandLineclient-usingOpenStackRCfile) sections of the EWC documentation for details)
 * You require an existing VM already enrolled into your IPA Server and provisioned via any of the EWC Community Hub Items with the name suffix `Provisioning` (i.e. [IPA Client Provisioning](https://europeanweather.cloud/community-hub/ipa-client-provisioning), [Default Stack Provisioning](https://europeanweather.cloud/community-hub/default-stack-provisioning/), etc.)
 * Your require SSH access to the exiting VM (i.e. your public SSH key must be registered on the target machine)
 
@@ -57,7 +57,7 @@ cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/ipa-client-teardown
 git checkout x.y.z
 ```
 
-### 2. Download  Ansible dependencies
+### 2. Download Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
