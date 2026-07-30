@@ -191,7 +191,9 @@ For illustration purposes, supposes it IP is `10.0.0.53`.
     4. A new table will be displayed in on the middle of the view port, this time listing the available subnets. Click on `Edit Subnet`, on the same row where the correct subnet is listed.
     5. Within the pop-up edit form, click on `Subnet Details`
     6. Replace the contents of the `DNS Name Servers` entry with the IP of your new IPA server, for example:
-    ![UI DNS Name Servers](./docs/images/horinzon-ui-dns-name-servers.jpg)
+
+        <img src="https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/main/playbooks/ipa-server-flavour/docs/images/horinzon-ui-dns-name-servers.jpg" height=600px>
+
     7. Click on `Save`
 
   **OR**
