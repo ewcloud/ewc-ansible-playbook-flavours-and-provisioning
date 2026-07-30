@@ -30,8 +30,8 @@ The template is designed to:
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-* You require an existing VM already enrolled into your IPA Server.
-* Your require SSH access to the exiting VM (i.e. your public SSH key must be registered on the target machine)
+* Verify the IP address of the existing VM already enrolled into your IPA Server.
+* Verify your SSH access to the exiting VM (i.e. your public SSH key must be registered on the target machine)
 
 ## Usage
 
@@ -47,7 +47,7 @@ git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provision
 cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/ipa-client-disenroll-flavour
 ```
 
-#### 1.2. (Optional) Checkout an specific Item's version
+#### 1.2. Checkout an specific Item's version
 >⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
 
 ```bash
@@ -65,59 +65,99 @@ ansible-galaxy role install -r requirements.yml
 
 ### 3. Specify the target host and SSH credentials
 >💡 To find out which is the default user for your chosen VM image,
-checkout the [official EWC documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+VM+images+and+default+users).
+checkout the [official EWC documentation](https://confluence.ecmwf.int/x/USRNH#EWCOpenStackAPIaccessVMimagesanddefaultusers-Defaultusers).
 
-Create an inventory file to specify address/credentials that Ansible should use
-to reach the virtual machine you wish to configure:
+Create an inventory file, to specify address/credentials that your local working environment should use
+to connect to the target VM.
 
-```yaml
-# inventory.yml
----
-ewcloud:
-  hosts:
-    ipa_client:
-      ansible_python_interpreter: /usr/bin/python3
-      ansible_host: <add the IPV4 address of the target host>
-      ansible_ssh_private_key_file: <add the path to local SSH private key file>
-      ansible_user: <add the default user according to your chosen VM image>
-      ansible_ssh_common_args: -o StrictHostKeyChecking=accept-new
+Copy into the file one of the two snippets below, and replace the placeholders (i.e. values enclosed in `<` `>` characters):
 
-```
+* **Connecting form within the EWC tenancy's network**
+
+  ```yaml
+  # inventory.yml
+  ---
+  ewcloud:
+    hosts:
+      target:
+        ansible_python_interpreter: /usr/bin/python3
+        ansible_host: <add the IPV4 address of the target host>
+        ansible_ssh_private_key_file: <add the path to local SSH private key file>
+        ansible_user: <add the default user according to your chosen VM image>
+        ansible_ssh_common_args: -o StrictHostKeyChecking=no
+
+  ```
+
+**OR**
+
+
+*  **Connecting from outside the EWC tenancy's network**
+
+    > ⚠️ This requires an [SSH Bastion](https://europeanweather.cloud/community-hub/ssh-bastion-provisioning) to be already provisioned within your EWC tenancy.
+
+    ```yaml
+    # inventory.yml
+    ---
+    ewcloud:
+      hosts:
+        target:
+          ansible_host: <add the IP address of the target host>
+          ansible_ssh_user: <add the default user according to your chosen VM image>
+          ansible_ssh_private_key_file: <add the path to local SSH private key file>
+          ansible_python_interpreter: auto
+
+    all:
+      vars:
+        ansible_ssh_common_args: >- 
+          -o StrictHostKeyChecking=no
+          -o UserKnownHostsFile=/dev/null
+          -o ProxyCommand="ssh 
+                          -o StrictHostKeyChecking=no
+                          -o UserKnownHostsFile=/dev/null
+                          -o BatchMode=yes
+                          -W %h:%p
+                          -i <add the path to local SSH private key file> 
+                          cloud-user@<add the IP address of the ssh bastion>"
+
+    ```
+    
 
 ### 4. Configure and apply the template
 
-#### 4.1. Interactive Mode
+* **Interactive Mode**
 
-By running the following command, you can trigger an interactive session that
-prompts you for the necessary user inputs, and then applies changes to your
-target EWC environment:
+  By running the following command, you can trigger an interactive session that
+  prompts you for the necessary user inputs, and then applies changes to your
+  target EWC environment:
 
-```bash
-ansible-playbook -i inventory.yml ipa-client-disenroll-flavour.yml
-```
+  ```bash
+  ansible-playbook -i inventory.yml ipa-client-disenroll-flavour.yml
+  ```
 
-#### 4.2. Non-Interactive Mode
+**OR**
 
->💡 To learn more about defining variables at runtime, checkout the
-[official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
+* **Non-Interactive Mode**
 
-You can also run in non-interactive mode by passing the
-`--extra-vars` or `-e` flag, followed by a map of  key-value pairs; one for
-each and every available input (see [inputs section](#inputs) below). For
-example:
+  >💡 To learn more about defining variables at runtime, checkout the
+  [official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
 
-```bash
-ansible-playbook \
-  -i inventory.yml \
-  -e '{
-      "ipa_domain": "eumetsat.sandbox.ewc",
-      "ipa_client_hostname": "ipa-client-1",
-      "ipa_server_hostname": "ipa-server-1",
-      "ipa_admin_username": "ipaadmin",
-      "ipa_admin_password": "my-secret-password"
-    }' \
-  ipa-client-disenroll-flavour.yml
-```
+  You can also run in non-interactive mode by passing the
+  `--extra-vars` or `-e` flag, followed by a map of  key-value pairs; one for
+  each and every available input (see [inputs section](#inputs) below). For
+  example:
+
+  ```bash
+  ansible-playbook \
+    -i inventory.yml \
+    -e '{
+        "ipa_domain": "eumetsat.sandbox.ewc",
+        "ipa_client_hostname": "ipa-client-1",
+        "ipa_server_hostname": "ipa-server-1",
+        "ipa_admin_username": "ipaadmin",
+        "ipa_admin_password": "my-secret-password"
+      }' \
+    ipa-client-disenroll-flavour.yml
+  ```
 
 ## Inputs
 
@@ -131,6 +171,7 @@ ansible-playbook \
 
 
 ## Dependencies
+
 
 | Name | Home URL |
 |------|---------|

@@ -50,7 +50,7 @@ git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provision
 cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/ipa-client-teardown
 ```
 
-#### 1.2. (Optional) Checkout an specific Item's version
+#### 1.2. Checkout an specific Item's version
 >⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
 
 ```bash
@@ -111,6 +111,7 @@ ansible-playbook \
 
 
 ## Dependencies
+
 
 | Name | Home URL |
 |------|---------|
