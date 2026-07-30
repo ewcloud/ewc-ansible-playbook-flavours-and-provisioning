@@ -11,7 +11,7 @@ The template is designed to:
   * Display data from various sources including remote S3-compatible object storage
   * View time-series data with animation capabilities
   * Customize visualization with different color maps and overlays
-  * Access data through a user-friendly web interface at `http://<your-vm>.<tenancy-name>.<s|f>.ewcloud.host:80/viewer`. More info about the standard for url creation [here](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+DNS)
+  * Access data through a user-friendly web interface at `http://<your-vm>.<tenancy-name>.<s|f>.ewcloud.host:80/viewer`. More info about the standard for url creation [here](https://confluence.ecmwf.int/x/po5yEw)
 
 For more information about xcube capabilities, please refer to the [xcube Documentation](https://xcube.readthedocs.io/).
 

@@ -54,7 +54,7 @@ cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/ipa-client-disenroll
 git checkout x.y.z
 ```
 
-### 2. Download  Ansible dependencies
+### 2. Download Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:

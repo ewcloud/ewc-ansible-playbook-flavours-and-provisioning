@@ -65,7 +65,7 @@ git checkout x.y.z
 ```
 
 
-### 2. Download  Ansible dependencies
+### 2. Download Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
@@ -172,7 +172,7 @@ if you do not know how to configure a new session.
 For a session creation
 example, representative of a typical EWC environment, checkout the Remote
 Desktop section of
-[this official EWC documentation page](https://confluence.ecmwf.int/display/EWCLOUDKB/EUMETSAT+tenancy%3A+Default+setup).
+[this official EWC documentation page]https://confluence.ecmwf.int/x/bVA7E).
 
 ## Inputs
 
