@@ -49,7 +49,7 @@ and can be deployed, together with a compatible VM, via it. Checkout the [EWC Us
 * If you plan to configure an existing VM, ensure it meets the minium requirements before moving on to the [Usage](#usage) section below:
   * VM Image: Ubuntu 22
   * VM Plan: 8 CPU cores, 64GB RAM, 265GB Disk + 1TB Disk (secondary)
-    > ⚠️ Make sure the secondary disk is formatted and mounted by following [these steps](https://confluence.ecmwf.int/spaces/EWCLOUDKB/pages/621047896/EWC+Cloud+Management+UI+-+Storage+-+Add+a+volume+to+an+instance#EWCCloudManagementUIStorageAddavolumetoaninstance-Formatthenewdisk]).
+    > ⚠️ Make sure the secondary disk is formatted and mounted by following this guide steps from the [EWC Knowledge Base](https://confluence.ecmwf.int/x/WHAEJQ#EWCCloudManagementUIStorageAddavolumetoaninstance-Formatthenewdisk).
   * Network: Private
   * Security Groups: `eumetcast`
   * Floating IP: Optional (not recommended from a security standpoint)
