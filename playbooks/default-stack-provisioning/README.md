@@ -117,7 +117,7 @@ ansible-playbook \
         "ipa_server_hostname":"ipa-server-1",
         "ipa_server_flavor_name":"4cpu-8gbmem",
         "ipa_server_image_name":"Rocky-9.7-20260519081947",
-        "ipa_domain":"eumetsat.sandbox.ewc",
+        "ipa_domain":"internal-eumetsat-sandbox.ewc",
         "ipa_admin_username":"ipaadmin",
         "ipa_admin_password":"my-secret-password",
         "ipa_admin_givenname":"IPAADMIN",
@@ -155,7 +155,7 @@ ansible-playbook \
 | ipa_server_hostname | hostname of the IPA server. Should match the pattern "<ipa_server_app_name>-<ipa_server_instance_name>-<ipa_server_instance_index>". Required for input validation purpose | `string` | `ipa-server-1` | yes |
 | ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/x/evWHEw) | `string` | `4cpu-8gbmem` | yes |
 | ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/x/pU2xG) | `string` | `Rocky-8.10-20260519112324` | yes |
-| ipa_domain | domain name to be managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
+| ipa_domain | domain name to be managed by the IPA server. Example: `internal-eumetsat-sandbox.ewc` | `string` | n/a | yes |
 | ipa_admin_username | username of administrator account to replace the default IPA admin | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of administrator account to replace the default IPA admin | `string` | n/a | yes |
 | ipa_admin_givenname | given name of the administrator to replace the default IPA admin (needs not be a physical person) | `string` | `EWC` | yes |

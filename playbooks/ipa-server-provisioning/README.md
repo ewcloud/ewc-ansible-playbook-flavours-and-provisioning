@@ -116,7 +116,7 @@ ansible-playbook \
         "private_keypair_path":"~/.ssh/id_rsa",
         "private_network_name": "private",
         "security_group_name": "ipa",
-        "ipa_domain":"eumetsat.sandbox.ewc",
+        "ipa_domain":"internal-eumetsat-sandbox.ewc",
         "ipa_admin_username":"ipaadmin",
         "ipa_admin_password":"my-secret-password",
         "ipa_admin_givenname": "IPAADMIN",
@@ -163,7 +163,7 @@ openstack subnet unset \
 | private_keypair_path | path to the local private keypair to use for SSH access to the instance  | `string` | `~/.ssh/id_rsa` | yes |
 | private_network_name | private network name to attach the instance | `string` | `private`  | yes |
 | security_group_name | security group name to apply to the instance  | `string` | `ipa` | yes |
-| ipa_domain | domain name to be managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
+| ipa_domain | domain name to be managed by the IPA server. Example: `internal-eumetsat-sandbox.ewc` | `string` | n/a | yes |
 | ipa_admin_username | username of administrator account to replace the default IPA admin | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of administrator account to replace the default IPA admin | `string` | n/a | yes |
 | ipa_admin_givenname | given name of the administrator to replace the default IPA admin (needs not be a physical person) | `string` | `EWC` | yes |

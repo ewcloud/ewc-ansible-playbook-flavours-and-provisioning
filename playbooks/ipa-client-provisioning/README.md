@@ -108,7 +108,7 @@ ansible-playbook \
         "private_network_name": "private",
         "security_group_name": "ipa",
         "instance_has_fip": "no",
-        "ipa_domain": "eumetsat.sandbox.ewc",
+        "ipa_domain": "internal-eumetsat-sandbox.ewc",
         "ipa_server_hostname": "ipa-server-1",
         "ipa_admin_username": "ipaadmin",
         "ipa_admin_password": "my-secret-password"
@@ -131,7 +131,7 @@ ansible-playbook \
 | private_network_name | private network name to attach the instance to  | `string` | `private`| yes |
 | security_group_name | security group name to apply to the instance  | `string` | `ipa` | yes |
 | instance_has_fip | whether to assign a floating IP to the instance. Only `yes` will be accepted to approve | `string` | n/a | yes |
-| ipa_domain | domain name managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
+| ipa_domain | domain name managed by the IPA server. Example: `internal-eumetsat-sandbox.ewc` | `string` | n/a | yes |
 | ipa_server_hostname | hostname of the IPA server | `string`|  `ipa-server-1` | yes |
 | ipa_admin_username | username of the administrator account from the IPA server | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of the administrator account from the IPA server | `string` | n/a | yes |

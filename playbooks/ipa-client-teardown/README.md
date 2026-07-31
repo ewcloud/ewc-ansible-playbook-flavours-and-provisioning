@@ -91,7 +91,7 @@ ansible-playbook \
   -e '{
         "tf_project_path": "~/ewc/ipa-client-1",
         "private_keypair_path": "~/.ssh/id_rsa",
-        "ipa_domain": "eumetsat.sandbox.ewc",
+        "ipa_domain": "internal-eumetsat-sandbox.ewc",
         "ipa_server_hostname": "ipa-server-1",
         "ipa_admin_username": "ipaadmin",
         "ipa_admin_password": "my-secret-password"
@@ -104,7 +104,7 @@ ansible-playbook \
 |------|-------------|------|---------|----------|
 | tf_project_path | path to terraform working directory. Example: `~/ewc/ipa-client-1` | `string` | n/a | yes |
 | private_keypair_path | path to the local private keypair to use for SSH access to the instance | `string` | `~/.ssh/id_rsa` | yes |
-| ipa_domain | domain name managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
+| ipa_domain | domain name managed by the IPA server. Example: `internal-eumetsat-sandbox.ewc` | `string` | n/a | yes |
 | ipa_server_hostname | hostname of the IPA server. | `string`| `ipa-server-1` | yes |
 | ipa_admin_username | username of the administrator account from the IPA server | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of the administrator account from the IPA server | `string` | n/a | yes |
