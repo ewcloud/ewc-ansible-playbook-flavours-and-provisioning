@@ -248,7 +248,7 @@
         ansible_host: "{{ remote_host_public_ip_fact }}"
         ansible_user: "cloud-user"
         ansible_ssh_private_key_file: "{{ hostvars['localhost']['private_keypair_path_fact'] }}"
-        ansible_ssh_common_args: "-o StrictHostKeyChecking=accept-new"
+        ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
 
 - name: Install IPA server
   hosts: ipa_server
@@ -270,13 +270,51 @@
         os_network_name: "{{ hostvars['localhost']['ewc_ansible_role_ipa_server']['os_network_name_fact'] }}"
         os_security_group_name: "{{ hostvars['localhost']['ewc_ansible_role_ipa_server']['os_security_group_name_fact'] }}"
 
+- name: Update OpenStack subnet DNS nameservers for IPA compatibility
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Gather information about user-specified OpenStack network
+      openstack.cloud.networks_info:
+        name: "{{ private_network_name }}"
+      register: networks_info
+
+    - name: Get ID of user-defined network
+      ansible.builtin.set_fact:
+        network_id: "{{ networks_info.networks[0].id }}"
+
+    - name: Gather information about subnets within user-defined OpenStack network
+      openstack.cloud.subnets_info:
+        filters:
+          network_id: "{{ network_id }}"
+      register: subnets_info
+
+    - name: Get name, ID, CIDR and DNS nameservers of subnet (choose first)
+      ansible.builtin.set_fact:
+        subnet_name: "{{ subnets_info.subnets[0].name }}"
+        subnet_cidr: "{{ subnets_info.subnets[0].cidr }}"
+        subnet_dns_nameservers: "{{ subnets_info.subnets[0].dns_nameservers | default([]) }}"
+
+    - name: Point DNS nameservers in OpenStack subnet to new IPA server
+      openstack.cloud.subnet:
+        network: "{{ private_network_name }}"
+        name: "{{ subnet_name }}"
+        cidr: "{{ subnet_cidr }}"
+        dns_nameservers:
+          - "{{ hostvars['localhost']['remote_host_internal_ip_fact'] }}"
+        state: present
+      register: subnet_result
+      no_log: true
+
 - name: Cleanup and summarize execution after post-provisioning
   hosts: localhost
   connection: local
   gather_facts: false
 
   tasks:
-    - name: Update intance's Terraform definition file
+    - name: Update instance's Terraform definition file
       ansible.builtin.lineinfile:
         path: "{{ hostvars['localhost']['tf_project_path_fact'] }}/main.tf"
         search_string: 'instance_has_fip'
