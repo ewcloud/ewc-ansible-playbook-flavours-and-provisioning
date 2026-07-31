@@ -5,7 +5,7 @@ A collection of configuration templates
 to customize your
 [European Weather Cloud (EWC)](https://europeanweather.cloud/) tenancy. See full list of Items in the [index](#index) below.
 
-Want to learn how other users make the best out of these templates, or have ideas of your own? Head over to [the official discussion platform](https://chat.europeanweather.cloud/) and engage with the EWC community. Feedback is always welcomed! ♥️
+Want to learn how other users make the best out of these templates, or have ideas of your own? Head over to [the EWC discussion platform](https://chat.europeanweather.cloud/) and engage with the community. Feedback is always welcomed! ♥️
 
 ## Index
 
@@ -27,7 +27,7 @@ Want to learn how other users make the best out of these templates, or have idea
 | [ssh-bastion-flavour](./playbooks/ssh-bastion-flavour/)   | Reduces the attack surface of a running VM and turns it into a SSH proxy with Fail2ban, providing tenant admins and users a secure entry point to access private EWC networks from the public internet. | 
 | [xcube-viewer-flavour](./playbooks/xcube-viewer-flavour/)   |  Configures an existing VM with the xcube Viewer, to visualize Earth Observation data within a user-friendly graphical user interface | 
 
-### Level 2: Self-provisioning + Configuration
+### Level 2: Provisioning/Management + Configuration
 
 | Name  | Summary  |
 |------|-----|
