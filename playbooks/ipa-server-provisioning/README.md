@@ -124,29 +124,6 @@ ansible-playbook \
     }' \
   ipa-server-provisioning.yml
 ```
-### 4. Manually update DNS nameserver(s)
-
->⛔ Changes described in this section can potentially affect DNS resolution on existing VMs within your subnet. To prevent issues, enroll them to the new IPA server via the
-[IPA Client Enroll Flavour](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour)
-CommunityHub Item, OR manually [edit nameservers in their DNS configuration](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/domain-dns).
-
-After successful execution of the template, additional changes to the OpenStack subnet are required.
-You can edit your specific OpenStack subnet, as well as any other OpenStack resource, with the native [OpenStack CLI](pypi.org/project/python-openstackclient/).
-
-First, take note of the IP address of your newly configured IPA server and the subnet attached to it, replace these information in the command below, and execute:
-
-```bash
-openstack subnet set \
-  --dns-nameserver <IPV4 address of the IPA server> \
-  <ID or name of the OpenStack Subnet attached to the IPA server>
-```
-Then remove any default DNS nameservers which where added to the subnet prior to the IPA server configuration:
-
-```bash
-openstack subnet unset \
-  --dns-nameserver <IPV4 address of any prior default DNS nameserver> \
-  <ID or name of the OpenStack Subnet attached to the IPA server>
-```
 
 ## Inputs
 
