@@ -23,26 +23,21 @@ Users can leverage HAProxy to distribute workloads and improve website and appli
 * Rate limits.
 
 ## Prerequisites
-> ⚠️ Only Ubuntu version 24 and 22 supported due to constrains imposed by [dependencies](#dependencies).
-
-> 💡 A VM plan with at least 8GB of RAM is recommended for successful setup and
-stable operation.
-
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-* If you plan to configure an existing VM, jump to the [Usage](#usage) section below
-* If you have not yet provisioned a VM, it is required to do so. You may choose one of the following approaches:
-  * A) Provision a new VM via UI:
-    * Create an SSH keypair (see [Creating the keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
-    * Import the SSH public key into Morpheus (see [Adding the keys in Morpheus](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-AddingthekeysinMorpheus) section of the EWC documentation)
-    * Provision a new VM through the web portal (see [Provision a new Instance - Web](https://confluence.ecmwf.int/display/EWCLOUDKB/Provision+a+new+instance+-+web) section of the EWC) documentation
 
-    OR 
-  * B) Provision a new VM via CLI:
-    * Create an SSH keypair (see [Creating the keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
-    * Add you SSH public key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey) section of the EWC documentation).
-    * Provision a new VM via the OpenStack CLI (see [How to create a VM using the OpenStack CLI](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+create+a+VM+using+the+Openstack+CLI) section of the EWC documentation)
+* Verify the `ssh-https` OpenStack Security Group exists in your EWC tenancy
+  > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
+* If you plan to configure an existing VM, ensure it meets the minium requirements before moving on to the [Usage](#usage) section below:
+  * VM Image: Ubuntu 24 or 22
+  * VM Plan: 4 CPU cores, 8GB RAM, 40GB Disk
+  * Network: Private
+  * Security Groups: `ssh-https`
+  * Floating IP: Required
+  
+  Otherwise, provision a new VM with above specifications before continuing (see [EWC Getting Started: Provision a VM](https://confluence.ecmwf.int/x/2RvEJg) for details).
+
 
 ## Usage
 
@@ -58,14 +53,14 @@ git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provision
 cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/haproxy-flavour
 ```
 
-#### 1.2. (Optional) Checkout an specific Item's version
+#### 1.2. Checkout an specific Item's version
 >⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
 
 ```bash
 git checkout x.y.z
 ```
 
-### 2. Download  Ansible dependencies
+### 2. Download Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
@@ -75,22 +70,58 @@ ansible-galaxy role install -r requirements.yml
 ```
 
 ### 3. Specify the target host and SSH credentials
-Create an inventory file to specify address/credentials that Ansible should use
-to reach the virtual machine you wish to configure:
+Create an inventory file, to specify address/credentials that your local working environment should use
+to connect to the target VM.
 
-```yaml
-# inventory.yml
----
-ewcloud:
-  hosts:
-    haproxy:
-      ansible_python_interpreter: /usr/bin/python3
-      ansible_host: <add the IPV4 address of the target host>
-      ansible_ssh_private_key_file: <add the path to local SSH private key file>
-      ansible_user: ubuntu
-      ansible_ssh_common_args: -o StrictHostKeyChecking=accept-new
-```
+Copy into the file one of the two snippets below, and replace the placeholders (i.e. values enclosed in `<` `>` characters):
 
+* **Connecting form within the EWC tenancy's network**
+
+  ```yaml
+  # inventory.yml
+  ---
+  ewcloud:
+    hosts:
+      haproxy:
+        ansible_python_interpreter: /usr/bin/python3
+        ansible_host: <add the IPV4 address of the target host>
+        ansible_ssh_private_key_file: <add the path to local SSH private key file>
+        ansible_user: ubuntu
+        ansible_ssh_common_args: -o StrictHostKeyChecking=no
+  ```
+
+**OR**
+
+*  **Connecting from outside the EWC tenancy's network**
+
+    > ⚠️ This requires an [SSH Bastion](https://europeanweather.cloud/community-hub/ssh-bastion-provisioning) to be already provisioned within your EWC tenancy.
+
+    ```yaml
+    # inventory.yml
+    ---
+    ewcloud:
+      hosts:
+        target:
+          ansible_host: <add the IP address of the target host>
+          ansible_ssh_user: ubuntu
+          ansible_ssh_private_key_file: <add the path to local SSH private key file>
+          ansible_python_interpreter: auto
+
+    all:
+      vars:
+        ansible_ssh_common_args: >- 
+          -o StrictHostKeyChecking=no
+          -o UserKnownHostsFile=/dev/null
+          -o ProxyCommand="ssh 
+                          -o StrictHostKeyChecking=no
+                          -o UserKnownHostsFile=/dev/null
+                          -o BatchMode=yes
+                          -W %h:%p
+                          -i <add the path to local SSH private key file> 
+                          cloud-user@<add the IP address of the ssh bastion>"
+
+    ```
+    
 ### 4. Configure and apply the template
 
 By running the following command, you can trigger an interactive session that
@@ -102,6 +133,7 @@ ansible-playbook -i inventory.yml haproxy-flavour.yml
 ```
 
 ## Dependencies
+
 > 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
 | Name | Home URL |

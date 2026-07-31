@@ -35,10 +35,9 @@ to their DNS configuration.
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [python-openstackclient](https://pypi.org/project/python-openstackclient) (version 8.0 or higher)
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-* Install [terraform](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+IaC+via+Terraform+and+OpenTofu#EWCIaCviaTerraformandOpenTofu-InstallationoftheCLI) (version 1.0 or higher)
-* Get OpenStack API credentials (see [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials) section of the EWC documentation)
-* Create an SSH keypair (see [Creating Keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
-* Import your public SSH key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey) section of the EWC documentation).
+* Install [terraform](https://confluence.ecmwf.int/x/UyRNH) (version 1.0 or higher)
+* Get OpenStack application credentials and add them to your shell's environment variables (see the [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/x/TiRNH) and [Using OpenStack RC files](https://confluence.ecmwf.int/x/TyRNH#EWCOpenStackAPIaccessInstallanduseCommandLineclient-usingOpenStackRCfile) sections of the EWC documentation for details)
+* Create an SSH keypair and import the public SSH key to OpenStack (see [EWC OpenStack API access - Setup a KeyPair](https://confluence.ecmwf.int/x/0ZglK) section of the EWC documentation).
 
 ## Usage
 > ⚠️ Only RockyLinux versions 9 or 8 are supported due
@@ -64,14 +63,14 @@ git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provision
 cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/default-stack-provisioning
 ```
 
-#### 1.2. (Optional) Checkout an specific Item's version
+#### 1.2. Checkout an specific Item's version
 >⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
 
 ```bash
 git checkout x.y.z
 ```
 
-### 2. Download  Ansible dependencies
+### 2. Download Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
@@ -118,7 +117,7 @@ ansible-playbook \
         "ipa_server_hostname":"ipa-server-1",
         "ipa_server_flavor_name":"4cpu-8gbmem",
         "ipa_server_image_name":"Rocky-9.7-20260519081947",
-        "ipa_domain":"eumetsat.sandbox.ewc",
+        "ipa_domain":"internal-eumetsat-sandbox.ewc",
         "ipa_admin_username":"ipaadmin",
         "ipa_admin_password":"my-secret-password",
         "ipa_admin_givenname":"IPAADMIN",
@@ -154,9 +153,9 @@ ansible-playbook \
 | ipa_server_instance_name| name of the instance, used in the full instance name  | `string` | `server` | yes |
 | ipa_server_instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
 | ipa_server_hostname | hostname of the IPA server. Should match the pattern "<ipa_server_app_name>-<ipa_server_instance_name>-<ipa_server_instance_index>". Required for input validation purpose | `string` | `ipa-server-1` | yes |
-| ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `4cpu-8gbmem` | yes |
-| ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `Rocky-8.10-20260519112324` | yes |
-| ipa_domain | domain name to be managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
+| ipa_server_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/x/evWHEw) | `string` | `4cpu-8gbmem` | yes |
+| ipa_server_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/x/pU2xG) | `string` | `Rocky-8.10-20260519112324` | yes |
+| ipa_domain | domain name to be managed by the IPA server. Example: `internal-eumetsat-sandbox.ewc` | `string` | n/a | yes |
 | ipa_admin_username | username of administrator account to replace the default IPA admin | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of administrator account to replace the default IPA admin | `string` | n/a | yes |
 | ipa_admin_givenname | given name of the administrator to replace the default IPA admin (needs not be a physical person) | `string` | `EWC` | yes |
@@ -165,19 +164,20 @@ ansible-playbook \
 | ssh_bastion_app_name | application name, used as prefix in the full instance name  | `string` | `ssh` | yes |
 | ssh_bastion_instance_name| name of the instance, used in the full instance name  | `string` | `bastion` | yes |
 | ssh_bastion_instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1`  | yes |
-| ssh_bastion_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `4cpu-8gbmem` | yes |
-| ssh_bastion_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `Rocky-9.7-20260519081947` | yes |
+| ssh_bastion_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/x/evWHEw) | `string` | `4cpu-8gbmem` | yes |
+| ssh_bastion_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/x/pU2xG) | `string` | `Rocky-9.7-20260519081947` | yes |
 | remote_desktop_tf_project_path | path to terraform working directory | `string` | `~/ewc/remote-desktop-1` | yes |
 | remote_desktop_app_name | application name, used as prefix in the full instance name | `string` | `remote`  | yes |
 | remote_desktop_instance_name| name of the instance, used in the full instance name | `string` | `desktop` | yes |
 | remote_desktop_instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
-| remote_desktop_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans)  | `string` | `4cpu-8gbmem` | yes |
-| remote_desktop_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `Rocky-9.7-20260519081947`  | yes |
+| remote_desktop_flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/x/evWHEw)  | `string` | `4cpu-8gbmem` | yes |
+| remote_desktop_image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/x/pU2xG) | `string` | `Rocky-9.7-20260519081947`  | yes |
 | remote_desktop_instance_has_fip | technically required to temporarily assign a floating IP to the instance to securely connect from localhost during initial configuration. 💡 The template ensures to remove the floating IP during post-provisioning | `string` | `yes` | yes |
 | fail2ban_whitelisted_ip_ranges | IPv4 ranges (in CIDR format) to be whitelisted in Fail2ban configuration. When in doubt, do not set. Example: `['10.0.0.0/24','192.168.1.0/24']` | `list(string)` | `null` | no |
 
 
 ## Dependencies
+
 > 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
 | Name |  Home URL |
