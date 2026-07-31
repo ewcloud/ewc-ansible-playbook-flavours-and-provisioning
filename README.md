@@ -9,22 +9,22 @@ Want to learn how other users make the best out of these templates, or have idea
 
 ## Index
 
->💡 Two levels of functionality available in this collection: 1) one to configure previously provisioned instances, 2) another to self-provisioning or manage provisioned instances ( full deployment and state management).
+>💡 Two levels of functionality available in this bundle: 1) one to install items onto existing instances, 2) another to provision or manage the state of instances whilst installing items on top ( full deployment and state management).
 
 ### Level 1: Configuration (existing VMs)
 
 | Name  | Summary  |
 |------|-----|
-| [eumetcast-terrestrial-amt-flavour](./playbooks/eumetcast-terrestrial-amt-flavour/) | Configures an existing VM to reliably capture and store data streamed by the EUMETCast Terrestrial service over a high-bandwidth network |
-| [eumetsat-data-tailor-flavour](./playbooks/eumetsat-data-tailor-flavour/)    |Transforms an existing VM into a powerful satellite data customization hub, enabling users to efficiently subset, aggregate, reproject, and reformat data from METOP, MFG, MSG, MTG, and Sentinel-3 into GIS and image formats, offering faster processing and greater flexibility than web-based alternatives.  |
+| [eumetcast-terrestrial-amt-flavour](./playbooks/eumetcast-terrestrial-amt-flavour/) | Configures an existing VM to capture and store data streamed by the EUMETCast Terrestrial service over a high-bandwidth network |
+| [eumetsat-data-tailor-flavour](./playbooks/eumetsat-data-tailor-flavour/)    |Transforms an existing VM into a satellite data customization hub, enabling users to efficiently subset, aggregate, reproject, and reformat data from METOP, MFG, MSG, MTG, and Sentinel-3 into GIS and image formats, offering faster processing and greater flexibility than web-based alternatives.  |
 | [eumetsat-s3-mount-flavour](./playbooks/eumetsat-s3-mount-flavour/) | Enables a VM to access public EUMETSAT data, stored in S3 buckets, just as if it was kept on the local filesystem |
-| [haproxy-flavour](./playbooks/haproxy-flavour/)    | Configures an existing VM as a high-performance load balancer, enhancing application speed, security, and scalability with easy management for TCP and HTTP workloads.   |
-| [ipa-client-disenroll-flavour](./playbooks/ipa-client-disenroll-flavour/)   |  Simplifies the secure removal of a running VM from a FreeIPA-managed fleet of instances, reducing administrative overhead and enhancing security by eliminating stale credentials and DNS records. |
+| [haproxy-flavour](./playbooks/haproxy-flavour/)    | Configures an existing VM as a load balancer, enhancing application speed, security, and scalability with easy management for TCP and HTTP workloads.   |
+| [ipa-client-disenroll-flavour](./playbooks/ipa-client-disenroll-flavour/)   |  Simplifies the removal of a running VM from a FreeIPA-managed fleet of instances, reducing administrative overhead and enhancing security by eliminating stale credentials and DNS records. |
 | [ipa-client-enroll-flavour](./playbooks/ipa-client-enroll-flavour) | Integrates a running VM into a FreeIPA-managed fleet of instances, enabling centralized user authentication, DNS resolution, and secure remote access for simplified and scalable identity management. | 
 | [ipa-server-flavour](./playbooks/ipa-server-flavour/)    | Turns an existing VM into a FreeIPA server, a central place for user authentication, authorization, and DNS-based resource discovery for secure and efficient identity management. |
 | [nginx-proxy-manager-flavour](./playbooks/nginx-proxy-manager-flavour/)    | Configures an existing VM as a user-friendly Nginx Proxy Manager server, simplifying virtual host management, SSL/HTTP/2 support, and security features like exploit blocking for efficient and secure proxy operations.  |
 | [remote-desktop-flavour](./playbooks/remote-desktop-flavour/) | Transforms an existing VM into a secure, graphical desktop environment using X2Go and MATE, enabling simple remote access and intuitive cloud-based development for tenant users.  | 
-| [ssh-bastion-flavour](./playbooks/ssh-bastion-flavour/)   | Tightens the configuration of a running VM, to operate as a secure SSH proxy with Fail2ban, providing tenant admins and users a fortified entry point to safely access private EWC networks from the public internet. | 
+| [ssh-bastion-flavour](./playbooks/ssh-bastion-flavour/)   | Reduces the attack surface of a running VM and turns it into a SSH proxy with Fail2ban, providing tenant admins and users a secure entry point to access private EWC networks from the public internet. | 
 | [xcube-viewer-flavour](./playbooks/xcube-viewer-flavour/)   |  Configures an existing VM with the xcube Viewer, to visualize Earth Observation data within a user-friendly graphical user interface | 
 
 ### Level 2: Self-provisioning + Configuration
