@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.9.0...1.10.0) (2026-08-03)
+
+
+### Features
+
+* IPA server provisioning updates also subnet DNS nameservers ([#44](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/44)) ([f4a3130](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/f4a31306af81972b2d39deea51af2507907b16fe))
+
 # [1.9.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.8.4...1.9.0) (2026-07-24)
 
 
