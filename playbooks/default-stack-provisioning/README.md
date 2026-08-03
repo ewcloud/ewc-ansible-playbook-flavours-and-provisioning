@@ -40,7 +40,7 @@ to their DNS configuration.
 * Create an SSH keypair and import the public SSH key to OpenStack (see [EWC OpenStack API access - Setup a KeyPair](https://confluence.ecmwf.int/x/0ZglK) section of the EWC documentation).
 
 ## Usage
-> ⚠️ Only RockyLinux versions 9 or 8 are supported due
+> ⚠️ Only RockyLinux is supported due
 to constrains imposed by [dependencies](#dependencies).
 
 > 💡 VM plans with at least 4GB of RAM is recommended for successful setup and stable operation 

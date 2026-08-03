@@ -48,7 +48,7 @@ To learn the basics about managing infrastructure with Terraform, check out [Ter
 * Create an SSH keypair and import the public SSH key to OpenStack (see [EWC OpenStack API access - Setup a KeyPair](https://confluence.ecmwf.int/x/0ZglK) section of the EWC documentation).
 
 ## Usage
-> ⚠️ Only RockyLinux version 8 supported due to constrains imposed by [dependencies](#dependencies).
+> ⚠️ Only RockyLinux is supported due to constrains imposed by [dependencies](#dependencies).
 
 > 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
 stable operation.
