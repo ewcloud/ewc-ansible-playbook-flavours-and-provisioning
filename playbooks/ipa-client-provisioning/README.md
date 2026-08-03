@@ -41,8 +41,6 @@ To learn the basics about managing infrastructure with Terraform, check out [Ter
 * Create an SSH keypair and import the public SSH key to OpenStack (see [EWC OpenStack API access - Setup a KeyPair](https://confluence.ecmwf.int/x/0ZglK) section of the EWC documentation).
 
 ## Usage
-> ⚠️ Only Ubuntu version 24 or 22, and RockyLinux versions 9 or 8 supported due to constrains imposed by [dependencies](#dependencies).
-
 
 ### 1. Clone the repository
 
