@@ -63,7 +63,7 @@ git checkout x.y.z
 Download the correct version of the Ansible dependencies, if you haven't done so already:
 
 ```
-ansible-galaxy role install -r requirements.yml
+ansible-galaxy role install --force -r requirements.yml
 ```
 
 ### 3. Configure and apply the template
