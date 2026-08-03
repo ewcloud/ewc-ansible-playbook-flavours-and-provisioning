@@ -6,7 +6,7 @@ within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to eq
 
 EUMETCast is EUMETSAT’s primary dissemination mechanism for the near-real-time delivery of satellite data. EUMETCast serves data through two complementary delivery systems: EUMETCast Satellite and EUMETCast Terrestrial.
 
-![EUMETCast overview](./docs/images/eumetcast-overview.png)
+![EUMETCast overview](https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/refs/heads/main/playbooks/eumetcast-terrestrial-amt-flavour/docs/images/eumetcast-overview.png)
 
 Terrestrial services for data distribution, available and supported, include:
 
