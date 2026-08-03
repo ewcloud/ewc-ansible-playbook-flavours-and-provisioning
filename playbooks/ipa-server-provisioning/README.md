@@ -53,6 +53,10 @@ To learn the basics about managing infrastructure with Terraform, check out [Ter
 > 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
 stable operation.
 
+>⛔ Execution of this template can potentially affect DNS resolution on existing VMs within your subnet. To prevent issues, enroll them to the new IPA server via the
+[IPA Client Enroll Flavour](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour)
+CommunityHub Item, OR manually [edit nameservers in their DNS configuration](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/domain-dns).
+
 
 ### 1. Clone the repository
 
