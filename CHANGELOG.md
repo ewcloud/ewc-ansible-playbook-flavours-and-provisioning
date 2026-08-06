@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.10.0...1.10.1) (2026-08-06)
+
+
+### Bug Fixes
+
+* IPA server stability and Remote Desktop dependencies ([#45](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/45)) ([7f7a581](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/7f7a581e9fd43d81712e75c898afa1e9750508ab))
+
 # [1.10.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.9.0...1.10.0) (2026-08-03)
 
 
