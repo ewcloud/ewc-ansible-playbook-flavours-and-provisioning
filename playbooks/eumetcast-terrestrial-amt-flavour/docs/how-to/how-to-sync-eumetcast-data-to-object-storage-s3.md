@@ -23,7 +23,7 @@ You can automatically synchronise received data to Object Storage.
 
    Add a line similar to the following (adjust the source path if you changed the storage location):
    ```
-   */5 * * * * s3cmd -c /etc/s3cfg sync /home/eumetuser/data/ter-1/default/ s3://eumetcast-example/ --delete-removed
+   */1 * * * * s3cmd -c /etc/s3cfg sync /home/eumetuser/data/ter-1/default/ s3://eumetcast-example
    ```
 
 > 💡 Adjust the cron interval and source sub-directory according to your needs and the actual data layout under `/home/eumetuser/data`.
