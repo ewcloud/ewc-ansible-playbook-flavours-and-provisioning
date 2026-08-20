@@ -28,6 +28,9 @@ address, and a minimum recommended 16GB of RAM, as:
 > 💡 This Item is supported by the [EWCCLI](https://www.europeanweather.cloud/community-hub/ewc-cli), 
 and can be deployed, together with a compatible VM, via it. Checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages to learn how.
 
+* Request authorization keys:
+  * Write to EWC Support ([support@europeanweather.cloud](mailto:support@europeanweather.cloud)), making sure to provide your EWC tenancy name alongside your request for VPN and HTCondor access.
+
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)

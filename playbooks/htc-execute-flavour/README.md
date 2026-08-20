@@ -7,9 +7,11 @@ The [European Weather Cloud (EWC)](https://europeanweather.cloud/) provides a ce
 The principal advantage of this EWC service is access to a much larger, resource pool than any single tenant could provide alone. Capacity is drawn from:
 
 1. Capacity made available by EWC itself
-2. Spare capacity contributed by EWC tenants for shared usage
+2. Spare VMs contributed by EWC tenants for shared usage
 
-This template is for said EWC tenants wishing to contribute their compute resources to the pool of resources.
+EWC users can submit jobs from their VMs (i.e. those configured by the [HTC Batch Processing Submit Flavour](../htc-submit-flavour/)). Jobs are placed in the queue, matched to available resources, executed, and results are returned to VM where the job was submitted from.
+
+This template is EWC users wishing to contribute their compute resources to the pool of resources as HTCondor Execute Nodes:
 
 ![High Throughput Batch Processing Overview](https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/refs/heads/main/playbooks/htc-execute-flavour/docs/images/htc-execute-flavour.png)
 
@@ -28,6 +30,9 @@ address, and a minimum recommended 32GB of RAM, as:
 > 💡 This Item is supported by the [EWCCLI](https://www.europeanweather.cloud/community-hub/ewc-cli), 
 and can be deployed, together with a compatible VM, via it. Checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages to learn how.
 
+* Request authorization keys:
+  * Write to EWC Support ([support@europeanweather.cloud](mailto:support@europeanweather.cloud)), making sure to provide your EWC tenancy name alongside your request for VPN, HTCondor and Harbor access.
+
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
@@ -36,7 +41,7 @@ and can be deployed, together with a compatible VM, via it. Checkout the [EWC Us
   > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
 * If you plan to configure an existing VM, ensure it meets the minium requirements before moving on to the [Usage](#usage) section below:
   * VM Image: RockyLinux 8 or 9
-  * VM Plan: 8 CPU cores, 32GB RAM, 30GB Disk
+  * VM Plan: 8 CPU cores, 64GB RAM, 30GB Disk
   * Network: Private
   * Security Groups: `htcondor`
   * Floating IP: Optional (not recommended from a security standpoint)
