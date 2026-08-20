@@ -32,3 +32,7 @@ playbooks/eumetcast-terrestrial-amt-flavour/eumetcast-terrestrial-amt-flavour.ym
 playbooks/eumetcast-terrestrial-amt-flavour/eumetcast-terrestrial-amt-flavour.yml yaml[line-length]
 playbooks/eumetsat-s3-mount-flavour/eumetsat-s3-mount-flavour.yml var-naming[no-role-prefix]
 playbooks/eumetsat-s3-mount-flavour/eumetsat-s3-mount-flavour.yml yaml[line-length]
+playbooks/htc-execute-flavour/htc-execute-flavour.yml var-naming[no-role-prefix]
+playbooks/htc-execute-flavour/htc-execute-flavour.yml yaml[line-length]
+playbooks/htc-submit-flavour/htc-submit-flavour.yml var-naming[no-role-prefix]
+playbooks/htc-submit-flavour/htc-submit-flavour.yml yaml[line-length]
