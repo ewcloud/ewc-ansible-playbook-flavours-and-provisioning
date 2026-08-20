@@ -23,6 +23,10 @@
       prompt: Password to authenticate against HTCondor node pool.
       private: true
 
+    - name: harbor_auth_token
+      prompt: Token for authentication when pulling private container images from EWC Container registry
+      private: true
+
   tasks:
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
@@ -30,6 +34,7 @@
         headscale_login_server_fact: "{{ headscale_login_server }}"
         htcondor_cm_external_ip_fact: "{{ htcondor_cm_external_ip }}"
         htcondor_password_fact: "{{ htcondor_password }}"
+        harbor_auth_token_fact: "{{ harbor_auth_token }}"
 
 - name: Configure HTCondor Execute Node
   hosts: all
@@ -46,3 +51,4 @@
         headscale_login_server: "{{ hostvars['localhost']['headscale_login_server_fact'] }}"
         htcondor_cm_external_ip: "{{ hostvars['localhost']['htcondor_cm_external_ip_fact'] }}"
         htcondor_password: "{{ hostvars['localhost']['htcondor_password_fact'] }}"
+        harbor_auth_token: "{{ hostvars['localhost']['harbor_auth_token_fact'] }}"
