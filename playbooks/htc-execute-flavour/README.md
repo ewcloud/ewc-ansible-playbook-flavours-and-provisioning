@@ -190,8 +190,8 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
 > 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see /sbom.json).
 
-| Name | Version | License |Home URL |
-|------|---------|-------|-------|
-| ewc-ansible-role-htcondor-execute | 1.0 | MIT | https://github.com/ewcloud/ewc-ansible-role-htcondor-execute |
+| Name | Home URL |
+|------|---------|
+| ewc-ansible-role-htcondor-execute | https://github.com/ewcloud/ewc-ansible-role-htcondor-execute |
 
 
