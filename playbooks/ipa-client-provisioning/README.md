@@ -36,14 +36,11 @@ To learn the basics about managing infrastructure with Terraform, check out [Ter
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [python-openstackclient](https://pypi.org/project/python-openstackclient) (version 8.0 or higher)
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-* Install [terraform](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+IaC+via+Terraform+and+OpenTofu#EWCIaCviaTerraformandOpenTofu-InstallationoftheCLI) (version 1.0 or higher)
-* Get OpenStack API credentials (see [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials) section of the EWC documentation)
-* Create an SSH keypair (see [Creating Keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
-* Import your public SSH key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey) section of the EWC documentation).
+* Install [terraform](https://confluence.ecmwf.int/x/UyRNH) (version 1.0 or higher)
+* Get OpenStack application credentials and add them to your shell's environment variables (see the [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/x/TiRNH) and [Using OpenStack RC files](https://confluence.ecmwf.int/x/TyRNH#EWCOpenStackAPIaccessInstallanduseCommandLineclient-usingOpenStackRCfile) sections of the EWC documentation for details)
+* Create an SSH keypair and import the public SSH key to OpenStack (see [EWC OpenStack API access - Setup a KeyPair](https://confluence.ecmwf.int/x/0ZglK) section of the EWC documentation).
 
 ## Usage
-> ⚠️ Only Ubuntu version 24 or 22, and RockyLinux versions 9 or 8 supported due to constrains imposed by [dependencies](#dependencies).
-
 
 ### 1. Clone the repository
 
@@ -57,20 +54,20 @@ git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provision
 cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/ipa-client-provisioning
 ```
 
-#### 1.2. (Optional) Checkout an specific Item's version
+#### 1.2. Checkout an specific Item's version
 >⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
 
 ```bash
 git checkout x.y.z
 ```
 
-### 2. Download  Ansible dependencies
+### 2. Download Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
 
 ```
-ansible-galaxy role install -r requirements.yml
+ansible-galaxy role install --force -r requirements.yml
 ```
 
 ### 3. Configure and apply the template
@@ -102,14 +99,14 @@ ansible-playbook \
         "app_name": "ipa",
         "instance_name": "client",
         "instance_index": 1,
-        "flavor_name": "eo2.medium",
-        "image_name": "ubuntu-22.04-20250204105649",
+        "flavor_name": "1cpu-4gbmem",
+        "image_name": "Ubuntu-22.04-20260519071848",
         "public_keypair_name": "my-public-key-name",
         "private_keypair_path": "~/.ssh/id_rsa",
         "private_network_name": "private",
         "security_group_name": "ipa",
         "instance_has_fip": "no",
-        "ipa_domain": "eumetsat.sandbox.ewc",
+        "ipa_domain": "internal-eumetsat-sandbox.ewc",
         "ipa_server_hostname": "ipa-server-1",
         "ipa_admin_username": "ipaadmin",
         "ipa_admin_password": "my-secret-password"
@@ -125,19 +122,20 @@ ansible-playbook \
 | app_name | application name, used as prefix in the full instance name | `string` | `ipa` | yes |
 | instance_name| name of the instance, used in the full instance name | `string` |  `client` | yes |
 | instance_index | index or identifier for the instance, used as suffix in the full instance name | `number` | `1` | yes |
-| flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+VM+plans) | `string` | `eo1.large` | yes |
-| image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+Virtual+Images+Available) | `string` | `ubuntu-22.04-20250204105649` | yes |
+| flavor_name | name the flavor to use for the instance. To learn about available options, checkout the [official EWC VM plans documentation](https://confluence.ecmwf.int/x/evWHEw) | `string` | `4cpu-8gbmem` | yes |
+| image_name | name of the image to use for the instance. For complete information on  available options, see the [official EWC Images documentation](https://confluence.ecmwf.int/x/pU2xG) | `string` | `Ubuntu-22.04-20260519071848` | yes |
 | public_keypair_name | name of public keypair (stored in OpenStack) to be copied into the instance for remote SSH access | `string` | n/a | yes |
 | private_keypair_path | path to the local private keypair to use for SSH access to the instance  | `string` | `~/.ssh/id_rsa` | yes |
 | private_network_name | private network name to attach the instance to  | `string` | `private`| yes |
 | security_group_name | security group name to apply to the instance  | `string` | `ipa` | yes |
 | instance_has_fip | whether to assign a floating IP to the instance. Only `yes` will be accepted to approve | `string` | n/a | yes |
-| ipa_domain | domain name managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
+| ipa_domain | domain name managed by the IPA server. Example: `internal-eumetsat-sandbox.ewc` | `string` | n/a | yes |
 | ipa_server_hostname | hostname of the IPA server | `string`|  `ipa-server-1` | yes |
 | ipa_admin_username | username of the administrator account from the IPA server | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of the administrator account from the IPA server | `string` | n/a | yes |
 
 ## Dependencies
+
 > 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
 | Name |  Home URL |

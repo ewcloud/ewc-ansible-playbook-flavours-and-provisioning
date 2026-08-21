@@ -57,12 +57,12 @@
     - name: ipa_server_flavor_name
       prompt: name the flavor to use for the instance of the IPA server. Press Enter to accept default
       private: false
-      default: "eo1.large"
+      default: "4cpu-8gbmem"
 
     - name: ipa_server_image_name
       prompt: name the image to use for the instance of the IPA server. Press Enter to accept default
       private: false
-      default: "Rocky-8.10-20250604144456"
+      default: "Rocky-8.10-20260519112324"
 
     - name: ipa_domain
       prompt: domain name to be managed by the IPA server
@@ -112,12 +112,12 @@
     - name: ssh_bastion_flavor_name
       prompt: name the flavor to use for the instanceof the SSH bastion. Press Enter to accept default
       private: false
-      default: "eo1.large"
+      default: "4cpu-8gbmem"
 
     - name: ssh_bastion_image_name
       prompt: name the image to use for the instanceof the SSH bastion. Press Enter to accept default
       private: false
-      default: "Rocky-8.10-20250604144456"
+      default: "Rocky-8.10-20260519112324"
 
     - name: remote_desktop_tf_project_path
       prompt: path to terraform working directory for the remote desktop. Press Enter to accept default
@@ -142,12 +142,12 @@
     - name: remote_desktop_flavor_name
       prompt: name the flavor to use for the instance of the remote desktop. Press Enter to accept default
       private: false
-      default: "eo1.large"
+      default: "4cpu-8gbmem"
 
     - name: remote_desktop_image_name
       prompt: name the image to use for the instance of the remote desktop. Press Enter to accept default
       private: false
-      default: "Rocky-8.10-20250604144456"
+      default: "Rocky-8.10-20260519112324"
 
     - name: remote_desktop_instance_has_fip
       prompt: technically required to temporarily assign a floating IP to the instance to securely connect from localhost during initial configuration. 💡 The template ensures to remove the floating IP during post-provisioning. Press Enter to accept default
@@ -177,44 +177,6 @@
 
 - name: Provision IPA Server
   import_playbook: "../ipa-server-provisioning/ipa-server-provisioning.yml"
-
-- name: Update OpenStack subnet DNS nameservers for IPA compatibility
-  hosts: localhost
-  connection: local
-  gather_facts: false
-
-  tasks:
-    - name: Gather information about user-specified OpenStack network
-      openstack.cloud.networks_info:
-        name: "{{ private_network_name }}"
-      register: networks_info
-
-    - name: Get ID of user-defined network
-      ansible.builtin.set_fact:
-        network_id: "{{ networks_info.networks[0].id }}"
-
-    - name: Gather information about subnets within user-defined OpenStack network
-      openstack.cloud.subnets_info:
-        filters:
-          network_id: "{{ network_id }}"
-      register: subnets_info
-
-    - name: Get name, ID, CIDR and DNS nameservers of subnet (choose first)
-      ansible.builtin.set_fact:
-        subnet_name: "{{ subnets_info.subnets[0].name }}"
-        subnet_cidr: "{{ subnets_info.subnets[0].cidr }}"
-        subnet_dns_nameservers: "{{ subnets_info.subnets[0].dns_nameservers | default([]) }}"
-
-    - name: Point DNS nameservers in OpenStack subnet to new IPA server
-      openstack.cloud.subnet:
-        network: "{{ private_network_name }}"
-        name: "{{ subnet_name }}"
-        cidr: "{{ subnet_cidr }}"
-        dns_nameservers:
-          - "{{ hostvars['localhost']['remote_host_internal_ip_fact'] }}"
-        state: present
-      register: subnet_result
-      no_log: true
 
 - name: Provision SSH Bastion
   import_playbook: "../ssh-bastion-provisioning/ssh-bastion-provisioning.yml"

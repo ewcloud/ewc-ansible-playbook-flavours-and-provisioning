@@ -24,35 +24,23 @@ and with a minimum recommended 4GB of RAM, such that it:
 
 ## Prerequisites
 
-> ⚠️ Only RockyLinux version 8 is supported due
-to constrains imposed by [dependencies](#dependencies).
-
-> 💡 A VM plan with at least 4GB of RAM is recommended for successful setup and
-stable operation.
+> 💡 This Item is supported by the [EWCCLI](https://www.europeanweather.cloud/community-hub/ewc-cli), 
+and can be deployed, together with a compatible VM, via it. Checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages to learn how.
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-* Get OpenStack API credentials (see [How to request OpenStack Application Credentials](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+request+Openstack+Application+Credentials) section of the EWC documentation)
-* If you plan to configure an existing VM, jump to the [Usage](#usage) section below
-* If you have not yet provisioned a VM, it is required to do so. You may choose one of the following approaches:
-  * A) Provision a new VM via UI:
-    * Create an SSH keypair (see [Creating the keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
-    * Import the SSH public key into Morpheus (see [Adding the keys in Morpheus](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-AddingthekeysinMorpheus) section of the EWC documentation)
-    * Provision a new VM through the web portal (see [Provision a new Instance - Web](https://confluence.ecmwf.int/display/EWCLOUDKB/Provision+a+new+instance+-+web) section of the EWC) documentation
 
-    OR 
-  * B) Provision a new VM via CLI:
-    * Create an SSH keypair (see [Creating the keys](https://confluence.ecmwf.int/display/EWCLOUDKB/Add+your+SSH+key+pair+to+Morpheus#AddyourSSHkeypairtoMorpheus-Creatingthekeys) section of the EWC documentation)
-    * Add you SSH public key to OpenStack (see [Import SSH Key](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+OpenStack+Command-Line+client#EWCOpenStackCommandLineclient-ImportSSHkey) section of the EWC documentation).
-    * Provision a new VM via the OpenStack CLI (see [How to create a VM using the OpenStack CLI](https://confluence.ecmwf.int/display/EWCLOUDKB/EWC+-+How+to+create+a+VM+using+the+Openstack+CLI) section of the EWC documentation)
+* Verify the `ipa` OpenStack Security Group exists in your EWC tenancy
+  > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
+* If you plan to configure an existing VM, ensure it meets the minium requirements before moving on to the [Usage](#usage) section below:
+  * VM Image: RockyLinux 9 or 8
+  * VM Plan: 4 CPU cores, 4GB RAM, 30GB Disk
+  * Network: Private
+  * Security Groups: `ipa`
+  * Floating IP: Optional (not recommended from a security standpoint)
   
-    OR
-  * C) Deploy this template, together with a new VM, as part of the [IPA Server Provisioning Community Hub Item](https://europeanweather.cloud/community-hub/ipa-server-provisioning)
-
-    OR
-  * D) Deploy this template, together with a new VM, via the [EWCCLI](https://pypi.org/project/ewccli/)
-
+  Otherwise, provision a new VM with above specifications before continuing (see [EWC Getting Started: Provision a VM](https://confluence.ecmwf.int/x/2RvEJg) for details).
 
 ## Usage
 
@@ -68,76 +56,116 @@ git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provision
 cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/ipa-server-flavour
 ```
 
-#### 1.2. (Optional) Checkout an specific Item's version
+#### 1.2. Checkout an specific Item's version
 >⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
 
 ```bash
 git checkout x.y.z
 ```
 
-### 2. Download  Ansible dependencies
+### 2. Download Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
 
 ```
-ansible-galaxy role install -r requirements.yml
+ansible-galaxy role install --force -r requirements.yml
 ```
 
 ### 3. Specify the target host and SSH credentials
-Create an inventory file to specify address/credentials that Ansible should use
-to reach the virtual machine you wish to configure:
+Create an inventory file, to specify address/credentials that your local working environment should use
+to connect to the target VM.
 
-```yaml
-# inventory.yml
----
-ewcloud:
-  hosts:
-    ipa_server:
-      ansible_python_interpreter: /usr/bin/python3
-      ansible_host: <add the IPV4 address of the target host>
-      ansible_ssh_private_key_file: <add the path to local SSH private key file>
-      ansible_user: cloud-user
-      ansible_ssh_common_args: -o StrictHostKeyChecking=accept-new
-```
+Copy into the file one of the two snippets below, and replace the placeholders (i.e. values enclosed in `<` `>` characters):
+
+* **Connecting form within the EWC tenancy's network**
+
+  ```yaml
+  # inventory.yml
+  ---
+  ewcloud:
+    hosts:
+      target:
+        ansible_python_interpreter: auto
+        ansible_host: <add the IP address of the target host>
+        ansible_ssh_private_key_file: <add the path to local SSH private key file>
+        ansible_user: cloud-user
+        ansible_ssh_common_args: -o StrictHostKeyChecking=no
+  ```
+
+**OR**
+
+
+*  **Connecting from outside the EWC tenancy's network**
+
+    > ⚠️ This requires an [SSH Bastion](https://europeanweather.cloud/community-hub/ssh-bastion-provisioning) to be already provisioned within your EWC tenancy.
+
+    ```yaml
+    # inventory.yml
+    ---
+    ewcloud:
+      hosts:
+        target:
+          ansible_host: <add the IP address of the target host>
+          ansible_ssh_user: cloud-user
+          ansible_ssh_private_key_file: <add the path to local SSH private key file>
+          ansible_python_interpreter: auto
+
+    all:
+      vars:
+        ansible_ssh_common_args: >- 
+          -o StrictHostKeyChecking=no
+          -o UserKnownHostsFile=/dev/null
+          -o ProxyCommand="ssh 
+                          -o StrictHostKeyChecking=no
+                          -o UserKnownHostsFile=/dev/null
+                          -o BatchMode=yes
+                          -W %h:%p
+                          -i <add the path to local SSH private key file> 
+                          cloud-user@<add the IP address of the ssh bastion>"
+
+    ```
 
 ### 4. Configure and apply the template
 
-#### 4.1. Interactive Mode
+* **Interactive Mode**
 
-By running the following command, you can trigger an interactive session that
-prompts you for the necessary user inputs, and then applies changes to your
-target EWC environment:
+  By running the following command, you can trigger an interactive session that
+  prompts you for the necessary user inputs, and then applies changes to your
+  target EWC environment:
 
-```bash
-ansible-playbook -i inventory.yml ipa-server-flavour.yml
-```
+  ```bash
+  ansible-playbook -i inventory.yml ipa-server-flavour.yml
+  ```
 
-#### 4.2. Non-Interactive Mode
+**OR**
 
->💡 To learn more about defining variables at runtime, checkout the
-[official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
 
-You can also run in non-interactive mode by passing the
-`--extra-vars` or `-e` flag, followed by a map of  key-value pairs; one for
-each and every available input (see [inputs section](#inputs) below). For
-example:
+* **Non-Interactive Mode**
 
-```bash
-ansible-playbook \
-  -i inventory.yml \
-  -e '{
-      "ipa_domain": "eumetsat.sandbox.ewc",
-      "ipa_server_hostname": "ipa-server-1",
-      "ipa_admin_username": "ipaadmin",
-      "ipa_admin_password": "my-secret-password",
-      "ipa_admin_givenname": "EWC",
-      "ipa_admin_surname": "IPAADMIN",
-      "os_network_name": "private",
-      "os_security_group_name": "ipa"
-    }' \
-  ipa-server-flavour.yml
-```
+  >💡 To learn more about defining variables at runtime, checkout the
+  [official Ansible documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html).
+
+  You can also run in non-interactive mode by passing the
+  `--extra-vars` or `-e` flag, followed by a map of  key-value pairs; one for
+  each and every available input (see [inputs section](#inputs) below). For
+  example:
+
+  ```bash
+  ansible-playbook \
+    -i inventory.yml \
+    -e '{
+        "ipa_domain": "internal-eumetsat-sandbox.ewc",
+        "ipa_server_hostname": "ipa-server-1",
+        "ipa_admin_username": "ipaadmin",
+        "ipa_admin_password": "my-secret-password",
+        "ipa_admin_givenname": "EWC",
+        "ipa_admin_surname": "IPAADMIN",
+        "os_network_name": "private",
+        "os_security_group_name": "ipa"
+      }' \
+    ipa-server-flavour.yml
+  ```
 
 ### 5. Manually update DNS nameserver(s)
 
@@ -156,41 +184,44 @@ For illustration purposes, supposes it IP is `10.0.0.53`.
 
 **Step 2: Ensure the IPA server's IP address is part of the list of subnet DSN nameservers**
 
-Via Openstack CLI:
+  * **Via [EWC Cloud Management UI](https://confluence.ecmwf.int/x/KnAEJQ)**
+    1. Click on `Project > Network > Networks`.
+    2. A table will be displayed in on the middle of the view port, listing available networks. Click on network name.
+    3. Click on the `Subnets` tab.
+    4. A new table will be displayed in on the middle of the view port, this time listing the available subnets. Click on `Edit Subnet`, on the same row where the correct subnet is listed.
+    5. Within the pop-up edit form, click on `Subnet Details`
+    6. Replace the contents of the `DNS Name Servers` entry with the IP of your new IPA server, for example:
 
-```bash
-openstack subnet set \
-  --dns-nameserver <IPV4 address of the IPA server> \
-  <ID or name of the OpenStack Subnet attached to the IPA server>
-```
+        <img src="https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/main/playbooks/ipa-server-flavour/docs/images/horinzon-ui-dns-name-servers.jpg" height=600px>
 
-Following the example in the prior step and assuming the subnet name `private-subnet`, then we would execute:
+    7. Click on `Save`
 
-```bash
-openstack subnet set --dns-nameserver 10.0.0.53 private-subnet
-```
+  **OR**
 
-**Step 3: Remove any other IP address from the DNS nameservers of the subnet**
+  * **Via [OpenStack CLI](pypi.org/project/python-openstackclient/)**
+    
+    Following the example in the prior step and assuming the subnet name `private-subnet`, then we would execute:
 
-Via Openstack CLI:
-```bash
-openstack subnet unset \
-  --dns-nameserver <IPV4 address of any prior default DNS nameserver> \
-  <ID or name of the OpenStack Subnet attached to the IPA server>
-```
+    ```bash
+    openstack subnet set --dns-nameserver 10.0.0.53 private-subnet
+    ```
 
-Continuing the example, suppose two additional IP address, `1.1.1.1` and `8.8.8.8`, are still part of the DNS nameservers list. To remove then we would execute:
+    Supposing the two additional IP address, `1.1.1.1` and `8.8.8.8`, are still part of the DNS nameservers list, you can remove then with:
 
-```bash
-openstack subnet unset --dns-nameserver 1.1.1.1 private-subnet && \
-openstack subnet unset --dns-nameserver 8.8.8.8 private-subnet
-```
+    ```bash
+    openstack subnet unset --dns-nameserver 1.1.1.1 private-subnet
+    ```
+    ```bash
+    openstack subnet unset --dns-nameserver 8.8.8.8 private-subnet
+    ```
+
+
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| ipa_domain | domain name to be managed by the IPA server. Example: `eumetsat.sandbox.ewc` | `string` | n/a | yes |
+| ipa_domain | domain name to be managed by the IPA server. Example: `internal-eumetsat-sandbox.ewc` | `string` | n/a | yes |
 | ipa_server_hostname | hostname of the target vm where the IPA server will be installed | `string`| `ipa-server-1` | yes |
 | ipa_admin_username | username of administrator account to replace the default IPA admin | `string` | `ipaadmin` | yes |
 | ipa_admin_password | password of administrator account to replace the default IPA admin. Example: `my-secret-password` | `string` | n/a | yes |
@@ -200,6 +231,7 @@ openstack subnet unset --dns-nameserver 8.8.8.8 private-subnet
 | os_security_group_name | OpenStack security group containing all firewall rules required by the IPA server/client communication | `string` | `ipa` | yes |
 
 ## Dependencies
+
 > 💡 Upon execution, a SBOM (SPDX format) is auto-generated and stored in the VM's file system root directory (see `/sbom.json`).
 
 | Name | Home URL |
