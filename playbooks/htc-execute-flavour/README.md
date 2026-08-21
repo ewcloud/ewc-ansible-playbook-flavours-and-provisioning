@@ -161,14 +161,14 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
   ```bash
   ansible-playbook \
-    -i inventory.yaml \
+    -i inventory.yml \
       -e '{
         "headscale_preauthkey":"<redacted>",
         "headscale_login_server":"http://headscale.batchprocessing.eumetsat.ewcloud.host:80",
         "htcondor_cm_external_ip":"100.64.0.32",
         "htcondor_password":"<redacted>",
-        "harbor_auth_token":"redacted>"
-        }' \
+        "harbor_auth_token":"<redacted>"
+      }' \
     htc-execute-flavour.yml 
   ```
 

@@ -159,7 +159,7 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
   ```bash
   ansible-playbook \
-    -i inventory.yaml \
+    -i inventory.yml \
       -e '{
         "headscale_preauthkey":"<redacted>",
         "headscale_login_server":"http://headscale.batchprocessing.eumetsat.ewcloud.host:80",
