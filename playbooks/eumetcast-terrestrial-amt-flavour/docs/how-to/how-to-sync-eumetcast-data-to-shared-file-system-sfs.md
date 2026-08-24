@@ -16,12 +16,15 @@ You can synchronise received data to a mounted Shared File System (SFS) using [r
 
    Add a line similar to:
    ```
-   */5 * * * * rsync -rt --delete /home/eumetuser/data/ter-1/default/ /mountpoint/eumetcast-data/
+   */1 * * * * rsync -rt --delete /home/eumetuser/data/ter-1/default/ /mountpoint/eumetcast-data/
    ```
-
-   This command keeps the remote directory synchronised with the local one (added/removed files are mirrored).
-
-> ⚠️ Adjust permissions on the target directory if your applications need specific access rights. Change the source path if you modified the default storage location.
+   > ⚠️ Adjust permissions on the target directory if your applications need specific access rights. Change the source path if you modified the default storage location.
+   
+   The above command ensures changes done locally are always synced to the remote (`local` → `/home/eumetuser/data/ter-1/default/` OR `remote → /mountpoint/eumetcast-data`):
+   * files added in local are added to remote
+   * files removed from local are removed from remote
+   * files added in remote are removed
+   * files removed from remote are restored from local if they exist, else ignored
 
 **Resources**
 - [How to sync EUMETCast data to Object Storage (S3)](./how-to-sync-eumetcast-data-to-object-storage-s3.md)
