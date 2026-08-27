@@ -191,3 +191,9 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 | ewc-ansible-role-htcondor-submit | https://github.com/ewcloud/ewc-ansible-role-htcondor-submit |
 
 
+## Operation
+
+Checkout the following how-to guides to learn about usage of the Item after setup:
+* [How to submit Bash jobs](./docs/how-to/how-to-submit-bash-jobs.md)
+* [How to submit Docker jobs](./docs/how-to-submit-docker-jobs.md)
+* [How to submit Singularity jobs](./docs/how-to-submit-singularity-jobs.md)

@@ -195,3 +195,7 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 | ewc-ansible-role-htcondor-execute | https://github.com/ewcloud/ewc-ansible-role-htcondor-execute |
 
 
+## Operation
+
+Checkout the following how-to guides to learn about usage of the Item after setup:
+* [How to submit jobs](./docs/how-to/how-to-submit-jobs.md)
