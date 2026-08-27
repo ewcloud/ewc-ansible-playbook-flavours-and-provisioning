@@ -1,0 +1,54 @@
+---
+- name: Prompt for user inputs
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_prompt:
+    - name: headscale_preauthkey
+      prompt: Credentials of the VPN server
+      private: true
+
+    - name: headscale_login_server
+      prompt: Headscale Login Server. Press Enter to accept default
+      private: false
+      default: http://headscale.batchprocessing.eumetsat.ewcloud.host:80
+
+    - name: htcondor_cm_external_ip
+      prompt: IP Address of the HTCondor Manager node to which this Execute node reports to. Press Enter to accept default
+      private: false
+      default: 100.64.0.32
+
+    - name: htcondor_password
+      prompt: Password to authenticate against HTCondor node pool.
+      private: true
+
+    - name: harbor_auth_token
+      prompt: Token for authentication when pulling private container images from EWC Container registry
+      private: true
+
+  tasks:
+    - name: Store user input as localhost facts
+      ansible.builtin.set_fact:
+        headscale_preauthkey_fact: "{{ headscale_preauthkey }}"
+        headscale_login_server_fact: "{{ headscale_login_server }}"
+        htcondor_cm_external_ip_fact: "{{ htcondor_cm_external_ip }}"
+        htcondor_password_fact: "{{ htcondor_password }}"
+        harbor_auth_token_fact: "{{ harbor_auth_token }}"
+
+- name: Configure HTCondor Execute Node
+  hosts: all
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+
+  tasks:
+    - name: EWC Ansible Role HTCondor Execute
+      ansible.builtin.include_role:
+        name: ewc-ansible-role-htcondor-execute-1.0
+      vars:
+        headscale_preauthkey: "{{ hostvars['localhost']['headscale_preauthkey_fact'] }}"
+        headscale_login_server: "{{ hostvars['localhost']['headscale_login_server_fact'] }}"
+        htcondor_cm_external_ip: "{{ hostvars['localhost']['htcondor_cm_external_ip_fact'] }}"
+        htcondor_password: "{{ hostvars['localhost']['htcondor_password_fact'] }}"
+        harbor_auth_token: "{{ hostvars['localhost']['harbor_auth_token_fact'] }}"
