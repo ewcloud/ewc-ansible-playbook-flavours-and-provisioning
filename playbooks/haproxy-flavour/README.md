@@ -31,7 +31,7 @@ Users can leverage HAProxy to distribute workloads and improve website and appli
 
 ### Deploy via EWCCLI
 
->⚠️ Deployment via EWCCLI is only possible from a VM within your EWC private network.
+>⚠️ By default, deploying via EWCCLI is only possible from within your EWC private network. You may override by passing the `--external-ip` flag upon deployment. Caution is advised as this weakens security on the deployed VM.
 
 #### 1. Setup working environment
 
