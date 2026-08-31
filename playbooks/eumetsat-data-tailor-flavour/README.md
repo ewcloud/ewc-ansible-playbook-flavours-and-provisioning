@@ -7,9 +7,9 @@ within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to eq
 > 💡 Unlike the Data Tailor Web Services (DTWS), which can be used with EUMDAC or via https://tailor.eumetsat.int, the standalone version is generally faster and does not have limitations such as maximum concurrent jobs or workspace size.
 
 The Data Tailor is a product customization toolbox designed to:
-* Enable users to tailor satellite data to their specific needs. 
-* Offers the ability to subset and aggregate data products across space and time, filter layers, generate quick looks, reproject data onto new coordinate reference systems, and reformat data into widely used Geographic Information System (GIS) formats such as netCDF and GeoTIFF, as well as image formats like JPEG and PNG. 
-* Customize data from various satellite collections, including METOP, MFG ,MSG, MTG (Meteosat Third Generation) and Sentinel-3. 
+* Enable users to tailor satellite data to their specific needs.
+* Offers the ability to subset and aggregate data products across space and time, filter layers, generate quick looks, reproject data onto new coordinate reference systems, and reformat data into widely used Geographic Information System (GIS) formats such as netCDF and GeoTIFF, as well as image formats like JPEG and PNG.
+* Customize data from various satellite collections, including METOP, MFG ,MSG, MTG (Meteosat Third Generation) and Sentinel-3.
 
 For more information on capabilities of the Data Tailor, please refer to [Data Tailor Standalone Guide on User Portal](https://user.eumetsat.int/resources/user-guides/data-tailor-standalone-guide) and for more information about the available products and customizations inside the Data Tailor, please go to [Products and Customizations Available in the Data Tailor](https://user.eumetsat.int/resources/user-guides/data-store-detailed-guide#ID-Products-and-customisation-available-in-the-Data-Tailor) page.
 
@@ -36,7 +36,7 @@ pip install ewccli
 ewc login
 ```
 
-#### 3. Deploy 
+#### 3. Deploy
 >💡 To lean about EWCCLI deployment customization, checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages.
 
 
@@ -49,7 +49,7 @@ ewc hub deploy data-tailor-flavour
 #### 1. Setup working environment
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
-* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher)
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
 * If you plan to configure an existing VM, ensure it meets the minium requirements before proceeding:
   * VM Image: Ubuntu 24 or 22
@@ -57,7 +57,7 @@ ewc hub deploy data-tailor-flavour
   * Network: Private
   * Security Groups: `ssh-https`
   * Floating IP: Optional (not recommended from a security standpoint)
-  
+
   Otherwise, provision a new VM with above specifications before continuing (see [EWC Getting Started: Provision a VM](https://confluence.ecmwf.int/x/2RvEJg) for details).
 
 #### 2. Clone the repository
@@ -147,19 +147,19 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
     all:
       vars:
-        ansible_ssh_common_args: >- 
+        ansible_ssh_common_args: >-
           -o StrictHostKeyChecking=no
           -o UserKnownHostsFile=/dev/null
-          -o ProxyCommand="ssh 
+          -o ProxyCommand="ssh
                           -o StrictHostKeyChecking=no
                           -o UserKnownHostsFile=/dev/null
                           -o BatchMode=yes
                           -W %h:%p
-                          -i <add the path to local SSH private key file> 
+                          -i <add the path to local SSH private key file>
                           cloud-user@<add the PUBLIC IP address of the SSH bastion>"
 
     ```
-    
+
 
 #### 5. Configure and apply the template
 

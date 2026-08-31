@@ -1,7 +1,7 @@
 # EUMETCast Terrestrial AMT Flavour
 
 This Ansible Playbook configures an existing virtual machine running
-within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the [EUMETCast Terrestrial](https://user.eumetsat.int/data-access/eumetcast-terrestrial) over [AMT software stack](https://gitlab.eumetsat.int/open-source/amt). 
+within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the [EUMETCast Terrestrial](https://user.eumetsat.int/data-access/eumetcast-terrestrial) over [AMT software stack](https://gitlab.eumetsat.int/open-source/amt).
 
 
 EUMETCast is EUMETSAT’s primary dissemination mechanism for the near-real-time delivery of satellite data. EUMETCast serves data through two complementary delivery systems: EUMETCast Satellite and EUMETCast Terrestrial.
@@ -58,7 +58,7 @@ pip install ewccli
 ewc login
 ```
 
-#### 3. Deploy 
+#### 3. Deploy
 >💡 To lean about EWCCLI deployment customization, checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages.
 
 
@@ -71,7 +71,7 @@ ewc hub deploy eumetcast-terrestrial-amt-flavour
 #### 1. Setup working environment
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
-* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher)
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
 * If you plan to configure an existing VM, ensure it meets the minium requirements before proceeding:
   * VM Image: Ubuntu 22
@@ -80,7 +80,7 @@ ewc hub deploy eumetcast-terrestrial-amt-flavour
   * Network: Private
   * Security Groups: `eumetcast`
   * Floating IP: Optional (not recommended from a security standpoint)
-  
+
   Otherwise, provision a new VM with above specifications before continuing (see [EWC Getting Started: Provision a VM](https://confluence.ecmwf.int/x/2RvEJg) for details).
 
 #### 2. Clone the repository
@@ -169,15 +169,15 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
     all:
       vars:
-        ansible_ssh_common_args: >- 
+        ansible_ssh_common_args: >-
           -o StrictHostKeyChecking=no
           -o UserKnownHostsFile=/dev/null
-          -o ProxyCommand="ssh 
+          -o ProxyCommand="ssh
                           -o StrictHostKeyChecking=no
                           -o UserKnownHostsFile=/dev/null
                           -o BatchMode=yes
                           -W %h:%p
-                          -i <add the path to local SSH private key file> 
+                          -i <add the path to local SSH private key file>
                           cloud-user@<add the PUBLIC IP address of the SSH bastion>"
     ```
 

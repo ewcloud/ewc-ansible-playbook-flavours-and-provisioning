@@ -37,7 +37,7 @@ The template is designed to:
 #### 1. Setup working environment
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
-* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher)
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
 
 #### 2. Clone the repository
@@ -129,19 +129,19 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
     all:
       vars:
-        ansible_ssh_common_args: >- 
+        ansible_ssh_common_args: >-
           -o StrictHostKeyChecking=no
           -o UserKnownHostsFile=/dev/null
-          -o ProxyCommand="ssh 
+          -o ProxyCommand="ssh
                           -o StrictHostKeyChecking=no
                           -o UserKnownHostsFile=/dev/null
                           -o BatchMode=yes
                           -W %h:%p
-                          -i <add the path to local SSH private key file> 
+                          -i <add the path to local SSH private key file>
                           cloud-user@<add the PUBLIC IP address of the SSH bastion>"
 
     ```
-    
+
 
 #### 5. Configure and apply the template
 
