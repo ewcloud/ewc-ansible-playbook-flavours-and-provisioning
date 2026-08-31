@@ -1,7 +1,7 @@
 # EUMETCast Terrestrial AMT Flavour
 
 This Ansible Playbook configures an existing virtual machine running
-within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the [EUMETCast Terrestrial](https://user.eumetsat.int/data-access/eumetcast-terrestrial) over [AMT software stack](https://gitlab.eumetsat.int/open-source/amt). 
+within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the [EUMETCast Terrestrial](https://user.eumetsat.int/data-access/eumetcast-terrestrial) over [AMT software stack](https://gitlab.eumetsat.int/open-source/amt).
 
 
 EUMETCast is EUMETSAT’s primary dissemination mechanism for the near-real-time delivery of satellite data. EUMETCast serves data through two complementary delivery systems: EUMETCast Satellite and EUMETCast Terrestrial.
@@ -30,48 +30,72 @@ If unsure which services your you access, please contact the EUMETSAT User Helpd
 * Automatically cleans up disk space by keeping only the latest 5 minutes of transmitted data, under the `/home/eumetuser/data` subdirectory.
 
 ## Prerequisites
-> ⛔ When deploy on ECMWF site, network traffic required by this Item may be blocked due to ECMWF Firewall. Please get in touch with us through the [EWC Support portal](https://support.europeanweather.cloud/).
-
-> 💡 This Item is supported by the [EWCCLI](https://www.europeanweather.cloud/community-hub/ewc-cli)
-and can be deployed, together with a compatible VM, via it. Checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages to learn how.
+> ⛔ When deploying on ECMWF site, network traffic required by this Item may be blocked due to ECMWF Firewall. Please get in touch with us through the [EWC Support portal](https://support.europeanweather.cloud/).
 
 * Register a user account on the [EUMETSAT User Portal](https://eoportal.eumetsat.int/)
 * Subscribe to the service and data for EUMETCast Terrestrial
   * Ensure you select at least one EKU (temporal quota allocation)
 * Request a EUMETCast Terrestrial user key for access from the EWC:
   * Write to EUMETSAT Helpdesk ([ops@eumetsat.int](mailto:ops@eumetsat.int)), making sure to provide them your EUMETSAT User Portal username alongside your request
-* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
-* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
-* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-
 * Verify the `eumetcast` OpenStack Security Group exists in your EWC tenancy
   > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
-* If you plan to configure an existing VM, ensure it meets the minium requirements before moving on to the [Usage](#usage) section below:
+
+## Usage
+
+### Deploy via EWCCLI
+
+>⚠️ Deployment via EWCCLI is only possible from a VM within your EWC private network.
+
+#### 1. Setup working environment
+
+```bash
+pip install ewccli
+```
+
+#### 2. Configure access credentials
+
+```bash
+ewc login
+```
+
+#### 3. Deploy
+>💡 To lean about EWCCLI deployment customization, checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages.
+
+
+```bash
+ewc hub deploy eumetcast-terrestrial-amt-flavour
+```
+
+### Deploy via native tooling (Ansible)
+
+#### 1. Setup working environment
+
+* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher)
+* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
+* If you plan to configure an existing VM, ensure it meets the minium requirements before proceeding:
   * VM Image: Ubuntu 22
   * VM Plan: 8 CPU cores, 64GB RAM, 265GB Disk + 1TB Disk (secondary)
     > ⚠️ Make sure the secondary disk is formatted and mounted by following this guide steps from the [EWC Knowledge Base](https://confluence.ecmwf.int/x/WHAEJQ#EWCCloudManagementUIStorageAddavolumetoaninstance-Formatthenewdisk).
   * Network: Private
   * Security Groups: `eumetcast`
   * Floating IP: Optional (not recommended from a security standpoint)
-  
+
   Otherwise, provision a new VM with above specifications before continuing (see [EWC Getting Started: Provision a VM](https://confluence.ecmwf.int/x/2RvEJg) for details).
-    
 
-## Usage
-
-### 1. Clone the repository
+#### 2. Clone the repository
 
 ```bash
 git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning.git
 ```
 
-#### 1.1. Change to the specific Item's subdirectory
+#### 2.1. Change to the specific Item's subdirectory
 
 ```bash
 cd playbooks/eumetcast-terrestrial-amt-flavour
 ```
 
-#### 1.2. Checkout an specific Item's version
+#### 2.2. Checkout an specific Item's version
 >⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
 
 ```bash
@@ -79,7 +103,7 @@ git checkout x.y.z
 ```
 
 
-### 2. Download Ansible dependencies
+#### 3. Download Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
@@ -88,13 +112,13 @@ Download the correct version of the Ansible dependencies, if you haven't done so
 ansible-galaxy role install --force -r requirements.yml
 ```
 
-### 3. Specify the target host and SSH credentials
+#### 4. Specify the target host and SSH credentials
 Create an inventory file, to specify address/credentials that your local working environment should use
 to connect to the target VM.
 
 Copy into the file one of the two snippets below, and replace the placeholders (i.e. values enclosed in `<` `>` characters):
 
-* **Connecting form within the EWC tenancy's network**
+* **To connect within the EWC private network**
 
   ```yaml
   # inventory.yml
@@ -103,16 +127,32 @@ Copy into the file one of the two snippets below, and replace the placeholders (
     hosts:
       target:
         ansible_python_interpreter: auto
-        ansible_host: <add the IP address of the target host>
+        ansible_host: <add the PRIVATE IP address of the target host>
         ansible_ssh_private_key_file: <add the path to local SSH private key file>
-        ansible_user: cloud-user
+        ansible_user: ubuntu
         ansible_ssh_common_args: -o StrictHostKeyChecking=no
   ```
 
 **OR**
 
+* **To connect from the public internet to a EWC public IP address**
 
-*  **Connecting from outside the EWC tenancy's network**
+  ```yaml
+  # inventory.yml
+  ---
+  ewcloud:
+    hosts:
+      target:
+        ansible_python_interpreter: auto
+        ansible_host: <add the PUBLIC IP address of the target host>
+        ansible_ssh_private_key_file: <add the path to local SSH private key file>
+        ansible_user: ubuntu
+        ansible_ssh_common_args: -o StrictHostKeyChecking=no
+  ```
+
+**OR**
+
+*  **To connect from the public the public internet to a EWC private IP address**
 
     > ⚠️ This requires an [SSH Bastion](https://europeanweather.cloud/community-hub/ssh-bastion-provisioning) to be already provisioned within your EWC tenancy.
 
@@ -122,27 +162,27 @@ Copy into the file one of the two snippets below, and replace the placeholders (
     ewcloud:
       hosts:
         target:
-          ansible_host: <add the IP address of the target host>
-          ansible_ssh_user: cloud-user
+          ansible_host: <add the PRIVATE IP address of the target host>
+          ansible_ssh_user:  ubuntu
           ansible_ssh_private_key_file: <add the path to local SSH private key file>
           ansible_python_interpreter: auto
 
     all:
       vars:
-        ansible_ssh_common_args: >- 
+        ansible_ssh_common_args: >-
           -o StrictHostKeyChecking=no
           -o UserKnownHostsFile=/dev/null
-          -o ProxyCommand="ssh 
+          -o ProxyCommand="ssh
                           -o StrictHostKeyChecking=no
                           -o UserKnownHostsFile=/dev/null
                           -o BatchMode=yes
                           -W %h:%p
-                          -i <add the path to local SSH private key file> 
-                          cloud-user@<add the IP address of the ssh bastion>"
+                          -i <add the path to local SSH private key file>
+                          cloud-user@<add the PUBLIC IP address of the SSH bastion>"
     ```
 
 
-### 4. Configure and apply the template
+#### 5. Configure and apply the template
 
 * **Interactive Mode**
 

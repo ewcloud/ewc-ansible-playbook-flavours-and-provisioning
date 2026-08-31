@@ -32,7 +32,7 @@ to their DNS configuration.
 ## Prerequisites
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
-* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher)
 * Install [python-openstackclient](https://pypi.org/project/python-openstackclient) (version 8.0 or higher)
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
 * Install [terraform](https://confluence.ecmwf.int/x/UyRNH) (version 1.0 or higher)
@@ -43,7 +43,7 @@ to their DNS configuration.
 > ⚠️ Only RockyLinux is supported due
 to constrains imposed by [dependencies](#dependencies).
 
-> 💡 VM plans with at least 4GB of RAM is recommended for successful setup and stable operation 
+> 💡 VM plans with at least 4GB of RAM is recommended for successful setup and stable operation
 
 >⛔ Execution of this template can potentially affect DNS resolution on existing VMs within your subnet. To prevent issues, enroll them to the new IPA server via the
 [IPA Client Enroll Flavour](https://europeanweather.cloud/community-hub/ipa-client-enroll-flavour)

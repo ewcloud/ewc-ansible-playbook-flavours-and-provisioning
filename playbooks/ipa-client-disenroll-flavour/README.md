@@ -27,34 +27,39 @@ The template is designed to:
 
 ## Prerequisites
 
-* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
-* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
-* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
 * Verify the IP address of the existing VM already enrolled into your IPA Server.
 * Verify your SSH access to the exiting VM (i.e. your public SSH key must be registered on the target machine)
 
 ## Usage
 
-### 1. Clone the repository
+### Deploy via native tooling (Ansible)
+
+#### 1. Setup working environment
+
+* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher)
+* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
+
+#### 2. Clone the repository
 
 ```bash
 git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning.git
 ```
 
-#### 1.1. Change to the specific Item's subdirectory
+#### 2.1. Change to the specific Item's subdirectory
 
 ```bash
 cd ewc-ansible-playbook-flavours-and-provisioning/playbooks/ipa-client-disenroll-flavour
 ```
 
-#### 1.2. Checkout an specific Item's version
+#### 2.2. Checkout an specific Item's version
 >⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
 
 ```bash
 git checkout x.y.z
 ```
 
-### 2. Download Ansible dependencies
+#### 3. Download Ansible dependencies
 >💡 By default, Ansible Roles are installed under the `~/.ansible/roles` directory within your working environment.
 
 Download the correct version of the Ansible dependencies, if you haven't done so already:
@@ -63,7 +68,7 @@ Download the correct version of the Ansible dependencies, if you haven't done so
 ansible-galaxy role install --force -r requirements.yml
 ```
 
-### 3. Specify the target host and SSH credentials
+#### 4. Specify the target host and SSH credentials
 >💡 To find out which is the default user for your chosen VM image,
 checkout the [official EWC documentation](https://confluence.ecmwf.int/x/USRNH#EWCOpenStackAPIaccessVMimagesanddefaultusers-Defaultusers).
 
@@ -72,7 +77,7 @@ to connect to the target VM.
 
 Copy into the file one of the two snippets below, and replace the placeholders (i.e. values enclosed in `<` `>` characters):
 
-* **Connecting form within the EWC tenancy's network**
+* **To connect within the EWC private network**
 
   ```yaml
   # inventory.yml
@@ -80,8 +85,8 @@ Copy into the file one of the two snippets below, and replace the placeholders (
   ewcloud:
     hosts:
       target:
-        ansible_python_interpreter: /usr/bin/python3
-        ansible_host: <add the IPV4 address of the target host>
+        ansible_python_interpreter: auto
+        ansible_host: <add the PRIVATE IP address of the target host>
         ansible_ssh_private_key_file: <add the path to local SSH private key file>
         ansible_user: <add the default user according to your chosen VM image>
         ansible_ssh_common_args: -o StrictHostKeyChecking=no
@@ -90,8 +95,24 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
 **OR**
 
+* **To connect from the public internet to a EWC public IP address**
 
-*  **Connecting from outside the EWC tenancy's network**
+  ```yaml
+  # inventory.yml
+  ---
+  ewcloud:
+    hosts:
+      target:
+        ansible_python_interpreter: auto
+        ansible_host: <add the PUBLIC IP address of the target host>
+        ansible_ssh_private_key_file: <add the path to local SSH private key file>
+        ansible_user: <add the default user according to your chosen VM image>
+        ansible_ssh_common_args: -o StrictHostKeyChecking=no
+  ```
+
+**OR**
+
+*  **To connect from the public the public internet to a EWC private IP address**
 
     > ⚠️ This requires an [SSH Bastion](https://europeanweather.cloud/community-hub/ssh-bastion-provisioning) to be already provisioned within your EWC tenancy.
 
@@ -101,28 +122,28 @@ Copy into the file one of the two snippets below, and replace the placeholders (
     ewcloud:
       hosts:
         target:
-          ansible_host: <add the IP address of the target host>
+          ansible_host: <add the PRIVATE IP address of the target host>
           ansible_ssh_user: <add the default user according to your chosen VM image>
           ansible_ssh_private_key_file: <add the path to local SSH private key file>
           ansible_python_interpreter: auto
 
     all:
       vars:
-        ansible_ssh_common_args: >- 
+        ansible_ssh_common_args: >-
           -o StrictHostKeyChecking=no
           -o UserKnownHostsFile=/dev/null
-          -o ProxyCommand="ssh 
+          -o ProxyCommand="ssh
                           -o StrictHostKeyChecking=no
                           -o UserKnownHostsFile=/dev/null
                           -o BatchMode=yes
                           -W %h:%p
-                          -i <add the path to local SSH private key file> 
-                          cloud-user@<add the IP address of the ssh bastion>"
+                          -i <add the path to local SSH private key file>
+                          cloud-user@<add the PUBLIC IP address of the SSH bastion>"
 
     ```
-    
 
-### 4. Configure and apply the template
+
+#### 5. Configure and apply the template
 
 * **Interactive Mode**
 
