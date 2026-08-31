@@ -103,7 +103,7 @@ Copy into the file one of the two snippets below, and replace the placeholders (
   ewcloud:
     hosts:
       target:
-        ansible_python_interpreter: /usr/bin/python3
+        ansible_python_interpreter: auto
         ansible_host: <add the PUBLIC IP address of the target host>
         ansible_ssh_private_key_file: <add the path to local SSH private key file>
         ansible_user: cloud-user
