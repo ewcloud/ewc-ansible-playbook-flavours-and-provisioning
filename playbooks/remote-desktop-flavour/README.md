@@ -99,7 +99,18 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
 * **To connect from the public internet to a EWC public IP address**
 
-TODO
+```yaml
+  # inventory.yml
+  ---
+  ewcloud:
+    hosts:
+      target:
+        ansible_python_interpreter: /usr/bin/python3
+        ansible_host: <add the PUBLIC IP address of the target host>
+        ansible_ssh_private_key_file: <add the path to local SSH private key file>
+        ansible_user: cloud-user
+        ansible_ssh_common_args: -o StrictHostKeyChecking=no
+  ```
 
 **OR**
 
@@ -129,7 +140,7 @@ TODO
                           -o BatchMode=yes
                           -W %h:%p
                           -i <add the path to local SSH private key file> 
-                          cloud-user@<add the IP address of the ssh bastion>"
+                          cloud-user@<add the PUBLIC IP address of the SSH bastion>"
 
     ```
     
