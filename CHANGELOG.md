@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.11.0...1.11.1) (2026-08-31)
+
+
+### Bug Fixes
+
+* Update playbooks to import latest role versions ([#49](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/49)) ([eae9278](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/eae92783f81552b5e25ca69948347fcee8264c07))
+
 # [1.11.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.10.1...1.11.0) (2026-08-27)
 
 
