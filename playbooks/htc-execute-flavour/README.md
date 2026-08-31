@@ -13,7 +13,7 @@ EWC users can submit jobs from their VMs (i.e. those configured by the [HTC Batc
 
 This template is EWC users wishing to contribute their compute resources to the pool of resources as HTCondor Execute Nodes:
 
-![High Throughput Batch Processing Overview](https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/refs/heads/main/playbooks/htc-execute-flavour/docs/images/htc-execute-flavour.png)
+![High Throughput Batch Processing Overview](https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/refs/heads/main/playbooks/htc-execute-flavour/docs/images/htcondor-execute-node.png)
 
 
 ## Functionality
@@ -27,18 +27,44 @@ address, and a minimum recommended 32GB of RAM, as:
 
 ## Prerequisites
 
-> 💡 This Item is supported by the [EWCCLI](https://www.europeanweather.cloud/community-hub/ewc-cli), 
-and can be deployed, together with a compatible VM, via it. Checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages to learn how.
-
 * Request authorization keys:
   * Write to EWC Support ([support@europeanweather.cloud](mailto:support@europeanweather.cloud)), making sure to provide your EWC tenancy name alongside your request for VPN, HTCondor and Harbor access.
+* Verify the `htcondor` OpenStack Security Group exists in your EWC tenancy
+  > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
+
+## Usage
+
+### Deploy via EWCCLI
+
+>⚠️ Deployment via EWCCLI is only possible from a VM within your EWC private network.
+
+#### 1. Setup working environment
+
+```bash
+pip install ewccli
+```
+
+#### 2. Configure access credentials
+
+```bash
+ewc login
+```
+
+#### 3. Deploy 
+>💡 To lean about EWCCLI deployment customization, checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages.
+
+
+```bash
+ewc hub deploy htc-execute-flavour
+```
+
+### Deploy via native tooling (Ansible)
+
+#### 1. Setup working environment
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-
-* Verify the `htcondor` OpenStack Security Group exists in your EWC tenancy
-  > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
 * If you plan to configure an existing VM, ensure it meets the minium requirements before proceeding:
   * VM Image: RockyLinux 8 or 9
   * VM Plan: 8 CPU cores, 64GB RAM, 30GB Disk
@@ -47,9 +73,6 @@ and can be deployed, together with a compatible VM, via it. Checkout the [EWC Us
   * Floating IP: Optional (not recommended from a security standpoint)
   
   Otherwise, provision a new VM with above specifications before continuing (see [EWC Getting Started: Provision a VM](https://confluence.ecmwf.int/x/2RvEJg) for details).
-
-
-## Usage
 
 #### 2. Clone the repository
 

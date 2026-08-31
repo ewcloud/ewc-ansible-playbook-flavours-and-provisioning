@@ -30,22 +30,49 @@ If unsure which services your you access, please contact the EUMETSAT User Helpd
 * Automatically cleans up disk space by keeping only the latest 5 minutes of transmitted data, under the `/home/eumetuser/data` subdirectory.
 
 ## Prerequisites
-> ⛔ When deploy on ECMWF site, network traffic required by this Item may be blocked due to ECMWF Firewall. Please get in touch with us through the [EWC Support portal](https://support.europeanweather.cloud/).
-
-> 💡 This Item is supported by the [EWCCLI](https://www.europeanweather.cloud/community-hub/ewc-cli)
-and can be deployed, together with a compatible VM, via it. Checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages to learn how.
+> ⛔ When deploying on ECMWF site, network traffic required by this Item may be blocked due to ECMWF Firewall. Please get in touch with us through the [EWC Support portal](https://support.europeanweather.cloud/).
 
 * Register a user account on the [EUMETSAT User Portal](https://eoportal.eumetsat.int/)
 * Subscribe to the service and data for EUMETCast Terrestrial
   * Ensure you select at least one EKU (temporal quota allocation)
 * Request a EUMETCast Terrestrial user key for access from the EWC:
   * Write to EUMETSAT Helpdesk ([ops@eumetsat.int](mailto:ops@eumetsat.int)), making sure to provide them your EUMETSAT User Portal username alongside your request
+* Verify the `eumetcast` OpenStack Security Group exists in your EWC tenancy
+  > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
+
+## Usage
+
+### Deploy via EWCCLI
+
+>⚠️ Deployment via EWCCLI is only possible from a VM within your EWC private network.
+
+#### 1. Setup working environment
+
+```bash
+pip install ewccli
+```
+
+#### 2. Configure access credentials
+
+```bash
+ewc login
+```
+
+#### 3. Deploy 
+>💡 To lean about EWCCLI deployment customization, checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages.
+
+
+```bash
+ewc hub deploy eumetcast-terrestrial-amt-flavour
+```
+
+### Deploy via native tooling (Ansible)
+
+#### 1. Setup working environment
+
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-
-* Verify the `eumetcast` OpenStack Security Group exists in your EWC tenancy
-  > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
 * If you plan to configure an existing VM, ensure it meets the minium requirements before proceeding:
   * VM Image: Ubuntu 22
   * VM Plan: 8 CPU cores, 64GB RAM, 265GB Disk + 1TB Disk (secondary)
@@ -55,9 +82,6 @@ and can be deployed, together with a compatible VM, via it. Checkout the [EWC Us
   * Floating IP: Optional (not recommended from a security standpoint)
   
   Otherwise, provision a new VM with above specifications before continuing (see [EWC Getting Started: Provision a VM](https://confluence.ecmwf.int/x/2RvEJg) for details).
-    
-
-## Usage
 
 #### 2. Clone the repository
 

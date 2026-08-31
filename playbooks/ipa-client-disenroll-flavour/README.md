@@ -27,13 +27,18 @@ The template is designed to:
 
 ## Prerequisites
 
-* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
-* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
-* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
 * Verify the IP address of the existing VM already enrolled into your IPA Server.
 * Verify your SSH access to the exiting VM (i.e. your public SSH key must be registered on the target machine)
 
 ## Usage
+
+### Deploy via native tooling (Ansible)
+
+#### 1. Setup working environment
+
+* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
+* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
 
 #### 2. Clone the repository
 

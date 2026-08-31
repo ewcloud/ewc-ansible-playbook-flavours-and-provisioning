@@ -23,12 +23,44 @@ Users can leverage HAProxy to distribute workloads and improve website and appli
 * Rate limits.
 
 ## Prerequisites
-* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
-* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
-* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
 
 * Verify the `ssh-https` OpenStack Security Group exists in your EWC tenancy
   > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
+
+## Usage
+
+### Deploy via EWCCLI
+
+>⚠️ Deployment via EWCCLI is only possible from a VM within your EWC private network.
+
+#### 1. Setup working environment
+
+```bash
+pip install ewccli
+```
+
+#### 2. Configure access credentials
+
+```bash
+ewc login
+```
+
+#### 3. Deploy 
+>💡 To lean about EWCCLI deployment customization, checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages.
+
+
+```bash
+ewc hub deploy haproxy-flavour
+```
+
+### Deploy via native tooling (Ansible)
+
+#### 1. Setup working environment
+
+
+* Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
+* Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
+* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
 * If you plan to configure an existing VM, ensure it meets the minium requirements before proceeding:
   * VM Image: Ubuntu 24 or 22
   * VM Plan: 4 CPU cores, 8GB RAM, 40GB Disk
@@ -37,9 +69,6 @@ Users can leverage HAProxy to distribute workloads and improve website and appli
   * Floating IP: Required
   
   Otherwise, provision a new VM with above specifications before continuing (see [EWC Getting Started: Provision a VM](https://confluence.ecmwf.int/x/2RvEJg) for details).
-
-
-## Usage
 
 #### 2. Clone the repository
 

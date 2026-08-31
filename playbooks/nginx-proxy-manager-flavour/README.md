@@ -21,15 +21,44 @@ Nginx Proxy Manager is full-featured tool that helps to lower the barriers to en
 
 ## Prerequisites
 
-> 💡 This Item is supported by the [EWCCLI](https://www.europeanweather.cloud/community-hub/ewc-cli), 
-and can be deployed, together with a compatible VM, via it. Checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages to learn how.
+> ⛔ When deploying on ECMWF site, network traffic required by this Item may be blocked due to ECMWF Firewall. Please get in touch with us through the [EWC Support portal](https://support.europeanweather.cloud/).
+
+* Verify the `nginx-proxy-manager` OpenStack Security Group exists in your EWC tenancy
+  > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
+
+## Usage
+
+### Deploy via EWCCLI
+
+>⚠️ Deployment via EWCCLI is only possible from a VM within your EWC private network.
+
+#### 1. Setup working environment
+
+```bash
+pip install ewccli
+```
+
+#### 2. Configure access credentials
+
+```bash
+ewc login 
+```
+
+#### 3. Deploy 
+>💡 To lean about EWCCLI deployment customization, checkout the [EWC User Stories: I want to use the ewccli](https://confluence.ecmwf.int/x/NlYiK) documentation pages.
+
+
+```bash
+ewc hub deploy nginx-proxy-manager-flavour
+```
+
+### Deploy via native tooling (Ansible)
+
+#### 1. Setup working environment
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher) 
 * Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
-
-* Verify the `nginx-proxy-manager` OpenStack Security Group exists in your EWC tenancy
-  > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
 * If you plan to configure an existing VM, ensure it meets the minium requirements before proceeding:
   * VM Image: Ubuntu 24 or 22
   * VM Plan: 4 CPU cores, 8GB RAM, 40GB Disk
@@ -38,9 +67,6 @@ and can be deployed, together with a compatible VM, via it. Checkout the [EWC Us
   * Floating IP: Optional (not recommended from a security standpoint)
   
   Otherwise, provision a new VM with above specifications before continuing (see [EWC Getting Started: Provision a VM](https://confluence.ecmwf.int/x/2RvEJg) for details).
-
-
-## Usage
 
 #### 2. Clone the repository
 
@@ -172,7 +198,6 @@ Copy into the file one of the two snippets below, and replace the placeholders (
   ```
 
 ## Inputs
-> ⛔ If deploying to an instance on the ECMWF site, using a high port numbers such as in the example above will prevent you from accessing the Nginx Proxy Manager UI from the pubic internet, even when a valid security group is attached to the instance. This is due to the outer perimeter firewall of the ECMWF site. For details see [EWC Security guidelines - Restrictive firewall (allow-listing)](https://confluence.ecmwf.int/x/o4DlFg#EWCSecurityguidelines-Restrictivefirewall(allow-listing)).
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
