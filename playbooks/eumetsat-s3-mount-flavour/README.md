@@ -65,13 +65,13 @@ ewc hub deploy eumetsat-s3-mount-flavour
 git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning.git
 ```
 
-##### 2.1. Change to the specific Item's subdirectory
+#### 2.1. Change to the specific Item's subdirectory
 
 ```bash
 cd playbooks/eumetsat-s3-mount-flavour
 ```
 
-##### 2.2. Checkout an specific Item's version
+#### 2.2. Checkout an specific Item's version
 >⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
 
 ```bash

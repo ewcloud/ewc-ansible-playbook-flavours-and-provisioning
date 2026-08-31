@@ -79,13 +79,13 @@ ewc hub deploy htc-submit-flavour
 git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning.git
 ```
 
-##### 2.1. Change to the specific Item's subdirectory
+#### 2.1. Change to the specific Item's subdirectory
 
 ```bash
 cd playbooks/htc-submit-flavour
 ```
 
-##### 2.2. Checkout an specific Item's version
+#### 2.2. Checkout an specific Item's version
 >⚠️ Make sure to replace `x.y.z` in the command below, with your version of preference.
 
 ```bash

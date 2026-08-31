@@ -67,7 +67,7 @@ ewc hub deploy xcube-viewer-flavour
 git clone https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning.git
 ```
 
-##### 2.1. Change to the specific Item's subdirectory
+#### 2.1. Change to the specific Item's subdirectory
 
 ```bash
 cd playbooks/xcube-viewer-flavour
