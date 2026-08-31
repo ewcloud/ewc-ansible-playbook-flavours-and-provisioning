@@ -45,7 +45,7 @@
   tasks:
     - name: EWC Ansible Role HTCondor Execute
       ansible.builtin.include_role:
-        name: ewc-ansible-role-htcondor-execute-1.0
+        name: ewc-ansible-role-htcondor-execute-1.2
       vars:
         headscale_preauthkey: "{{ hostvars['localhost']['headscale_preauthkey_fact'] }}"
         headscale_login_server: "{{ hostvars['localhost']['headscale_login_server_fact'] }}"
