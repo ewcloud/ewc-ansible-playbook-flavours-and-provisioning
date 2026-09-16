@@ -146,13 +146,7 @@ Copy into the file one of the two snippets below, and replace the placeholders (
         ansible_ssh_common_args: >-
           -o StrictHostKeyChecking=no
           -o UserKnownHostsFile=/dev/null
-          -o ProxyCommand="ssh
-                          -o StrictHostKeyChecking=no
-                          -o UserKnownHostsFile=/dev/null
-                          -o BatchMode=yes
-                          -W %h:%p
-                          -i <add the path to local SSH private key file>
-                          cloud-user@<add the PUBLIC IP address of the SSH bastion>"
+          -o ProxyCommand="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o BatchMode=yes -W %h:%p -i <add the patch to local SSH private key file> cloud-user@<add the PUBLIC IP address of the SSH bastion>"
 
     ```
 
