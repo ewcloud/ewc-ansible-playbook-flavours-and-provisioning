@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.11.2...1.12.0) (2026-09-17)
+
+
+### Features
+
+* Bump EUMETCAST dep to 1.1.0 to configure TER-4 and TER-5 relays by default ([#51](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/51)) ([8d28f87](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/8d28f87d42a3a57d537ee52e80cbd8e2af527e03))
+
 ## [1.11.2](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.11.1...1.11.2) (2026-08-31)
 
 
