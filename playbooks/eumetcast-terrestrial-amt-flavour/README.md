@@ -16,10 +16,13 @@ If unsure which services your you access, please contact the EUMETSAT User Helpd
 
 | | | | |
 | --- | --- | --- | --- |
-| Terrestrial Service | **Total Bandwidth (Mbps)** | Data | Default |
-| **ter-1** | 240 | **EPS, MSG, Sentinel-3A/B, Sentinel-5P, Third Party data, MTG** | yes |
-| **ter-2** | 168 | **Sentinel-6 data** | |
-| **ter-3** | 230 | **Sentinel-5P L1B, Sentinel-3A/B OLCI L1 FR, Sentinel-3A/B SLSTR L1B, FY3 HIRAS, FY4 GIIRS, GOSAT, MTG HRFI-FD (4 high-res full-disk bands)** | |
+| Terrestrial Service | **Total Bandwidth (Mbps)** | Data |
+| **ter-1** | 240 | **EPS, MSG, Sentinel-3A/B, Sentinel-5P, Third Party data, MTG** |
+| **ter-2** | 168 | **Sentinel-6 data** |
+| **ter-3** | 230 | **Sentinel-5P L1B, Sentinel-3A/B OLCI L1 FR, Sentinel-3A/B SLSTR L1B, FY3 HIRAS, FY4 GIIRS, GOSAT, MTG HRFI-FD (4 high-res full-disk bands)** |
+| **ter-4** | 120 (pre-operational) / 300 Mbps (operational) | **EPS-SG data** |
+| **ter-5** | 100 | **S6B data** |
+
 
 ## Functionality
 
