@@ -16,10 +16,13 @@ If unsure which services your you access, please contact the EUMETSAT User Helpd
 
 | | | | |
 | --- | --- | --- | --- |
-| Terrestrial Service | **Total Bandwidth (Mbps)** | Data | Default |
-| **ter-1** | 240 | **EPS, MSG, Sentinel-3A/B, Sentinel-5P, Third Party data, MTG** | yes |
-| **ter-2** | 168 | **Sentinel-6 data** | |
-| **ter-3** | 230 | **Sentinel-5P L1B, Sentinel-3A/B OLCI L1 FR, Sentinel-3A/B SLSTR L1B, FY3 HIRAS, FY4 GIIRS, GOSAT, MTG HRFI-FD (4 high-res full-disk bands)** | |
+| Terrestrial Service | **Total Bandwidth (Mbps)** | Data |
+| **ter-1** | 240 | **EPS, MSG, Sentinel-3A/B, Sentinel-5P, Third Party data, MTG** |
+| **ter-2** | 168 | **Sentinel-6 data** |
+| **ter-3** | 230 | **Sentinel-5P L1B, Sentinel-3A/B OLCI L1 FR, Sentinel-3A/B SLSTR L1B, FY3 HIRAS, FY4 GIIRS, GOSAT, MTG HRFI-FD (4 high-res full-disk bands)** |
+| **ter-4** | 120 (pre-operational) / 300 Mbps (operational) | **EPS-SG data** |
+| **ter-5** | 100 | **S6B data** |
+
 
 ## Functionality
 
@@ -72,7 +75,7 @@ ewc hub deploy eumetcast-terrestrial-amt-flavour
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher)
-* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
+* Install [ansible](https://pypi.org/project/ansible) (version 8.7 or higher)
 * If you plan to configure an existing VM, ensure it meets the minium requirements before proceeding:
   * VM Image: Ubuntu 22
   * VM Plan: 8 CPU cores, 64GB RAM, 265GB Disk + 1TB Disk (secondary)

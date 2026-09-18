@@ -62,7 +62,7 @@ ewc hub deploy htc-submit-flavour
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher)
-* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
+* Install [ansible](https://pypi.org/project/ansible) (version 8.7 or higher)
 * If you plan to configure an existing VM, ensure it meets the minium requirements before proceeding:
   * VM Image: RockyLinux 8 or 9
   * VM Plan: 8 CPU cores, 32GB RAM, 30GB Disk
