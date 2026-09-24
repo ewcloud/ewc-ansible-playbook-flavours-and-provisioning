@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.12.0...1.12.1) (2026-09-24)
+
+
+### Bug Fixes
+
+* EUMETCAST readiness probe coverage and idempotency for TER-4 and TER-5 configuration ([#55](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/55)) ([24a87b0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/24a87b0db991c10cd9c85f54df80c3990e81bd47))
+
 # [1.12.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.11.2...1.12.0) (2026-09-17)
 
 
