@@ -24,6 +24,7 @@ If unsure which of this data you may access, please contact the EUMETSAT User He
 | **ter-4** | 120 (pre-operational) / 300 Mbps (operational) | **EPS-SG data** |
 | **ter-5** | 100 | **S6B data** |
 
+>💡 For more detailed information, please check the [EUMETCast channels and PIDs](https://user.eumetsat.int/resources/user-guides/eumet-cast-channels-and-pi-ds#ID-Channels-and-bandwidth-calculator-for-terrestrial-services) documentation page on the EUMETSAT User Portal.
 
 ## Functionality
 
