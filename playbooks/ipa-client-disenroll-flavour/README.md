@@ -38,7 +38,7 @@ The template is designed to:
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher)
-* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
+* Install [ansible](https://pypi.org/project/ansible) (version 8.7 or higher)
 
 #### 2. Clone the repository
 

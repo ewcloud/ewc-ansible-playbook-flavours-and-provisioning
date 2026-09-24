@@ -1,5 +1,7 @@
 # EUMETCast Terrestrial AMT Flavour
 
+>💡 If you are interested in historical records, as opposed to data streaming, you may find data snapshots on the [EUMETSAT User Portal's Data store](https://user.eumetsat.int/search-view?sort=startDate%20desc). Apply the `Data` and `Data Store` and `EUMETCast Terrestrial` filters, or an specific satellite filter to sort out relevant available snapshots.
+
 This Ansible Playbook configures an existing virtual machine running
 within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the [EUMETCast Terrestrial](https://user.eumetsat.int/data-access/eumetcast-terrestrial) over [AMT software stack](https://gitlab.eumetsat.int/open-source/amt).
 
@@ -8,18 +10,21 @@ EUMETCast is EUMETSAT’s primary dissemination mechanism for the near-real-time
 
 ![EUMETCast overview](https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/refs/heads/main/playbooks/eumetcast-terrestrial-amt-flavour/docs/images/eumetcast-overview.png)
 
-Terrestrial services for data distribution, available and supported, include:
 
->💡 Additional terrestrial services for data distribution will be created in the future for various missions.
-If unsure which services your you access, please contact the EUMETSAT User Helpdesk ([ops@eumetsat.int](mailto:ops@eumetsat.int)).
-
+Terrestrial services currently supported, for near-real-time data distribution, are tabulated below.
+Additional terrestrial services will be created in the future for new missions.
+If unsure which of this data you may access, please contact the EUMETSAT User Helpdesk ([ops@eumetsat.int](mailto:ops@eumetsat.int)).
 
 | | | | |
 | --- | --- | --- | --- |
-| Terrestrial Service | **Total Bandwidth (Mbps)** | Data | Default |
-| **ter-1** | 240 | **EPS, MSG, Sentinel-3A/B, Sentinel-5P, Third Party data, MTG** | yes |
-| **ter-2** | 168 | **Sentinel-6 data** | |
-| **ter-3** | 230 | **Sentinel-5P L1B, Sentinel-3A/B OLCI L1 FR, Sentinel-3A/B SLSTR L1B, FY3 HIRAS, FY4 GIIRS, GOSAT, MTG HRFI-FD (4 high-res full-disk bands)** | |
+| Terrestrial Service | **Total Bandwidth (Mbps)** | Data |
+| **ter-1** | 240 | **EPS, MSG, Sentinel-3A/B, Sentinel-5P, Third Party data, MTG** |
+| **ter-2** | 168 | **Sentinel-6 data** |
+| **ter-3** | 230 | **Sentinel-5P L1B, Sentinel-3A/B OLCI L1 FR, Sentinel-3A/B SLSTR L1B, FY3 HIRAS, FY4 GIIRS, GOSAT, MTG HRFI-FD (4 high-res full-disk bands)** |
+| **ter-4** | 120 (pre-operational) / 300 Mbps (operational) | **EPS-SG data** |
+| **ter-5** | 100 | **S6B data** |
+
+>💡 For more detailed information, please check the [EUMETCast channels and PIDs](https://user.eumetsat.int/resources/user-guides/eumet-cast-channels-and-pi-ds#ID-Channels-and-bandwidth-calculator-for-terrestrial-services) documentation page on the EUMETSAT User Portal.
 
 ## Functionality
 
@@ -72,7 +77,7 @@ ewc hub deploy eumetcast-terrestrial-amt-flavour
 
 * Install [git](https://git-scm.com/downloads) (version 2.0 or higher )
 * Install [python](https://www.python.org/downloads) (version 3.9 or higher)
-* Install [ansible](https://pypi.org/project/ansible) (version 2.15 or higher)
+* Install [ansible](https://pypi.org/project/ansible) (version 8.7 or higher)
 * If you plan to configure an existing VM, ensure it meets the minium requirements before proceeding:
   * VM Image: Ubuntu 22
   * VM Plan: 8 CPU cores, 64GB RAM, 265GB Disk + 1TB Disk (secondary)
