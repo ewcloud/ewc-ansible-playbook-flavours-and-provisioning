@@ -1,5 +1,7 @@
 # EUMETCast Terrestrial AMT Flavour
 
+>💡 If you are interested in historical records, as opposed to data streaming, you may find data snapshots on the [EUMETSAT User Portal's Data store](https://user.eumetsat.int/search-view?sort=startDate%20desc). Apply the `Data` and `Data Store` and `EUMETCast Terrestrial` filters, or an specific satellite filter to sort out relevant available snapshots.
+
 This Ansible Playbook configures an existing virtual machine running
 within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the [EUMETCast Terrestrial](https://user.eumetsat.int/data-access/eumetcast-terrestrial) over [AMT software stack](https://gitlab.eumetsat.int/open-source/amt).
 
@@ -8,11 +10,10 @@ EUMETCast is EUMETSAT’s primary dissemination mechanism for the near-real-time
 
 ![EUMETCast overview](https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/refs/heads/main/playbooks/eumetcast-terrestrial-amt-flavour/docs/images/eumetcast-overview.png)
 
-Terrestrial services for data distribution, available and supported, include:
 
->💡 Additional terrestrial services for data distribution will be created in the future for various missions.
-If unsure which services your you access, please contact the EUMETSAT User Helpdesk ([ops@eumetsat.int](mailto:ops@eumetsat.int)).
-
+Terrestrial services currently supported, for near-real-time data distribution, are tabulated below.
+Additional terrestrial services will be created in the future for new missions.
+If unsure which of this data you may access, please contact the EUMETSAT User Helpdesk ([ops@eumetsat.int](mailto:ops@eumetsat.int)).
 
 | | | | |
 | --- | --- | --- | --- |
