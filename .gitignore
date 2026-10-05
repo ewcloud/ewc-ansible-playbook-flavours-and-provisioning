@@ -17,3 +17,5 @@ lerna-debug.log*
 *.sw?
 .DS_Store
 **/.local/*
+**/example
+**/example.*
