@@ -197,10 +197,12 @@ Copy into the file one of the two snippets below, and replace the placeholders (
     -i inventory.yml \
       -e '{
         "headscale_preauthkey":"<redacted>",
-        "headscale_login_server":"http://headscale.batchprocessing.eumetsat.ewcloud.host:80",
-        "htcondor_cm_external_ip":"100.64.0.32",
+        "headscale_login_server":"https://vpn.batchprocessing.eumetsat.ewcloud.host",
+        "htcondor_cm_external_ip":"100.64.0.1",
         "htcondor_password":"<redacted>",
-        "harbor_auth_token":"<redacted>"
+        "htcondor_reinstall": "no",
+        "harbor_auth_token": "<redacted>",
+        "tenancy_name": "my-ewc-tenancy"
       }' \
     htc-execute-flavour.yml
   ```
@@ -210,9 +212,9 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
 | Name                        | Description                                                                                        | Type     | Default                                                           | Required |
 | --------------------------- | ----------------------------------------------------------------------------------------------     | -------- | --------                                                          | :------: |
-| headscale_login_server      | URI of the VPN server                                                                              | `string` | `http://headscale.batchprocessing.eumetsat.ewcloud.host:80`       |    yes   |
+| headscale_login_server      | URI of the VPN server                                                                              | `string` | `https://vpn.batchprocessing.eumetsat.ewcloud.host`               |    yes   |
 | headscale_preauthkey        | Credentials of the VPN server                                                                      | `string` | n/a                                                               |    yes   |
-| htcondor_cm_external_ip     | IP Address of the HTCondor Manager node to which this submit node reports to                       | `string` | `100.64.0.32`                                                     |    yes   |
+| htcondor_cm_external_ip     | IP Address of the HTCondor Manager node to which this execute node reports to                      | `string` | `100.64.0.1`                                                      |    yes   |
 | htcondor_password           | Password to authenticate against HTCondor Execute node pool                                        | `string` | n/a                                                               |    yes   |
 | htcondor_reinstall          | Force HTCondor re-install. Only `yes` will be accepted to approve                                  | `string` | `no`                                                              |    yes   |
 | harbor_auth_token           | Token for authentication when pulling private container images from EWC Container registry         | `string` | n/a                                                               |    yes   |

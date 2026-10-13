@@ -12,12 +12,12 @@
     - name: headscale_login_server
       prompt: Headscale Login Server. Press Enter to accept default
       private: false
-      default: http://headscale.batchprocessing.eumetsat.ewcloud.host:80
+      default: https://vpn.batchprocessing.eumetsat.ewcloud.host
 
     - name: htcondor_cm_external_ip
       prompt: IP Address of the HTCondor Manager node to which this Submit node reports to. Press Enter to accept default
       private: false
-      default: 100.64.0.32
+      default: 100.64.0.1
 
     - name: htcondor_password
       prompt: Password to authenticate against HTCondor node pool
