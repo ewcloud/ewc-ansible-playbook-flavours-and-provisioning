@@ -23,6 +23,11 @@
       prompt: Password to authenticate against HTCondor node pool.
       private: true
 
+    - name: htcondor_reinstall
+      prompt: flag to force HTCondor re-install. Only `yes` will be accepted to approve. Press Enter to accept default
+      private: false
+      default: "no"
+
   tasks:
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
@@ -30,6 +35,7 @@
         headscale_login_server_fact: "{{ headscale_login_server }}"
         htcondor_cm_external_ip_fact: "{{ htcondor_cm_external_ip }}"
         htcondor_password_fact: "{{ htcondor_password }}"
+        htcondor_reinstall_fact: "{{ htcondor_reinstall }}"
 
 - name: Configure HTCondor Submit Node
   hosts: all
@@ -40,9 +46,10 @@
   tasks:
     - name: EWC Ansible Role HTCondor Submit
       ansible.builtin.include_role:
-        name: ewc-ansible-role-htcondor-submit-1.1
+        name: ewc-ansible-role-htcondor-submit-1.2
       vars:
         headscale_preauthkey: "{{ hostvars['localhost']['headscale_preauthkey_fact'] }}"
         headscale_login_server: "{{ hostvars['localhost']['headscale_login_server_fact'] }}"
         htcondor_cm_external_ip: "{{ hostvars['localhost']['htcondor_cm_external_ip_fact'] }}"
         htcondor_password: "{{ hostvars['localhost']['htcondor_password_fact'] }}"
+        htcondor_reinstall: "{{ hostvars['localhost']['htcondor_reinstall_fact'] }}"
