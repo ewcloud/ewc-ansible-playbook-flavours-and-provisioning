@@ -213,7 +213,7 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 | htcondor_cm_external_ip     | IP Address of the HTCondor Manager node to which this submit node reports to                       | `string` | `100.64.0.32`                                                     |    yes   |
 | htcondor_password           | Password to authenticate against HTCondor Submit node pool                                         | `string` | n/a                                                               |    yes   |
 | htcondor_reinstall          | Force HTCondor re-install. Only `yes` will be accepted to approve                                  | `string` | `no`                                                              |    yes   |
-
+| tenancy_name                | Tenancy name for target instance fully qualified domain name assignment                            | `string` | n/a                                                               |    yes   |
 
 
 ## Dependencies

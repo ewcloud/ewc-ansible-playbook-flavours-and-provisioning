@@ -28,6 +28,10 @@
       private: false
       default: "no"
 
+    - name: tenancy_name
+      prompt: Tenancy name for target instance fully qualified domain name assignment
+      private: false
+
   tasks:
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
@@ -36,6 +40,7 @@
         htcondor_cm_external_ip_fact: "{{ htcondor_cm_external_ip }}"
         htcondor_password_fact: "{{ htcondor_password }}"
         htcondor_reinstall_fact: "{{ htcondor_reinstall }}"
+        tenancy_name_fact: "{{ tenancy_name }}"
 
 - name: Configure HTCondor Submit Node
   hosts: all
@@ -46,10 +51,11 @@
   tasks:
     - name: EWC Ansible Role HTCondor Submit
       ansible.builtin.include_role:
-        name: ewc-ansible-role-htcondor-submit-1.2
+        name: ewc-ansible-role-htcondor-submit-1.3
       vars:
         headscale_preauthkey: "{{ hostvars['localhost']['headscale_preauthkey_fact'] }}"
         headscale_login_server: "{{ hostvars['localhost']['headscale_login_server_fact'] }}"
         htcondor_cm_external_ip: "{{ hostvars['localhost']['htcondor_cm_external_ip_fact'] }}"
         htcondor_password: "{{ hostvars['localhost']['htcondor_password_fact'] }}"
         htcondor_reinstall: "{{ hostvars['localhost']['htcondor_reinstall_fact'] }}"
+        tenancy_name: "{{ hostvars['localhost']['tenancy_name_fact'] }}"
