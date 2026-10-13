@@ -216,8 +216,7 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 | htcondor_password           | Password to authenticate against HTCondor Execute node pool                                        | `string` | n/a                                                               |    yes   |
 | htcondor_reinstall          | Force HTCondor re-install. Only `yes` will be accepted to approve                                  | `string` | `no`                                                              |    yes   |
 | harbor_auth_token           | Token for authentication when pulling private container images from EWC Container registry         | `string` | n/a                                                               |    yes   |
-
-
+| tenancy_name                | Tenancy name for target instance fully qualified domain name assignment                            | `string` | n/a                                                               |    yes   |
 
 ## Dependencies
 
