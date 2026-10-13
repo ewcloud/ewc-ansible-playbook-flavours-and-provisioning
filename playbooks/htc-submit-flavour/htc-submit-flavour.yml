@@ -20,11 +20,11 @@
       default: 100.64.0.32
 
     - name: htcondor_password
-      prompt: Password to authenticate against HTCondor node pool.
+      prompt: Password to authenticate against HTCondor node pool
       private: true
 
     - name: htcondor_reinstall
-      prompt: flag to force HTCondor re-install. Only `yes` will be accepted to approve. Press Enter to accept default
+      prompt: Force HTCondor re-install. Only `yes` will be accepted to approve. Press Enter to accept default
       private: false
       default: "no"
 
