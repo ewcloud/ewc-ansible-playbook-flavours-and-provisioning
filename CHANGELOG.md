@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.12.1...1.13.0) (2026-10-14)
+
+
+### Features
+
+* HTC Items version bump and general documentation fixes ([#62](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/62)) ([982c25f](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/982c25ff5a08cd8bbd42c0e03f4137fcc74fad6d))
+
 ## [1.12.1](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.12.0...1.12.1) (2026-09-24)
 
 
