@@ -32,6 +32,10 @@
       prompt: Token for authentication when pulling private container images from EWC Container registry
       private: true
 
+    - name: harbor_server
+      prompt:  URI of EWC Container Registry server where private container images are kept
+      private: false
+
     - name: tenancy_name
       prompt: Tenancy name for target instance fully qualified domain name assignment
       private: false
@@ -45,6 +49,7 @@
         htcondor_password_fact: "{{ htcondor_password }}"
         htcondor_reinstall_fact: "{{ htcondor_reinstall }}"
         harbor_auth_token_fact: "{{ harbor_auth_token }}"
+        harbor_server_fact: "{{ harbor_server }}"
         tenancy_name_fact: "{{ tenancy_name }}"
 
 - name: Configure HTCondor Execute Node
@@ -64,4 +69,5 @@
         htcondor_password: "{{ hostvars['localhost']['htcondor_password_fact'] }}"
         htcondor_reinstall: "{{ hostvars['localhost']['htcondor_reinstall_fact'] }}"
         harbor_auth_token: "{{ hostvars['localhost']['harbor_auth_token_fact'] }}"
+        harbor_server: "{{ hostvars['localhost']['harbor_server_fact'] }}"
         tenancy_name: "{{ hostvars['localhost']['tenancy_name_fact'] }}"

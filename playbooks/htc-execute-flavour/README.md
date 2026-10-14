@@ -202,6 +202,7 @@ Copy into the file one of the two snippets below, and replace the placeholders (
         "htcondor_password":"<redacted>",
         "htcondor_reinstall": "no",
         "harbor_auth_token": "<redacted>",
+        "harbor_server": "https://registry.europeanweather.cloud",
         "tenancy_name": "my-ewc-tenancy"
       }' \
     htc-execute-flavour.yml
@@ -218,6 +219,7 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 | htcondor_password           | Password to authenticate against HTCondor Execute node pool                                        | `string` | n/a                                                               |    yes   |
 | htcondor_reinstall          | Force HTCondor re-install. Only `yes` will be accepted to approve                                  | `string` | `no`                                                              |    yes   |
 | harbor_auth_token           | Token for authentication when pulling private container images from EWC Container registry         | `string` | n/a                                                               |    yes   |
+| harbor_server               | URI of EWC Container Registry server where private container images are kept                       | `string` | `https://registry.europeanweather.cloud`                          |    yes   |
 | tenancy_name                | Tenancy name for target instance fully qualified domain name assignment                            | `string` | n/a                                                               |    yes   |
 
 ## Dependencies
