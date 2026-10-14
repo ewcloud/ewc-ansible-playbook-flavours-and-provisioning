@@ -196,9 +196,11 @@ Copy into the file one of the two snippets below, and replace the placeholders (
     -i inventory.yml \
       -e '{
         "headscale_preauthkey":"<redacted>",
-        "headscale_login_server":"http://headscale.batchprocessing.eumetsat.ewcloud.host:80",
-        "htcondor_cm_external_ip":"100.64.0.32",
-        "htcondor_password":"<redacted>"
+        "headscale_login_server":"https://vpn.batchprocessing.eumetsat.ewcloud.host",
+        "htcondor_cm_external_ip":"100.64.0.1",
+        "htcondor_password":"<redacted>",
+        "htcondor_reinstall": "no",
+        "tenancy_name": "my-ewc-tenancy"
       }' \
     htc-submit-flavour.yml
   ```
@@ -208,11 +210,12 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
 | Name                        | Description                                                                                        | Type     | Default                                                           | Required |
 | --------------------------- | ----------------------------------------------------------------------------------------------     | -------- | --------                                                          | :------: |
-| headscale_login_server      | URI of the VPN server.                                                                             | `string` | `http://headscale.batchprocessing.eumetsat.ewcloud.host:80`       |    yes   |
-| headscale_preauthkey        | Credentials of the VPN server.                                                                     | `string` | n/a                                                               |    yes   |
-| htcondor_cm_external_ip     | IP Address of the HTCondor Manager node to which this submit node reports to.                      | `string` | `100.64.0.32`                                                     |    yes   |
-| htcondor_password           | Password to authenticate against HTCondor Submit node pool                                        | `string` | n/a                                                               |    yes   |
-
+| headscale_login_server      | URI of the VPN server                                                                              | `string` | `https://vpn.batchprocessing.eumetsat.ewcloud.host`               |    yes   |
+| headscale_preauthkey        | Credentials of the VPN server                                                                      | `string` | n/a                                                               |    yes   |
+| htcondor_cm_external_ip     | IP Address of the HTCondor Manager node to which this submit node reports to                       | `string` | `100.64.0.1`                                                      |    yes   |
+| htcondor_password           | Password to authenticate against HTCondor Submit node pool                                         | `string` | n/a                                                               |    yes   |
+| htcondor_reinstall          | Force HTCondor re-install. Only `yes` will be accepted to approve                                  | `string` | `no`                                                              |    yes   |
+| tenancy_name                | Tenancy name for target instance fully qualified domain name assignment                            | `string` | n/a                                                               |    yes   |
 
 
 ## Dependencies

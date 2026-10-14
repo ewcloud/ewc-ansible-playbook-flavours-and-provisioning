@@ -12,20 +12,33 @@
     - name: headscale_login_server
       prompt: Headscale Login Server. Press Enter to accept default
       private: false
-      default: http://headscale.batchprocessing.eumetsat.ewcloud.host:80
+      default: https://vpn.batchprocessing.eumetsat.ewcloud.host
 
     - name: htcondor_cm_external_ip
       prompt: IP Address of the HTCondor Manager node to which this Execute node reports to. Press Enter to accept default
       private: false
-      default: 100.64.0.32
+      default: 100.64.0.1
 
     - name: htcondor_password
-      prompt: Password to authenticate against HTCondor node pool.
+      prompt: Password to authenticate against HTCondor node pool
       private: true
+
+    - name: htcondor_reinstall
+      prompt: Force HTCondor re-install. Only `yes` will be accepted to approve. Press Enter to accept default
+      private: false
+      default: "no"
 
     - name: harbor_auth_token
       prompt: Token for authentication when pulling private container images from EWC Container registry
       private: true
+
+    - name: harbor_server
+      prompt: URI of EWC Container Registry server where private container images are kept
+      private: false
+
+    - name: tenancy_name
+      prompt: Tenancy name for target instance fully qualified domain name assignment
+      private: false
 
   tasks:
     - name: Store user input as localhost facts
@@ -34,7 +47,10 @@
         headscale_login_server_fact: "{{ headscale_login_server }}"
         htcondor_cm_external_ip_fact: "{{ htcondor_cm_external_ip }}"
         htcondor_password_fact: "{{ htcondor_password }}"
+        htcondor_reinstall_fact: "{{ htcondor_reinstall }}"
         harbor_auth_token_fact: "{{ harbor_auth_token }}"
+        harbor_server_fact: "{{ harbor_server }}"
+        tenancy_name_fact: "{{ tenancy_name }}"
 
 - name: Configure HTCondor Execute Node
   hosts: all
@@ -45,10 +61,13 @@
   tasks:
     - name: EWC Ansible Role HTCondor Execute
       ansible.builtin.include_role:
-        name: ewc-ansible-role-htcondor-execute-1.2
+        name: ewc-ansible-role-htcondor-execute-1.4
       vars:
         headscale_preauthkey: "{{ hostvars['localhost']['headscale_preauthkey_fact'] }}"
         headscale_login_server: "{{ hostvars['localhost']['headscale_login_server_fact'] }}"
         htcondor_cm_external_ip: "{{ hostvars['localhost']['htcondor_cm_external_ip_fact'] }}"
         htcondor_password: "{{ hostvars['localhost']['htcondor_password_fact'] }}"
+        htcondor_reinstall: "{{ hostvars['localhost']['htcondor_reinstall_fact'] }}"
         harbor_auth_token: "{{ hostvars['localhost']['harbor_auth_token_fact'] }}"
+        harbor_server: "{{ hostvars['localhost']['harbor_server_fact'] }}"
+        tenancy_name: "{{ hostvars['localhost']['tenancy_name_fact'] }}"

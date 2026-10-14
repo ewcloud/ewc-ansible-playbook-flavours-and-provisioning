@@ -15,8 +15,8 @@ Terrestrial services currently supported, for near-real-time data distribution, 
 Additional terrestrial services will be created in the future for new missions.
 If unsure which of this data you may access, please contact the EUMETSAT User Helpdesk ([ops@eumetsat.int](mailto:ops@eumetsat.int)).
 
-| | | | |
-| --- | --- | --- | --- |
+| | | |
+| --- | --- | --- |
 | Terrestrial Service | **Total Bandwidth (Mbps)** | Data |
 | **ter-1** | 240 | **EPS, MSG, Sentinel-3A/B, Sentinel-5P, Third Party data, MTG** |
 | **ter-2** | 168 | **Sentinel-6 data** |
@@ -84,7 +84,7 @@ ewc hub deploy eumetcast-terrestrial-amt-flavour
     > ⚠️ Make sure the secondary disk is formatted and mounted by following this guide steps from the [EWC Knowledge Base](https://confluence.ecmwf.int/x/WHAEJQ#EWCCloudManagementUIStorageAddavolumetoaninstance-Formatthenewdisk).
   * Network: Private
   * Security Groups: `eumetcast`
-  * Floating IP: Optional (not recommended from a security standpoint)
+  * Floating IP: Optional (required if enabling NAKs for improved data availability through retransmission)
 
   Otherwise, provision a new VM with above specifications before continuing (see [EWC Getting Started: Provision a VM](https://confluence.ecmwf.int/x/2RvEJg) for details).
 
