@@ -33,7 +33,7 @@
       private: true
 
     - name: harbor_server
-      prompt:  URI of EWC Container Registry server where private container images are kept
+      prompt: URI of EWC Container Registry server where private container images are kept
       private: false
 
     - name: tenancy_name
