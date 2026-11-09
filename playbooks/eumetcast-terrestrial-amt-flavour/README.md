@@ -29,7 +29,7 @@ If unsure which of this data you may access, please contact the EUMETSAT User He
 ## Functionality
 
 * Installs and configures the EUMETCast Terrestrial client over Automatic Multicast Tunnelling (AMT)
-* Deploys the Tellicast terrestrial receiver runtime
+* Deploys the TelliCast terrestrial receiver runtime
 * Configures network translation required for multicast reception over AMT
 * Creates maintenance jobs for log and data retention
 * Automatically cleans up disk space by keeping only the latest 5 minutes of transmitted data, under the `/home/eumetuser/data` subdirectory.
@@ -219,8 +219,9 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|----------|
-| tellicast_license_user_name | Tellicast license user identifier, equivalent to your EUMETSAT User Portal username. | `string` | n/a | yes |
-| tellicast_license_user_key | Tellicast license activation key (i.e. the user key you obtained via from EUMETSAT Helpdesk). | `string` | n/a | yes |
+| tellicast_license_user_name | TelliCast license user identifier, equivalent to your EUMETSAT User Portal username. | `string` | n/a | yes |
+| tellicast_license_user_key | TelliCast license activation key (i.e. the user key you obtained via from EUMETSAT Helpdesk). | `string` | n/a | yes |
+| tellicast_data_cleanup_schedule | TelliCast data cleanup schedule. Guards against "out of disk space" crashes. Available options are: `quarter-hourly` (recommended), `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `annually` or `reboot`. | `string` | `quarter-hourly`   |    yes   |
 
 ## Dependencies
 
@@ -233,4 +234,4 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
 ## Operation
 
-Checkout the [how-to guides](./docs/how-to/) to learn about management of the Item after initial setup.
+Checkout the [how-to guides](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/eumetcast-terrestrial-amt-flavour/docs/how-to) to learn about management of the Item after initial setup.

@@ -6,18 +6,23 @@
 
   vars_prompt:
     - name: tellicast_license_user_name
-      prompt: Tellicast license user identifier, equivalent to your EUMETSAT User Portal username.
+      prompt: TelliCast license user identifier, equivalent to your EUMETSAT User Portal username.
       private: true
 
     - name: tellicast_license_user_key
-      prompt: Tellicast license activation key (i.e. the user key you obtained via from EUMETSAT Helpdesk).
+      prompt: TelliCast license activation key (i.e. the user key you obtained via from EUMETSAT Helpdesk).
       private: true
+
+    - name: tellicast_data_cleanup_schedule
+      prompt: TelliCast data cleanup schedule. Guards against "out of disk space" crashes. Available options are `quarter-hourly` (recommended), `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `annually` or `reboot`. Press enter to accept default
+      default: "quarter-hourly"
 
   tasks:
     - name: Store user input as localhost facts
       ansible.builtin.set_fact:
         tellicast_license_user_name_fact: "{{ tellicast_license_user_name }}"
         tellicast_license_user_key_fact: "{{ tellicast_license_user_key }}"
+        tellicast_data_cleanup_schedule_fact: "{{ tellicast_data_cleanup_schedule }}"
 
 - name: Install Eumetcast on ATM
   hosts: all
@@ -28,7 +33,8 @@
   tasks:
     - name: EWC Ansible Role Eumetcast on ATM
       ansible.builtin.include_role:
-        name: ewc-ansible-role-eumetcast-terrestrial-amt-1.1
+        name: ewc-ansible-role-eumetcast-terrestrial-amt-1.3
       vars:
         tellicast_license_user_name: "{{ hostvars['localhost']['tellicast_license_user_name_fact'] }}"
         tellicast_license_user_key: "{{ hostvars['localhost']['tellicast_license_user_key_fact'] }}"
+        tellicast_data_cleanup_schedule: "{{ hostvars['localhost']['tellicast_data_cleanup_schedule_fact'] }}"
