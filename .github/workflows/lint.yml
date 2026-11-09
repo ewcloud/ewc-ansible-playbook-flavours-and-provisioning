@@ -20,7 +20,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        python-version: ['3.9']
+        python-version: ['3.12']
     env:
       ANSIBLE_PATH: ./playbooks
     steps:
