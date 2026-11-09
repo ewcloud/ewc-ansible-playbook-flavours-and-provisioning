@@ -31,8 +31,7 @@ If unsure which of this data you may access, please contact the EUMETSAT User He
 * Installs and configures the EUMETCast Terrestrial client over Automatic Multicast Tunnelling (AMT)
 * Deploys the TelliCast terrestrial receiver runtime
 * Configures network translation required for multicast reception over AMT
-* Creates maintenance jobs for log and data retention
-* Automatically cleans up disk space by keeping only the latest 5 minutes of transmitted data, under the `/home/eumetuser/data` subdirectory.
+* Automatically cleans up disk space by removing data, received and stored under the `/home/eumetuser/data` subdirectory, at regular user-defined intervals (every 15 minutes by default)
 
 ## Prerequisites
 > ⛔ When deploying on ECMWF site, network traffic required by this Item may be blocked due to ECMWF Firewall. Please get in touch with us through the [EWC Support portal](https://support.europeanweather.cloud/).
