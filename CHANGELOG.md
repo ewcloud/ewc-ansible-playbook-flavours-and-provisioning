@@ -3,6 +3,13 @@
 All notable changes to this project are documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.13.0...1.14.0) (2026-11-11)
+
+
+### Features
+
+* User-defined data cleanup schedule, data retention increase and readines probe accuracy ([#65](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/issues/65)) ([4012d34](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/commit/4012d348faba25041dbf7873039a987d9fc35890))
+
 # [1.13.0](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/compare/1.12.1...1.13.0) (2026-10-14)
 
 
