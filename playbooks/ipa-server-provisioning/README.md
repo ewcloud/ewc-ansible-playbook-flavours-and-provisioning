@@ -163,8 +163,8 @@ ansible-playbook \
 
 ## Operation
 Checkout the following how-to guides to learn about management of the Item after initial setup:
-* [How to configure the IPA Server](../ipa-server-flavour/docs/how-to/how-to-configure-the-ipa-server.md)
+* [How to configure the IPA Server](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/playbooks/ipa-server-flavour/docs/how-to/how-to-configure-the-ipa-server.md)
 
 ## Troubleshooting
-Checkout the [troubleshooting documentation](../../docs/troubleshooting.md) for
+Checkout the [troubleshooting documentation](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/docs/troubleshooting.md) for
 information on common problems and how to troubleshoot them.

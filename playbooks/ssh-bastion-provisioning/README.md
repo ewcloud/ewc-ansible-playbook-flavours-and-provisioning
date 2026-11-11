@@ -145,10 +145,10 @@ ansible-playbook \
 
 ## Operation
 Checkout the following how-to guides to learn about management of Item after initial setup:
-* [How to connect to a VM hidden behind the SSH Bastion](../ssh-bastion-flavour/docs/how-to/how-to-connect-to-a-vm-hidden-behind-the-ssh-bastion.md)
+* [How to connect to a VM hidden behind the SSH Bastion](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/playbooks/ssh-bastion-flavour/docs/how-to/how-to-connect-to-a-vm-hidden-behind-the-ssh-bastion.md)
 
 
 ## Troubleshooting
-Checkout the [troubleshooting documentation](../../docs/troubleshooting.md) for
+Checkout the [troubleshooting documentation](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/docs/troubleshooting.md) for
 information on common problems and how to troubleshoot them.
 

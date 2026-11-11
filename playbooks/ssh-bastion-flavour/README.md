@@ -210,4 +210,4 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
 ## Operation
 Checkout the following how-to guides to learn about management of Item after initial setup:
-* [How to connect to a VM hidden behind the SSH Bastion](./docs/how-to/how-to-connect-to-a-vm-hidden-behind-the-ssh-bastion.md)
+* [How to connect to a VM hidden behind the SSH Bastion](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/playbooks/ssh-bastion-flavour/docs/how-to/how-to-connect-to-a-vm-hidden-behind-the-ssh-bastion.md)

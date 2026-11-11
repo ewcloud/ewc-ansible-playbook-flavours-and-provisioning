@@ -2,7 +2,7 @@
 
 This Ansible Playbook configures an existing virtual machine in the
 [European Weather Cloud (EWC)](https://europeanweather.cloud/) to disenroll
-from a [IPA server](../ipa-server-flavour/).
+from a [IPA server](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/ipa-server-flavour).
 
 IPA provides integrated identity management and DNS services for centralized
 user authentication, authorization, and resource discovery. This template safely
@@ -20,7 +20,7 @@ to disenroll your instance.
 
 ## Functionality
 The template is designed to:
-- Configure a pre-existing virtual machine, previously enrolled (likely with help of the [IPA client](../ipa-client-enroll-flavour/) template) to disconnect from an [IPA server](../ipa-server-flavour/).
+- Configure a pre-existing virtual machine, previously enrolled (likely with help of the [IPA client](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/ipa-client-enroll-flavour) template) to disconnect from an [IPA server](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/ipa-server-flavour).
 - Disable user authentication and authorization (LDAP) for the target instance.
 - Remove IPA server-internal DNS records referencing the target instance, if present.
 
