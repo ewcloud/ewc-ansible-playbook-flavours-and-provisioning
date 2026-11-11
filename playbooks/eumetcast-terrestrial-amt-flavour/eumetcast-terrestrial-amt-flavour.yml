@@ -33,7 +33,7 @@
   tasks:
     - name: EWC Ansible Role Eumetcast on ATM
       ansible.builtin.include_role:
-        name: ewc-ansible-role-eumetcast-terrestrial-amt-1.3
+        name: ewc-ansible-role-eumetcast-terrestrial-amt-1.4
       vars:
         tellicast_license_user_name: "{{ hostvars['localhost']['tellicast_license_user_name_fact'] }}"
         tellicast_license_user_key: "{{ hostvars['localhost']['tellicast_license_user_key_fact'] }}"

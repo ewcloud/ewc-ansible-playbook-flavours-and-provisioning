@@ -3,7 +3,7 @@
 >💡 If you are interested in historical records, as opposed to data streaming, you may find data snapshots on the [EUMETSAT User Portal's Data store](https://user.eumetsat.int/search-view?sort=startDate%20desc). Apply the `Data` and `Data Store` and `EUMETCast Terrestrial` filters, or an specific satellite filter to sort out relevant available snapshots.
 
 This Ansible Playbook configures an existing virtual machine running
-within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the [EUMETCast Terrestrial](https://user.eumetsat.int/data-access/eumetcast-terrestrial) over [AMT software stack](https://gitlab.eumetsat.int/open-source/amt).
+within the [European Weather Cloud (EWC)](https://europeanweather.cloud/), to equip it with the [EUMETCast Terrestrial client](https://user.eumetsat.int/data-access/eumetcast-terrestrial) configured to communicate over [Automatic Multicast Tunnelling (AMT)](https://gitlab.eumetsat.int/open-source/amt).
 
 
 EUMETCast is EUMETSAT’s primary dissemination mechanism for the near-real-time delivery of satellite data. EUMETCast serves data through two complementary delivery systems: EUMETCast Satellite and EUMETCast Terrestrial.
@@ -11,9 +11,9 @@ EUMETCast is EUMETSAT’s primary dissemination mechanism for the near-real-time
 ![EUMETCast overview](https://raw.githubusercontent.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/refs/heads/main/playbooks/eumetcast-terrestrial-amt-flavour/docs/images/eumetcast-overview.png)
 
 
-Terrestrial services currently supported, for near-real-time data distribution, are tabulated below.
-Additional terrestrial services will be created in the future for new missions.
-If unsure which of this data you may access, please contact the EUMETSAT User Helpdesk ([ops@eumetsat.int](mailto:ops@eumetsat.int)).
+Terrestrial services currently supported, for near-real-time data distribution, are tabulated below:
+
+>💡 For more detailed information, please check the [EUMETCast channels and PIDs](https://user.eumetsat.int/resources/user-guides/eumet-cast-channels-and-pi-ds#ID-Channels-and-bandwidth-calculator-for-terrestrial-services) documentation page on the EUMETSAT User Portal.
 
 | | | |
 | --- | --- | --- |
@@ -24,17 +24,19 @@ If unsure which of this data you may access, please contact the EUMETSAT User He
 | **ter-4** | 120 (pre-operational) / 300 Mbps (operational) | **EPS-SG data** |
 | **ter-5** | 100 | **S6B data** |
 
->💡 For more detailed information, please check the [EUMETCast channels and PIDs](https://user.eumetsat.int/resources/user-guides/eumet-cast-channels-and-pi-ds#ID-Channels-and-bandwidth-calculator-for-terrestrial-services) documentation page on the EUMETSAT User Portal.
+Additional terrestrial services will be created in the future for new missions.
+If unsure which of this data you may access, please contact the EUMETSAT User Helpdesk ([ops@eumetsat.int](mailto:ops@eumetsat.int)).
+
 
 ## Functionality
+>✅ The data stream is saved to disk under the `/home/eumetuser/data` subdirectory.
 
 * Installs and configures the EUMETCast Terrestrial client over Automatic Multicast Tunnelling (AMT)
 * Deploys the TelliCast terrestrial receiver runtime
 * Configures network translation required for multicast reception over AMT
-* Automatically cleans up disk space by removing data, received and stored under the `/home/eumetuser/data` subdirectory, at regular user-defined intervals (every 15 minutes by default)
+* Automatically guards against "out of disk" crashes, by removing old data (15+ minutes of age), at regular user-defined intervals
 
 ## Prerequisites
-> ⛔ When deploying on ECMWF site, network traffic required by this Item may be blocked due to ECMWF Firewall. Please get in touch with us through the [EWC Support portal](https://support.europeanweather.cloud/).
 
 * Register a user account on the [EUMETSAT User Portal](https://eoportal.eumetsat.int/)
 * Subscribe to the service and data for EUMETCast Terrestrial
@@ -43,6 +45,8 @@ If unsure which of this data you may access, please contact the EUMETSAT User He
   * Write to EUMETSAT Helpdesk ([ops@eumetsat.int](mailto:ops@eumetsat.int)), making sure to provide them your EUMETSAT User Portal username alongside your request
 * Verify the `eumetcast` OpenStack Security Group exists in your EWC tenancy
   > 💡 You may create Security Groups via [this EWC Community Hub Item](https://europeanweather.cloud/community-hub/openstack-compute-instance) if pre-required ones are missing.
+
+  > ⛔ When deploying on ECMWF site, network traffic required by this Item may be blocked due to ECMWF Firewall. Please get in touch with us through the [EWC Support portal](https://support.europeanweather.cloud/).
 
 ## Usage
 
