@@ -7,7 +7,7 @@ The [European Weather Cloud (EWC)](https://europeanweather.cloud/) provides a ce
 The principal advantage of this EWC service is access to a much larger, resource pool than any single tenant could provide alone. Capacity is drawn from:
 
 1. Capacity made available by EWC itself
-2. Spare VMs contributed by EWC tenants for shared usage (i.e. those configured by the [HTC Batch Processing Execute Flavour](../htc-execute-flavour/))
+2. Spare VMs contributed by EWC tenants for shared usage (i.e. those configured by the [HTC Batch Processing Execute Flavour](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/htc-execute-flavour))
 
 EWC users can submit jobs from their VMs. Jobs are placed in the queue, matched to available resources, executed, and results are returned to VM where the job was submitted from.
 
@@ -230,7 +230,4 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
 ## Operation
 
-Checkout the following how-to guides to learn about usage of the Item after setup:
-* [How to submit Bash jobs](./docs/how-to/how-to-submit-bash-jobs.md)
-* [How to submit Docker jobs](./docs/how-to-submit-docker-jobs.md)
-* [How to submit Singularity jobs](./docs/how-to-submit-singularity-jobs.md)
+Checkout the [how-to guides](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/htc-submit-flavour/docs/how-to) to learn about usage of the Item after setup.

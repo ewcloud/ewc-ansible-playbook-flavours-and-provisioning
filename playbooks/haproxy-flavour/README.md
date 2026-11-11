@@ -181,7 +181,4 @@ ansible-playbook -i inventory.yml haproxy-flavour.yml
 | ewc-ansible-role-haproxy | https://github.com/ewcloud/ewc-ansible-role-haproxy |
 
 ## Operation
-Checkout the following how-to guides to learn about management of the Item after initial setup:
-* [How to add a new backend server to HAProxy](./docs/how-to/how-to-add-a-new-backend-server-to-haproxy.md)
-* [How to add a new SSL certificate to a server in HAProxy](./docs/how-to/how-to-add-a-new-ssl-certifacte-to-server-in-haproxy.md)
-* [How to modify HAproxy config file](./docs/how-to/how-to-modify-haproxy-config-file.md)
+Checkout the [how-to guides](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/haproxy-flavour/docs/how-to) to learn about management of the Item after initial setup.

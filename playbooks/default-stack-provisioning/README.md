@@ -189,9 +189,9 @@ ansible-playbook \
 
 ## Operation
 Checkout the following how-to guides to learn about management of the resulting instances after initial setup:
-* [How to configure the IPA Server](../ipa-server-flavour/docs/how-to/how-to-configure-the-ipa-server.md)
-* [How to connect to a VM hidden behind the SSH Bastion](../ssh-bastion-flavour/docs/how-to/how-to-connect-to-a-vm-hidden-behind-the-ssh-bastion.md)
+* [IPA Server how-to guides](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/ipa-server-flavour/docs/how-to)
+* [SSH Bastion how-to guides](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/ssh-bastion-flavour/docs/how-to)
 
 ## Troubleshooting
-Checkout the [troubleshooting documentation](../../docs/troubleshooting.md) for
+Checkout the [troubleshooting documentation](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/docs/troubleshooting.md) for
 information on common problems and how to troubleshoot them.

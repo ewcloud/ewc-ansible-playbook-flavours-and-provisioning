@@ -216,4 +216,4 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
 ## Operation
 Checkout the following how-to guides to learn about management of the Item after initial setup:
-* [How to initialize the environment](./docs/how-to/how-to-initialize-environment.md)
+* [How to initialize the environment](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/playbooks/eumetsat-data-tailor-flavour/docs/how-to/how-to-initialize-environment.md)

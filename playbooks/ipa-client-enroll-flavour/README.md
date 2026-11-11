@@ -2,7 +2,7 @@
 
 This Ansible Playbook configures an existing virtual machine in the
 [European Weather Cloud (EWC)](https://europeanweather.cloud/) to operate as a
-client of [IPA services](../ipa-server-flavour/).
+client of [IPA services](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/ipa-server-flavour).
 
 IPA provides integrated identity management and DNS services, enabling
 centralized user authentication, authorization, and resource discovery.

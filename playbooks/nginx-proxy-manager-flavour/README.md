@@ -207,8 +207,4 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 | ewc-ansible-role-nginx-proxy-manager | https://github.com/ewcloud/ewc-ansible-role-nginx-proxy-manager |
 
 ## Operation
-Checkout the following how-to guides to learn about management of the Item after initial setup:
-* [How to configure the NGINX Proxy manager initial setup](./docs/how-to/how-to-configure-the-nginx-proxy-manager-initial-setup.md)
-* [How to add a new proxy host for specific domain](./docs/how-to/how-to-add-a-new-proxy-host-for-specific-domain.md)
-* [How to add a new SSL Certificate for domain/s](./docs/how-to/how-to-add-a-new-ssl-certificate-for-domains.md)
-* [How to create/modify an access list](./docs/how-to/how-to-create-modify-an-access-list.md)
+Checkout the [how-to guides](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/nginx-proxy-manager-flavour/docs/how-to) to learn about management of the Item after initial setup.

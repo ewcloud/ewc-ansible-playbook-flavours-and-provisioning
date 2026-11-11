@@ -9,7 +9,7 @@ The principal advantage of this EWC service is access to a much larger, resource
 1. Capacity made available by EWC itself
 2. Spare VMs contributed by EWC tenants for shared usage
 
-EWC users can submit jobs from their VMs (i.e. those configured by the [HTC Batch Processing Submit Flavour](../htc-submit-flavour/)). Jobs are placed in the queue, matched to available resources, executed, and results are returned to VM where the job was submitted from.
+EWC users can submit jobs from their VMs (i.e. those configured by the [HTC Batch Processing Submit Flavour](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/tree/main/playbooks/htc-submit-flavour)). Jobs are placed in the queue, matched to available resources, executed, and results are returned to VM where the job was submitted from.
 
 This template is EWC users wishing to contribute their compute resources to the pool of resources as HTCondor Execute Nodes:
 
@@ -235,4 +235,4 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 ## Operation
 
 Checkout the following how-to guides to learn about usage of the Item after setup:
-* [How to submit jobs](./docs/how-to/how-to-submit-jobs.md)
+* [How to submit jobs](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/playbooks/htc-execute-flavour/docs/how-to/how-to-submit-jobs.md)

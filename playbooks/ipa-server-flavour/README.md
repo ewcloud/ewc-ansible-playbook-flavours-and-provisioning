@@ -60,7 +60,7 @@ For illustration purposes, supposes it IP is `10.0.0.53`.
 
   **OR**
 
-  * **Via [OpenStack CLI](pypi.org/project/python-openstackclient/)**
+  * **Via [OpenStack CLI](https://pypi.org/project/python-openstackclient/)**
 
     Following the example in the prior step and assuming the subnet name `private-subnet`, then we would execute:
 
@@ -279,4 +279,4 @@ Copy into the file one of the two snippets below, and replace the placeholders (
 
 ## Operation
 Checkout the following how-to guides to learn about management of the Item after initial setup:
-* [How to configure the IPA Server](./docs/how-to/how-to-configure-the-ipa-server.md)
+* [How to configure the IPA Server](https://github.com/ewcloud/ewc-ansible-playbook-flavours-and-provisioning/blob/main/playbooks/ipa-server-flavour/docs/how-to/how-to-configure-the-ipa-server.md)
